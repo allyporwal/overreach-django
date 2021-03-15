@@ -4,6 +4,7 @@ from django.db import models
 
 class WorkoutTracker(models.Model):
     workout_id = models.CharField(max_length=32, null=False, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
     session_name = models.CharField(max_length=50, null=False)
     workout = models.JSONField(blank=True)
 

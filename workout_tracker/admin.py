@@ -7,6 +7,7 @@ from .models import WorkoutTracker
 class WorkoutTrackerAdmin(admin.ModelAdmin):
     list_display = (
         'workout_id',
+        'created_at',
         'session_name',
         'workout',
     )
