@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'home',
     'workout_tracker',
+    'active_workout',
 ]
 
 MIDDLEWARE = [
