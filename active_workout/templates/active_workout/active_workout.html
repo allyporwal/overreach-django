@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<form id="workout-sets" class="mt-3" action="" method="POST">
+<form id="workout-sets" class="mt-3" action="{% url 'active_workout' %}" method="POST">
     {% csrf_token %}
     <input type="text" id="exercise-1-name" class="exercise-name" name="exercise-1-name" placeholder="exercise_name">
     <input id="exercise-1-sets" class="set-count" type="number" name="exercise-1-sets" placeholder="sets">
