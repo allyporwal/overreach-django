@@ -4,7 +4,7 @@
 $('#start').click(function(e) {
     let workoutSets = $("#workout-sets");
     let numberOfSets = workoutSets.children('.set-count').last().val()   
-    let exerciseNumber = $('#exercise-1-sets').attr("id")
+    let exerciseNumber = workoutSets.children('.set-count').last().attr("id")
     let x = parseInt(exerciseNumber.slice(9, 10))
     for (i = 0; i < numberOfSets; i++) {
         workoutSets.append(`<input type="number" 
