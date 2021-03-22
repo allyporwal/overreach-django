@@ -1,12 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def active_workout(request):
     """Add workout to be stored in session, to be retrieved later
     on and saved in a Django JSONField"""
     workout = request.session.get('workout', {})
-    workout_cleaned = None
 
+    # Take all form information from post and sort into nested lists
+    # by using endswith and startswith methods on the form keys
     if request.method == 'POST':
         exercises_sets_reps = [[], [], []]
         set_count = exercises_sets_reps[1]
@@ -25,23 +26,35 @@ def active_workout(request):
             if key.startswith('rpe'):
                 weight_rep_count_rpe[2].append(val)
 
-        exercises = [{'exercise': a,
-                      'sets': b,
-                      'reps': c,
-                      'set_volumes': []
-                      } for (a, b, c) in zip(*exercises_sets_reps)]
+        # Create lists of objects from above arrays using list comprehension
+        # Attribution for this snippet in README
+        workout = [{'exercise': exercise,
+                    'sets': sets,
+                    'reps': reps,
+                    'set_volumes': []
+                    } for (
+                        exercise, sets, reps) in zip(*exercises_sets_reps)]
 
-        weights_lifted = [{'weight': a,
-                           'rep_count': b,
-                           'rpe': c
-                           } for (a, b, c) in zip(*weight_rep_count_rpe)]
+        weights_lifted = [{'weight': weight,
+                           'rep_count': rep_count,
+                           'rpe': rpe
+                           } for (
+                               weight, rep_count, rpe) in zip(
+                                   *weight_rep_count_rpe)]
 
-        for x, y in zip(exercises, set_count):
-            z = int(y)
-            sets_to_add = weights_lifted[0:z]
-            x['set_volumes'].extend(sets_to_add)
-            del weights_lifted[0:z]
+        # Iterate through workout and set_count lists,
+        # add the correct number of sets to each dictionary
+        # in the workout list and then delete them from the
+        # weights_lifted list
+        for exercise, sets in zip(workout, set_count):
+            sets_number = int(sets)
+            sets_to_add = weights_lifted[0:sets_number]
+            exercise['set_volumes'].extend(sets_to_add)
+            del weights_lifted[0:sets_number]
 
-    request.session['workout'] = workout_cleaned
+        return redirect()
+
+    # store the workout list to the session to be retrieved later
+    request.session['workout'] = workout
     template = 'active_workout/active_workout.html'
     return render(request, template)
