@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from .validators import validate_active_workout
 
 
 def active_workout(request):
@@ -52,7 +53,8 @@ def active_workout(request):
             exercise['set_volumes'].extend(sets_to_add)
             del weights_lifted[0:sets_number]
 
-        return redirect()
+        validate_active_workout(workout)
+        # return redirect()
 
     # store the workout list to the session to be retrieved later
     request.session['workout'] = workout
