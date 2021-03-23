@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from .validators import validate_active_workout
 
 
@@ -40,8 +40,8 @@ def active_workout(request):
                            'rep_count': rep_count,
                            'rpe': rpe
                            } for (
-                               weight, rep_count, rpe) in zip(
-                                   *weight_rep_count_rpe)]
+                            weight, rep_count, rpe) in zip(
+                                *weight_rep_count_rpe)]
 
         # Iterate through workout and set_count lists,
         # add the correct number of sets to each dictionary
@@ -53,10 +53,16 @@ def active_workout(request):
             exercise['set_volumes'].extend(sets_to_add)
             del weights_lifted[0:sets_number]
 
-        validate_active_workout(workout)
-        # return redirect()
+        # print(workout)
 
+        request.session['workout'] = workout
+        print(request.session['workout'])
+        errors = validate_active_workout(request.session['workout'])
+        print(errors)
+        if errors != []:
+            return redirect(reverse('active_workout'))
     # store the workout list to the session to be retrieved later
-    request.session['workout'] = workout
+        # request.session['workout'] = workout
+        # print(request.session['workout'])
     template = 'active_workout/active_workout.html'
     return render(request, template)
