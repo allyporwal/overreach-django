@@ -53,24 +53,27 @@ def active_workout(request):
             exercise['set_volumes'].extend(sets_to_add)
             del weights_lifted[0:sets_number]
 
-        # print(workout)
-
+        # store the workout list to the session to be retrieved later
         request.session['workout'] = workout
         print(request.session['workout'])
+
         errors = validate_active_workout(request.session['workout'])
         print(errors)
+
+        # redirect back to the form if validation fails, showing user a
+        # list of any errors that must be corrected before workout can
+        # be saved
         if errors != []:
             return redirect(reverse('active_workout'))
-    # store the workout list to the session to be retrieved later
-        # request.session['workout'] = workout
-        # print(request.session['workout'])
+        else:
+            return redirect(reverse('home'))
+
     template = 'active_workout/active_workout.html'
     return render(request, template)
 
 
 def delete_active_workout(request):
-    # workout = request.session.get['workout']
+    """Delete the active workout from the session"""
     del request.session['workout']
 
-    # template = 'active_workout/active_workout.html'
     return redirect(reverse('active_workout'))

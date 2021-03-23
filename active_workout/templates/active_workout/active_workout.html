@@ -23,9 +23,9 @@
             <input id="exercise-{{ forloop.counter }}-reps" type="number" name="exercise-{{ forloop.counter }}-reps" placeholder="reps" value="{{ exercise.reps }}">
             <br>
             {% for set in exercise.set_volumes %}
-                <input type="number" name="weight-{{ forloop.counter }}-exercise-{{ forloop.counter }}" placeholder="weight" value="{{ set.weight }}">
-                <input type="number" name="reps-{{ forloop.counter }}-exercise-{{ forloop.counter }}" placeholder="reps" value="{{ set.rep_count }}">
-                <input type="number" name="rpe-{{ forloop.counter }}-exercise-{{ forloop.counter }}" placeholder="rpe" value="{{ set.rpe }}">
+                <input type="number" name="weight-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="weight" value="{{ set.weight }}">
+                <input type="number" name="reps-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="reps" value="{{ set.rep_count }}">
+                <input type="number" name="rpe-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="rpe" value="{{ set.rpe }}">
                 <br>
             {% endfor %}
         {% endfor %}

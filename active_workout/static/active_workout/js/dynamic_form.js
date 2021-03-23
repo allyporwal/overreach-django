@@ -8,9 +8,9 @@ $('#start').click(function(e) {
     let x = parseInt(exerciseNumber.slice(9, 10))
     for (i = 0; i < numberOfSets; i++) {
         workoutSets.append(`<input type="number" 
-        name="weight-${i}-exercise-${x}" placeholder="weight">
-        <input type="number" name="reps-${i}-exercise-${x}" placeholder="reps">
-        <input type="number" name="rpe-${i}-exercise-${x}" placeholder="rpe"><br>`);
+        name="weight-${i+1}-exercise-${x}" placeholder="weight">
+        <input type="number" name="reps-${i+1}-exercise-${x}" placeholder="reps">
+        <input type="number" name="rpe-${i+1}-exercise-${x}" placeholder="rpe"><br>`);
 }});
 
 $('#add-exercise').click(function(e) {
