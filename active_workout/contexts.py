@@ -7,6 +7,7 @@ def workout_in_progress(request):
     in_progress = True if workout != {} else False
 
     context = {
+        'workout': workout,
         'in_progress': in_progress,
     }
 

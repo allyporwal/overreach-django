@@ -66,3 +66,11 @@ def active_workout(request):
         # print(request.session['workout'])
     template = 'active_workout/active_workout.html'
     return render(request, template)
+
+
+def delete_active_workout(request):
+    # workout = request.session.get['workout']
+    del request.session['workout']
+
+    # template = 'active_workout/active_workout.html'
+    return redirect(reverse('active_workout'))
