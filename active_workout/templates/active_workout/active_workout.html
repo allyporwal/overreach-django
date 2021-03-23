@@ -3,6 +3,7 @@
 
 {% block content %}
 <a href="{% url 'delete_active_workout' %}">Delete workout</a>
+{{ errors }}  
 {% if in_progress == False %}
     <form id="workout-sets" class="mt-3" action="{% url 'active_workout' %}" method="POST">
         {% csrf_token %}

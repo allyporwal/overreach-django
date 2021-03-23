@@ -30,23 +30,23 @@ def validate_active_workout(workout):
             errors.append("You can't log more than 250 \
                           reps of one exercise in a single set")
 
-    # for weight in weights:
-    #     if int(weight) < 0:
-    #         errors.append("You can't lift negative kilos!")
-    #     if int(weight) > 1200:
-    #         errors.append("You can't lift more than 1200kg in a single rep")
+    for weight in weights:
+        if int(weight) < 0:
+            errors.append("You can't lift negative kilos!")
+        if int(weight) > 1200:
+            errors.append("You can't lift more than 1200kg in a single rep")
 
-    # for reps_logged in reps_lifted:
-    #     if int(reps_logged) < 0:
-    #         errors.append("You can't lift negative reps!")
-    #     if int(reps_logged) > 250:
-    #         errors.append("You can't log more than 250 reps of one exercise \
-    #                       in a single set")
+    for reps_logged in reps_lifted:
+        if int(reps_logged) < 0:
+            errors.append("You can't lift negative reps!")
+        if int(reps_logged) > 250:
+            errors.append("You can't log more than 250 reps of one exercise \
+                          in a single set")
 
-    # for rpe in rate_perceived_exertion:
-    #     if int(rpe) < 0:
-    #         errors.append("RPE must be between 1 and 10")
-    #     if int(rpe) > 10:
-    #         errors.append("RPE must be between 1 and 10")
+    for rpe in rate_perceived_exertion:
+        if int(rpe) < 0:
+            errors.append("RPE must be between 1 and 10")
+        if int(rpe) > 10:
+            errors.append("RPE must be between 1 and 10")
 
     return errors
