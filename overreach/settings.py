@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'home',
+    'dashboard',
     'workout_tracker',
     'active_workout',
 ]
