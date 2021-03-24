@@ -9,42 +9,9 @@
     {{ form.workout.as_hidden }}
     <!-- <button class="btn btn-black rounded-0 text-uppercase float-right">Submit</button> -->
 </form>
-<form id="workout-sets" class="mt-3" action="" method="POST">
-    {% csrf_token %}
-    <input type="text" id="exercise-1-name" class="exercise-name" name="exercise-1-name" placeholder="exercise_name">
-    <input id="exercise-1-sets" class="set-count" type="number" name="exercise-1-sets" placeholder="sets">
-    <input id="exercise-1-reps" type="number" name="exercise-1-reps" placeholder="reps">
-    <br>   
-    <button type="submit">Submit</button>
-</form>
-<button id="start">Start</button>
-<button id="add-exercise">Add exercise</button>   
+
 
 {% endblock %}
 
 {% block postloadjs %}
-<script type="text/javascript">
-
-$('#start').click(function(e) {
-    let workoutSets = $("#workout-sets");
-    let numberOfSets = workoutSets.children('.set-count').last().val()
-    console.log(numberOfSets)    
-    let exerciseNumber = $('#exercise-1-sets').attr("id")
-    let x = parseInt(exerciseNumber.slice(9, 10))
-    for (i = 0; i < numberOfSets; i++) {
-        workoutSets.append(`<input type="number" name="weight-${i}-exercise-${x}" placeholder="weight">
-        <input type="number" name="reps-${i}-exercise-${x}" placeholder="reps">
-        <input type="number" name="rpe-${i}-exercise-${x}" placeholder="rpe"><br>`);
-}});
-
-$('#add-exercise').click(function(e) {
-    let workoutSets = $("#workout-sets");
-    let exerciseNumber = workoutSets.children('.exercise-name').last().attr("id")
-    let x = parseInt(exerciseNumber.slice(9, 10)) + 1
-    workoutSets.append(`<input type="text" id="exercise-${x}-name" class="exercise-name" name="exercise-${x}-name" placeholder="exercise_name">
-    <input id="exercise-${x}-sets" class="set-count" type="number" name="exercise-${x}-sets" placeholder="sets">
-    <input id="exercise-${x}-sets" type="number" name="exercise-${x}-reps" placeholder="reps">
-    <br>`)
-});
-</script>   
 {% endblock %}

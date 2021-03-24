@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from .forms import WorkoutTrackerForm
 
 
@@ -9,13 +9,14 @@ def workout_tracker(request):
 
         form_data = {
             'session_name': request.POST['session_name'],
-            'workout': request.POST['workout'],
+            'workout': request.session['workout'],
         }
 
         form = WorkoutTrackerForm(form_data)
 
         if form.is_valid:
             form.save()
+            return redirect(reverse('home'))
 
     form = WorkoutTrackerForm()
     template = 'workout_tracker/workout_tracker.html'

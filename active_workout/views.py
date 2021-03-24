@@ -55,10 +55,9 @@ def active_workout(request):
 
         # store the workout list to the session to be retrieved later
         request.session['workout'] = workout
-        print(workout)
 
+        # validate the workout data
         errors = validate_active_workout(request.session['workout'])
-        print(errors)
 
         # redirect back to the form if validation fails, showing user a
         # list of any errors that must be corrected before workout can
@@ -71,7 +70,7 @@ def active_workout(request):
             return render(request, template, context)
 
         else:
-            return redirect(reverse('home'))
+            return redirect(reverse('workout_tracker'))
 
     template = 'active_workout/active_workout.html'
     return render(request, template)
