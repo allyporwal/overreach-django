@@ -27,8 +27,8 @@ def validate_active_workout(workout):
         if int(rep) < 0:
             errors.append("You can't lift negative reps!")
         if int(rep) > 250:
-            errors.append("You can't log more than 250 \
-                          reps of one exercise in a single set")
+            errors.append("You can't log more than 250 reps of one exercise \
+                          in a single set")
 
     for weight in weights:
         if int(weight) < 0:

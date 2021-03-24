@@ -70,7 +70,7 @@ def active_workout(request):
             return render(request, template, context)
 
         else:
-            return redirect(reverse('workout_tracker'))
+            return redirect(reverse('log_workout'))
 
     template = 'active_workout/active_workout.html'
     return render(request, template)

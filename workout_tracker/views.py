@@ -3,7 +3,7 @@ from .forms import WorkoutTrackerForm
 
 
 # Create your views here.
-def workout_tracker(request):
+def log_workout(request):
 
     if request.method == 'POST':
 
@@ -16,10 +16,11 @@ def workout_tracker(request):
 
         if form.is_valid:
             form.save()
+            del request.session['workout']
             return redirect(reverse('home'))
 
     form = WorkoutTrackerForm()
-    template = 'workout_tracker/workout_tracker.html'
+    template = 'workout_tracker/log_workout.html'
     context = {
         'form': form,
     }
