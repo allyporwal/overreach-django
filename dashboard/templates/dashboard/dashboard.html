@@ -3,6 +3,12 @@
 
 {% block content %}
 <h1>Dashboard</h1>
+
+{% for workout in workouts %}
+    {{ workout.session_name }}
+    {{ workout.workout }}
+{% endfor %}    
+
 {% endblock %}
 
 {% block postloadjs %}
