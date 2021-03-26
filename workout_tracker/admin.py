@@ -4,7 +4,6 @@ from .models import WorkoutTracker
 
 class WorkoutTrackerAdmin(admin.ModelAdmin):
     list_display = (
-        'workout_id',
         'created_at',
         'created_by',
         'session_name',
@@ -12,7 +11,7 @@ class WorkoutTrackerAdmin(admin.ModelAdmin):
         'pk',
     )
 
-    ordering = ('workout_id',)
+    ordering = ('pk',)
 
 
 admin.site.register(WorkoutTracker, WorkoutTrackerAdmin)
