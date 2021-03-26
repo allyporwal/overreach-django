@@ -45,3 +45,25 @@ def workout(request, workout_id):
     }
 
     return render(request, 'workout_tracker/workout.html', context)
+
+
+def delete_workout(request, workout_id):
+    """Allow the user to delete a workout they logged"""
+    workout = get_object_or_404(WorkoutTracker, pk=workout_id)
+    if UserProfile.objects.get(user=request.user) == workout.created_by:
+        workout.delete()
+        return redirect(reverse('dashboard'))
+    else:
+        return redirect(reverse('active_workout'))
+
+
+def all_workouts(request):
+    """Display workouts done by everyone"""
+    workouts = WorkoutTracker.objects.all()
+
+    template = 'workout_tracker/all_workouts.html'
+    context = {
+        'workouts': workouts,
+    }
+
+    return render(request, template, context)

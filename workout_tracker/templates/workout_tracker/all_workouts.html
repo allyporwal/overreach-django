@@ -2,23 +2,9 @@
 {% load static %}
 
 {% block content %}
-<h1>Dashboard</h1>
+<h1>All workouts</h1>
 
-    {{ request.user.username }}
-
-    {{ workout.session_name }}
-    {% for exercise in workout.workout %}
-        {{ exercise.exercise }}
-        {{ exercise.sets }}
-        {{ exercise.reps }}
-        {% for weight_reps_rpe in exercise.set_volumes %}
-            {{ weight_reps_rpe.weight }}
-            {{ weight_reps_rpe.rep_count }}
-            {{ weight_reps_rpe.rpe }}
-        {% endfor %}
-    {% endfor %}
-<div class="row">
-    {% for workout in workouts %}
+{% for workout in workouts %}
         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
             <div class="card">
                 <div class="card-body">
@@ -27,13 +13,13 @@
                         <p class="card-text">{{ workout.workout.0.exercise }} for {{ workout.workout.0.sets }} sets of {{ workout.workout.0.reps }} reps</p>
                         <p class="card-text">Weight: {{ workout.workout.0.set_volumes.1.weight }} </p>
                     <a href="{% url 'workout' workout.id %}" class="btn btn-primary">View</a>
-                    <a href="{% url 'delete_workout' workout.id %}" class="btn btn-primary">Delete</a>
+                    {% if workout.created_by.user == request.user %}
+                        <a href="{% url 'delete_workout' workout.id %}" class="btn btn-primary">Delete</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     {% endfor %}
-</div>
-
 
 {% endblock %}
 
