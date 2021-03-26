@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import WorkoutTrackerForm
 from profiles.models import UserProfile
+from .models import WorkoutTracker
 
 
 def log_workout(request):
@@ -33,3 +34,14 @@ def log_workout(request):
     }
 
     return render(request, template, context)
+
+
+def workout(request, workout_id):
+    """Show an individual workout"""
+    workout = get_object_or_404(WorkoutTracker, pk=workout_id)
+
+    context = {
+        'workout': workout,
+    }
+
+    return render(request, 'workout_tracker/workout.html', context)
