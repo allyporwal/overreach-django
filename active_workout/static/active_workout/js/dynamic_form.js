@@ -7,10 +7,10 @@ $('#start').click(function(e) {
     let exerciseNumber = workoutSets.children('.set-count').last().attr("id")
     let x = parseInt(exerciseNumber.slice(9, 10))
     for (i = 0; i < numberOfSets; i++) {
-        workoutSets.append(`<input type="number" 
+        workoutSets.append(`<input type="number" step="0.5"
         name="weight-${i+1}-exercise-${x}" placeholder="weight">
         <input type="number" name="reps-${i+1}-exercise-${x}" placeholder="reps">
-        <input type="number" name="rpe-${i+1}-exercise-${x}" placeholder="rpe"><br>`);
+        <input type="number" step="0.5" name="rpe-${i+1}-exercise-${x}" placeholder="rpe"><br>`);
 }});
 
 $('#add-exercise').click(function(e) {

@@ -11,7 +11,7 @@
         <input id="exercise-1-sets" class="set-count" type="number" name="exercise-1-sets" placeholder="sets">
         <input id="exercise-1-reps" type="number" name="exercise-1-reps" placeholder="reps">
         <br>   
-        <button type="submit">Submit</button>
+        <button type="submit">Save</button>
     </form>
     <button id="start">Start</button>
     <button id="add-exercise">Add exercise</button>
@@ -25,14 +25,14 @@
             <input id="exercise-{{ forloop.counter }}-reps" type="number" name="exercise-{{ forloop.counter }}-reps" placeholder="reps" value="{{ exercise.reps }}">
             <br>
             {% for set in exercise.set_volumes %}
-                <input type="number" name="weight-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="weight" value="{{ set.weight }}">
+                <input type="number" step="0.5" name="weight-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="weight" value="{{ set.weight }}">
                 <input type="number" name="reps-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="reps" value="{{ set.rep_count }}">
-                <input type="number" name="rpe-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="rpe" value="{{ set.rpe }}">
+                <input type="number" step="0.5" name="rpe-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="rpe" value="{{ set.rpe }}">
                 <br>
             {% endfor %}
         {% endfor %}
         <br>   
-        <button type="submit">Save workout</button>
+        <button type="submit">Save</button>
     </form>
     <button id="start">Start</button>
     <button id="add-exercise">Add exercise</button>

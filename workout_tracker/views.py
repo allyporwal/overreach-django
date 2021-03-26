@@ -22,7 +22,7 @@ def log_workout(request):
             del request.session['workout']
             return redirect(reverse('dashboard'))
 
-    # form = WorkoutTrackerForm()
+    form = WorkoutTrackerForm()
     template = 'workout_tracker/log_workout.html'
     context = {
         'form': form,

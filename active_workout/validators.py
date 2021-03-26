@@ -31,9 +31,9 @@ def validate_active_workout(workout):
                           in a single set")
 
     for weight in weights:
-        if int(weight) < 0:
+        if float(weight) < 0:
             errors.append("You can't lift negative kilos!")
-        if int(weight) > 1200:
+        if float(weight) > 1200:
             errors.append("You can't lift more than 1200kg in a single rep")
 
     for reps_logged in reps_lifted:
@@ -44,9 +44,9 @@ def validate_active_workout(workout):
                           in a single set")
 
     for rpe in rate_perceived_exertion:
-        if int(rpe) < 0:
+        if float(rpe) < 1:
             errors.append("RPE must be between 1 and 10")
-        if int(rpe) > 10:
+        if float(rpe) > 10:
             errors.append("RPE must be between 1 and 10")
 
     return errors
