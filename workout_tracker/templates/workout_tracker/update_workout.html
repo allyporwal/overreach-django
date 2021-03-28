@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% if edit_in_progress %}
+<form class="mt-3" action="{% url 'update_workout' workout.id %}" method="POST">
+    {% csrf_token %}
+    {{ form.session_name.label }}:
+    {{ form.session_name }}
+    {{ form.workout.as_hidden }}
+    <button type="submit">Update Workout</button>
+</form>
+{% endif %}
+
+{% endblock %}
+
+{% block postloadjs %}
+{% endblock %}
