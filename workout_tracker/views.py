@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import WorkoutTrackerForm
 from profiles.models import UserProfile
 from .models import WorkoutTracker
+from active_workout.validators import validate_active_workout
 
 
 def log_workout(request):
@@ -45,6 +46,19 @@ def workout(request, workout_id):
     }
 
     return render(request, 'workout_tracker/workout.html', context)
+
+
+def edit_workout(request, workout_id):
+    """Allow a user to edit a workout they logged"""
+    workout = get_object_or_404(WorkoutTracker, pk=workout_id)
+    request.session['workout_to_edit'] = workout.workout
+
+    context = {
+        'workout': workout,
+        'workout_to_edit': workout.workout,
+    }
+
+    return render(request, 'active_workout/edit_workout.html', context)
 
 
 def delete_workout(request, workout_id):

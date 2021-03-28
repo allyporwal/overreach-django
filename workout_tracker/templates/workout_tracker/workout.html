@@ -4,6 +4,19 @@
 {% block content %}
 <h1>Workout</h1>
 
+{{ workout.session_name }}
+{{ workout.created_by }}
+{{ workout.created_by }}
+{% for exercise in workout.workout %}
+    {{ exercise.exercise }}
+    {{ exercise.sets }}
+    {{ exercise.reps }}
+    {% for weight_reps_rpe in exercise.set_volumes %}
+        {{ weight_reps_rpe.weight }}
+        {{ weight_reps_rpe.rep_count }}
+        {{ weight_reps_rpe.rpe }}
+    {% endfor %}
+{% endfor %}
 
 {% endblock %}
 
