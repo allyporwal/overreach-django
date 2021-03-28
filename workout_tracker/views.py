@@ -111,9 +111,10 @@ def edit_workout(request, workout_id):
         # be saved
         if errors != []:
             context = {
+                'workout': workout,
                 'errors': errors,
             }
-            template = 'workout_tracker/update_workout.html'
+            template = 'active_workout/edit_workout.html'
             return render(request, template, context)
 
         else:
@@ -157,7 +158,6 @@ def update_workout(request, workout_id):
         'workout': workout,
         'form': form,
     }
-
     return render(request, template, context)
 
 
