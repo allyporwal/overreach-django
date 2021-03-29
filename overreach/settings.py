@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'dashboard',
     'profiles',
     'workout_tracker',
-    'active_workout',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'active_workout.contexts.workout_in_progress',
+                'workout_tracker.contexts.workout_in_progress',
             ],
         },
     },

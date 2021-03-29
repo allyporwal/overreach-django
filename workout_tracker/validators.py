@@ -8,6 +8,7 @@ def validate_active_workout(workout):
     weights = []
     reps_lifted = []
     rate_perceived_exertion = []
+    #  function will return a list of errors to be used in views and templates
     errors = []
 
     for exercise in workout:

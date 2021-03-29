@@ -1,5 +1,3 @@
-
-
 def workout_in_progress(request):
 
     workout = request.session.get('workout', {})
