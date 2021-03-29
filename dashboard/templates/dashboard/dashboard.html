@@ -27,6 +27,7 @@
                         <p class="card-text">{{ workout.workout.0.exercise }} for {{ workout.workout.0.sets }} sets of {{ workout.workout.0.reps }} reps</p>
                         <p class="card-text">Weight: {{ workout.workout.0.set_volumes.1.weight }} </p>
                     <a href="{% url 'workout' workout.id %}" class="btn btn-primary">View</a>
+                    <a href="{% url 'edit_workout' workout.id %}" class="btn btn-primary">Edit</a>
                     <a href="{% url 'delete_workout' workout.id %}" class="btn btn-primary">Delete</a>
                 </div>
             </div>

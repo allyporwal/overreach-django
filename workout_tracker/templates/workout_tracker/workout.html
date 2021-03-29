@@ -17,6 +17,7 @@
         {{ weight_reps_rpe.rpe }}
     {% endfor %}
 {% endfor %}
+<a href="{% url 'edit_workout' workout.id %}" class="btn btn-primary">Edit</a>
 
 {% endblock %}
 
