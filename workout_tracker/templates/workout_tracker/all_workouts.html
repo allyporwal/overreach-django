@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">{{ workout.session_name }}</h5>
-                <p class="card-text"><small>Logged on: {{ workout.created_at }}</small></p>                        
+                <p class="card-text"><small>Logged on: {{ workout.created_at }} by {{ workout.created_by }}</small></p>                        
                     <p class="card-text">{{ workout.workout.0.exercise }} for {{ workout.workout.0.sets }} sets of {{ workout.workout.0.reps }} reps</p>
                     <p class="card-text">Weight: {{ workout.workout.0.set_volumes.1.weight }} </p>
                 <a href="{% url 'workout' workout.id %}" class="btn btn-primary">View</a>

@@ -134,72 +134,77 @@ def edit_workout(request, workout_id):
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
     request.session['workout_to_edit'] = workout.workout
 
-    # Take all form information from post and sort into nested lists
-    # by using endswith and startswith methods on the form keys
-    if request.method == 'POST':
-        exercises_sets_reps = [[], [], []]
-        set_count = exercises_sets_reps[1]
-        weight_rep_count_rpe = [[], [], []]
-        for key, val in request.POST.items():
-            if key.endswith('-name'):
-                exercises_sets_reps[0].append(val)
-            if key.endswith('-sets'):
-                exercises_sets_reps[1].append(val)
-            if key.endswith('-reps'):
-                exercises_sets_reps[2].append(val)
-            if key.startswith('weight'):
-                weight_rep_count_rpe[0].append(val)
-            if key.startswith('reps'):
-                weight_rep_count_rpe[1].append(val)
-            if key.startswith('rpe'):
-                weight_rep_count_rpe[2].append(val)
+    # Check that the user created the workout they want to edit
+    if UserProfile.objects.get(user=request.user) == workout.created_by:
 
-        # Create lists of objects from above arrays using list comprehension
-        # Attribution for this snippet in README
-        workout_edited = [{'exercise': exercise,
-                           'sets': sets,
-                           'reps': reps,
-                           'set_volumes': []
-                           } for (
-                            exercise, sets, reps) in zip(
-                                *exercises_sets_reps)]
+        # Take all form information from post and sort into nested lists
+        # by using endswith and startswith methods on the form keys
+        if request.method == 'POST':
+            exercises_sets_reps = [[], [], []]
+            set_count = exercises_sets_reps[1]
+            weight_rep_count_rpe = [[], [], []]
+            for key, val in request.POST.items():
+                if key.endswith('-name'):
+                    exercises_sets_reps[0].append(val)
+                if key.endswith('-sets'):
+                    exercises_sets_reps[1].append(val)
+                if key.endswith('-reps'):
+                    exercises_sets_reps[2].append(val)
+                if key.startswith('weight'):
+                    weight_rep_count_rpe[0].append(val)
+                if key.startswith('reps'):
+                    weight_rep_count_rpe[1].append(val)
+                if key.startswith('rpe'):
+                    weight_rep_count_rpe[2].append(val)
 
-        weights_lifted = [{'weight': weight,
-                           'rep_count': rep_count,
-                           'rpe': rpe
-                           } for (
-                            weight, rep_count, rpe) in zip(
-                                *weight_rep_count_rpe)]
+            # Create lists of objects from above arrays
+            # Attribution for this snippet in README
+            workout_edited = [{'exercise': exercise,
+                               'sets': sets,
+                               'reps': reps,
+                               'set_volumes': []
+                               } for (
+                                   exercise, sets, reps) in zip(
+                                       *exercises_sets_reps)]
 
-        # Iterate through workout and set_count lists,
-        # add the correct number of sets to each dictionary
-        # in the workout list and then delete them from the
-        # weights_lifted list
-        for exercise, sets in zip(workout_edited, set_count):
-            sets_number = int(sets)
-            sets_to_add = weights_lifted[0:sets_number]
-            exercise['set_volumes'].extend(sets_to_add)
-            del weights_lifted[0:sets_number]
+            weights_lifted = [{'weight': weight,
+                               'rep_count': rep_count,
+                               'rpe': rpe
+                               } for (
+                                   weight, rep_count, rpe) in zip(
+                                       *weight_rep_count_rpe)]
 
-        # store the workout list to the session to be retrieved later
-        request.session['workout_edited'] = workout_edited
+            # Iterate through workout and set_count lists,
+            # add the correct number of sets to each dictionary
+            # in the workout list and then delete them from the
+            # weights_lifted list
+            for exercise, sets in zip(workout_edited, set_count):
+                sets_number = int(sets)
+                sets_to_add = weights_lifted[0:sets_number]
+                exercise['set_volumes'].extend(sets_to_add)
+                del weights_lifted[0:sets_number]
 
-        # validate the workout data
-        errors = validate_active_workout(request.session['workout_edited'])
+            # store the workout list to the session to be retrieved later
+            request.session['workout_edited'] = workout_edited
 
-        # redirect back to the form if validation fails, showing user a
-        # list of any errors that must be corrected before workout can
-        # be saved
-        if errors != []:
-            context = {
-                'workout': workout,
-                'errors': errors,
-            }
-            template = 'workout_tracker/edit_workout.html'
-            return render(request, template, context)
+            # validate the workout data
+            errors = validate_active_workout(request.session['workout_edited'])
 
-        else:
-            return redirect(reverse('update_workout', args=[workout.id]))
+            # redirect back to the form if validation fails, showing user a
+            # list of any errors that must be corrected before workout can
+            # be saved
+            if errors != []:
+                context = {
+                    'workout': workout,
+                    'errors': errors,
+                }
+                template = 'workout_tracker/edit_workout.html'
+                return render(request, template, context)
+
+            else:
+                return redirect(reverse('update_workout', args=[workout.id]))
+    else:
+        return redirect(reverse('dashboard'))
 
     template = 'workout_tracker/edit_workout.html'
     context = {
@@ -212,27 +217,31 @@ def edit_workout(request, workout_id):
 def update_workout(request, workout_id):
     """Updates a user's workout in the database"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
-    if request.method == 'POST':
+    # Check that the user created the workout they want to edit
+    if UserProfile.objects.get(user=request.user) == workout.created_by:
+        if request.method == 'POST':
 
-        # Allow the user to name their workout and
-        # grab the workout from the session to store
-        # in Django JSONField
-        form_data = {
-            'session_name': request.POST['session_name'],
-            'workout': request.session['workout_edited'],
-        }
+            # Allow the user to name their workout and
+            # grab the workout from the session to store
+            # in Django JSONField
+            form_data = {
+                'session_name': request.POST['session_name'],
+                'workout': request.session['workout_edited'],
+            }
 
-        form = WorkoutTrackerForm(form_data, instance=workout)
+            form = WorkoutTrackerForm(form_data, instance=workout)
 
-        if form.is_valid:
-            form.save()
-            # clear the workout from the session after saving
-            del request.session['workout_edited']
-            return redirect(reverse('dashboard'))
+            if form.is_valid:
+                form.save()
+                # clear the workout from the session after saving
+                del request.session['workout_edited']
+                return redirect(reverse('dashboard'))
+
+    else:
+        return redirect(reverse('dashboard'))
 
     form = WorkoutTrackerForm(initial={
             'session_name': workout.session_name,
-            'workout': request.session['workout_edited'],
         })
     template = 'workout_tracker/update_workout.html'
     context = {

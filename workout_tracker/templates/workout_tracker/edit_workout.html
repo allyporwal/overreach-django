@@ -3,7 +3,9 @@
 
 {% block content %}
 
-{{ errors }}
+{% for error in errors %}
+    {{ error }}
+{% endfor %}
 
 <a href="{% url 'delete_active_workout' %}">Delete workout</a>
 {% if not edit_in_progress %}
@@ -50,5 +52,5 @@
 
 {% block postloadjs %}
     {{ block.super }}
-    <script src="{% static 'active_workout/js/dynamic_form.js' %}"></script>
+    <script src="{% static 'workout_tracker/js/dynamic_form.js' %}"></script>
 {% endblock %}
