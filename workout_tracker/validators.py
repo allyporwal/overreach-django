@@ -23,6 +23,8 @@ def validate_active_workout(workout):
     for set_number in sets:
         if int(set_number) < 0:
             errors.append("You can't lift negative sets!")
+        elif set_number == '':
+            errors.append("Please input how many sets you want to lift")
 
     for rep in reps:
         if int(rep) < 0:

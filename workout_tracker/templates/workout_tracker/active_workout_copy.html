@@ -6,24 +6,17 @@
 {% for error in errors %}
     {{ error }}
 {% endfor %}  
-{% if in_progress == False %}
-<div class="container-fluid">    
+{% if in_progress == False %}    
     <form id="workout-sets" class="mt-3" action="{% url 'active_workout' %}" method="POST">
         {% csrf_token %}
-            <div class="input-group row justify-content-center">
-                <div class="col-1"></div>
-                <input type="text" id="exercise-1-name" class="exercise-name col-4" name="exercise-1-name" placeholder="Exercise">
-                <input id="exercise-1-sets" class="set-count col-2" type="number" name="exercise-1-sets" placeholder="Sets">
-                <input id="exercise-1-reps" class="col-2" type="number" name="exercise-1-reps" placeholder="Reps">
-                <div class="input-group-append col-2 p-0" id="exercise-1-button-addon">
-                    <button class="btn btn-outline-secondary w-100 log-exercise" type="button">Log</button>                
-                </div>
-                <div class="col-1"></div>
-            </div>
-        <br>   
-        <button class="btn btn-outline-primary" id="save" type="submit">Save</button>
+        <input type="text" id="exercise-1-name" class="exercise-name" name="exercise-1-name" placeholder="exercise_name">
+        <input id="exercise-1-sets" class="set-count" type="number" name="exercise-1-sets" placeholder="sets">
+        <input id="exercise-1-reps" type="number" name="exercise-1-reps" placeholder="reps">
+        <br>
+        <button id="save" type="submit">Save</button>
     </form>
-</div>
+    <button id="start">Start</button>
+    <button id="add-exercise">Add exercise</button>
 {% else %}
     <a href="{% url 'delete_active_workout' %}">Delete workout</a>
     <form id="workout-sets" class="mt-3" action="{% url 'active_workout' %}" method="POST">

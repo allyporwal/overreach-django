@@ -16,6 +16,7 @@ def active_workout(request):
         exercises_sets_reps = [[], [], []]
         set_count = exercises_sets_reps[1]
         weight_rep_count_rpe = [[], [], []]
+        # check_for_empty = exercises_sets_reps + weight_rep_count_rpe
         for key, val in request.POST.items():
             if key.endswith('-name'):
                 exercises_sets_reps[0].append(val)
@@ -43,8 +44,8 @@ def active_workout(request):
                            'rep_count': rep_count,
                            'rpe': rpe
                            } for (
-                            weight, rep_count, rpe) in zip(
-                                *weight_rep_count_rpe)]
+                               weight, rep_count, rpe) in zip(
+                                   *weight_rep_count_rpe)]
 
         # Iterate through workout and set_count lists,
         # add the correct number of sets to each dictionary
@@ -219,9 +220,10 @@ def update_workout(request, workout_id):
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
     # Check that the user created the workout they want to edit
     if UserProfile.objects.get(user=request.user) == workout.created_by:
+
         if request.method == 'POST':
 
-            # Allow the user to name their workout and
+            # Allow the user to re-name their workout and
             # grab the workout from the session to store
             # in Django JSONField
             form_data = {
@@ -243,6 +245,7 @@ def update_workout(request, workout_id):
     form = WorkoutTrackerForm(initial={
             'session_name': workout.session_name,
         })
+
     template = 'workout_tracker/update_workout.html'
     context = {
         'workout': workout,

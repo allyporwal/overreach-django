@@ -4,11 +4,11 @@ from .models import WorkoutTracker
 
 class WorkoutTrackerAdmin(admin.ModelAdmin):
     list_display = (
+        'pk',
         'created_at',
         'created_by',
         'session_name',
         'workout',
-        'pk',
     )
 
     ordering = ('pk',)
