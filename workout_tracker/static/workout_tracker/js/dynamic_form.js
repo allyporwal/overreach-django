@@ -3,15 +3,15 @@
 
 // Listen for events in the form on log exercise buttons
 $('#workout-sets').on('click', '.log-exercise', function() {
-    let numberOfSets = $('.set-count').last().val();
+    let numberOfSets = $(this).parent().prevUntil().find('.set-count').val();
     // ensure the correct number is attached to element attributes
     // when inserted into DOM
     let exerciseNumber = $('.set-count').last().attr("id");
     let x = parseInt(exerciseNumber.slice(9, 10));
     // add the desired number of sets
     for (i = 0; i < numberOfSets; i++) {
-        $('#form-separator').before(
-            `<div class="form-row">
+        $(this).parent().parent().after(
+            `<div class="form-row weight-reps-rpe-${x}">
                 <div class="form-group col-6">
                     <label class="sr-only" for="weight-${i+1}-exercise-${x}">Weight</label>
                     <input type="number" step="0.5" name="weight-${i+1}-exercise-${x}" placeholder="Weight lifted" class="form-control" required>
@@ -25,23 +25,24 @@ $('#workout-sets').on('click', '.log-exercise', function() {
                     <input type="number" step="0.5" name="rpe-${i+1}-exercise-${x}" placeholder="RPE" class="form-control" required>
                 </div>
                 <div class="form-group col-2">
-                    <label class="sr-only" for="delete-set-${x}">Delete set</label>
-                    <button class="btn btn-outline-secondary w-100 form-control" name="delete-set-${x}" type="button"><i class="fas fa-trash"></i></button>                
+                    <label class="sr-only" for="delete-set-${i}">Delete set</label>
+                    <button class="btn btn-outline-secondary w-100 form-control delete-set" name="delete-set-${i}" type="button"><i class="fas fa-trash"></i></button>                
                 </div>              
             </div>`);
+    $(this).prop("disabled", true)        
 }});
 
-
-
+// listen for clicks on the add exericse button
 $('#add-exercise').click(function() {
-    let workoutSets = $("#workout-sets");
-    let exerciseNumber = $('.exercise-name').last().attr("id");
+    // ensure correct numbering/naming of element attributes
+    let exerciseNumber = $('.exercise-name').last().attr('id');
     let x = parseInt(exerciseNumber.slice(9, 10)) + 1;
+    // insert another row into the DOM
     $('#form-separator').before(`
-                        <hr class="mt-1 w-50">
+                        <hr id="exercise-seperator-${x}" class="mt-1 w-50">
                         <div class="form-row exercise-row">
                           <div class="form-group col-4">
-                              <label for="exercise-${x}-name">Exercise ${x}</label>
+                              <label for="exercise-${x}-name">Exercise</label>
                               <input type="text" id="exercise-${x}-name" class="exercise-name form-control" name="exercise-${x}-name">
                           </div>
                           <div class="form-group col-2">
@@ -62,3 +63,33 @@ $('#add-exercise').click(function() {
                           </div>
                       </div>`)
 });
+
+// delete elements from the form, allowing the user to
+// drop exercises and their sets
+$('#workout-sets').on('click', '.delete-exercise', function() {
+    let exerciseNumber = $(this).attr('id');    
+    let exerciseToDelete = $(this).parent().parent();
+    let x = parseInt(exerciseNumber.slice(16, 17));
+    let setsToDelete = exerciseToDelete.siblings(`.weight-reps-rpe-${x}`);
+    let hrToDelete = $(`#exercise-seperator-${x}`);
+    setsToDelete.fadeOut(750, function() {
+        setsToDelete.remove()
+    });
+    exerciseToDelete.fadeOut(750, function() {
+        exerciseToDelete.remove()
+    });
+    hrToDelete.fadeOut(750, function() {
+        hrToDelete.remove();
+    });        
+});
+
+$('#workout-sets').on('click', '.delete-set', function() {
+    let numberOfSets = $(this).parent().parent().prevAll('.exercise-row').first().find('.set-count');
+    let setNumber = numberOfSets.val();
+    // let logButton = $(this).parent().parent().prev().find('.log-exercise');
+    $(this).closest('.form-row').fadeOut(750, function() {
+        $(this).closest('.form-row').remove();
+        numberOfSets.val(setNumber - 1);
+    });
+});
+
