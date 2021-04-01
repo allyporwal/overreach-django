@@ -82,9 +82,14 @@ def active_workout(request):
 
 def delete_active_workout(request):
     """Delete the active workout from the session"""
-    del request.session['workout']
+    workout = request.session.get('workout', {})
 
-    return redirect(reverse('dashboard'))
+    if workout:
+        del request.session['workout']
+        return redirect(reverse('dashboard'))
+
+    else:
+        return redirect(reverse('dashboard'))
 
 
 def log_workout(request):
@@ -185,6 +190,8 @@ def edit_workout(request, workout_id):
                 exercise['set_volumes'].extend(sets_to_add)
                 del weights_lifted[0:sets_number]
 
+            # clear workout to edit from session to replace with edited workout
+            # del request.session['workout_to_edit']
             # store the workout list to the session to be retrieved later
             request.session['workout_edited'] = workout_edited
 
@@ -236,6 +243,7 @@ def update_workout(request, workout_id):
             if form.is_valid:
                 form.save()
                 # clear the workout from the session after saving
+                del request.session['workout_to_edit']
                 del request.session['workout_edited']
                 return redirect(reverse('dashboard'))
 

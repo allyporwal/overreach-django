@@ -4,19 +4,11 @@
 {% block content %}
 <h1>Dashboard</h1>
 
+    Edit: {{ edit_in_progress }}
+    | WO: {{ in_progress }}
+
     {{ request.user.username }}
 
-    {{ workout.session_name }}
-    {% for exercise in workout.workout %}
-        {{ exercise.exercise }}
-        {{ exercise.sets }}
-        {{ exercise.reps }}
-        {% for weight_reps_rpe in exercise.set_volumes %}
-            {{ weight_reps_rpe.weight }}
-            {{ weight_reps_rpe.rep_count }}
-            {{ weight_reps_rpe.rpe }}
-        {% endfor %}
-    {% endfor %}
 <div class="row">
     {% for workout in workouts %}
         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
