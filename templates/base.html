@@ -59,9 +59,9 @@
                         <a class="nav-link" href="#">Friends</a>
                         <a class="nav-link" href="{% url 'all_workouts' %}">Everyone</a>
                     {% endif %}
-                </div>
-                {% if request.user.is_authenticated %}
-                    <div class="navbar-nav ml-auto">
+                </div>  
+                <div class="navbar-nav ml-auto">
+                    {% if request.user.is_authenticated %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 My Profile
@@ -72,11 +72,11 @@
                             </div>
                         </li>
                         <a class="nav-link" href="{% url 'account_logout' %}">Log Out</a>
-                    {% else %}    
+                    {% else %}                        
                         <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
                         <a class="nav-link" href="{% url 'account_login' %}">Log In</a>
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
         </nav>
     </header>

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'dashboard',
     'profiles',
     'workout_tracker',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -155,6 +156,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Add context processer variables here

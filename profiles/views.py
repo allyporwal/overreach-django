@@ -16,8 +16,9 @@ def profile(request):
 
 def edit_profile(request):
     """Allow the user to edit their profile details"""
-    form = UserProfileForm()
+    profile = get_object_or_404(UserProfile, user=request.user)
 
+    form = UserProfileForm(instance=profile)
     context = {
         'form': form,
     }
