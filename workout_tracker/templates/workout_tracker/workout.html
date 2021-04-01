@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block content %}
-<h1>Workout</h1>
+<h1>{{ workout.session_name }}</h1>
 
 {{ workout.session_name }}
 {{ workout.created_by }}
-{{ workout.created_by }}
+{{ workout.created_at }}
 {% for exercise in workout.workout %}
     {{ exercise.exercise }}
     {{ exercise.sets }}

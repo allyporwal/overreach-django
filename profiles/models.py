@@ -7,7 +7,7 @@ from django_countries.fields import CountryField
 
 
 class UserProfile(models.Model):
-    """User profile to hold billing information and workout history"""
+    """User profile to hold billing information, profile image and workout history"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     default_street_address1 = models.CharField(max_length=80,
                                                null=True, blank=True)
