@@ -1,7 +1,25 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<h1>Edit Profile</h1>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-12 col-md-4">
+            <h2>Edit Profile</h2>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12 col-md-8">
+            <form method="POST" action="{% url 'edit_profile' %}">
+                {{ form }}
+                <div id="button-container" class="form-row justify-content-center">
+                    <div class="form-group col-sm-6"> 
+                        <button class="btn btn-primary form-control text-uppercase" id="save-profile" type="submit">Update Profile</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
 {% block postloadjs %}
 {% endblock %}
