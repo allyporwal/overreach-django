@@ -128,8 +128,28 @@ def workout(request, workout_id):
     """Show an individual workout"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
 
+    weights = []
+    reps_lifted = []
+    rate_perceived_exertion = []
+
+    for exercise in workout.workout:
+        for weight in exercise['set_volumes']:
+            weights.append(weight['weight'])
+            reps_lifted.append(weight['rep_count'])
+            rate_perceived_exertion.append(weight['rpe'])
+
+    print(reps_lifted)
+
+    # total_volume = [
+    #     weight * reps for weight, reps in zip(weights, reps_lifted)]
+    # total_reps = sum(reps_lifted)
+    # average_rpe = sum(rate_perceived_exertion) / len(rate_perceived_exertion)
+
     context = {
         'workout': workout,
+        # 'total_volume': total_volume,
+        # 'total_reps': total_reps,
+        # 'average_rpe': average_rpe,
     }
 
     return render(request, 'workout_tracker/workout.html', context)
