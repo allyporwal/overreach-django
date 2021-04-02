@@ -19,7 +19,7 @@ class UserProfile(models.Model):
                                                null=True, blank=True)
     default_town_or_city = models.CharField(max_length=40,
                                             null=True, blank=True)
-    default_county = models.CharField(max_length=80,
+    default_county = models.CharField(max_length=40,
                                       null=True, blank=True)
     default_postcode = models.CharField(max_length=20,
                                         null=True, blank=True)
@@ -35,5 +35,5 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     """Create or update the user profile"""
     if created:
         UserProfile.objects.create(user=instance)
-    # Existing users: just save the profile
+
     instance.userprofile.save()

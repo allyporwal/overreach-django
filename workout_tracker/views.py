@@ -269,7 +269,7 @@ def delete_workout(request, workout_id):
         workout.delete()
         return redirect(reverse('dashboard'))
     else:
-        return redirect(reverse('active_workout'))
+        return redirect(reverse('dashboard'))
 
 
 def all_workouts(request):
