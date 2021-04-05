@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load volume_tools %}
 
 {% block content %}
 
@@ -16,7 +17,7 @@
         </div>
         <div class="col-sm-8 mt-2 mb-4">
             <div class="accordion" id="workout-accordian">
-                {% for exercise in workout.workout %}
+                {% for exercise, exercise_volume, exercise_reps, exercise_average_rpe in workout_zipped %}
                 <div class="card">
                     <div class="card-header" id="heading-{{ forloop.counter }}">
                         <h2 class="mb-0">
@@ -59,9 +60,9 @@
                                     <tbody>
                                         <tr>
                                             <th scope="row"><small>Totals:</small></th>
-                                            <td></td>
-                                            <td></td>
-                                            <td>RPE</td>
+                                            <td>{{ exercise_volume }}</td>
+                                            <td>{{ exercise_reps }}</td>
+                                            <td>{{ exercise_average_rpe }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -83,9 +84,9 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col"></th>
-                                            <th scope="col"><small>Volume</small></th>
-                                            <th scope="col"><small>Reps</small></th>
-                                            <th scope="col"><small>Average RPE</small></th>
+                                            <th scope="col">Volume</th>
+                                            <th scope="col">Reps</th>
+                                            <th scope="col">Average RPE</th>
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -1,4 +1,3 @@
-import collections, functools, operator
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import WorkoutTrackerForm
 from profiles.models import UserProfile
@@ -129,33 +128,51 @@ def workout(request, workout_id):
     """Show an individual workout"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
 
+    # sort workout data into lists for processing
+    set_count = []
     reps_lifted = []
     rate_perceived_exertion = []
-    set_count = []
+    session_rpe = []
     volumes = []
-    exercise_volumes = []
 
     for exercise in workout.workout:
         set_count.append(int(exercise['sets']))
         for weight in exercise['set_volumes']:
-            reps_lifted.append(weight['rep_count'])
-            rate_perceived_exertion.append(weight['rpe'])
+            reps_lifted.append(int(weight['rep_count']))
+            rate_perceived_exertion.append(float(weight['rpe']))
+            session_rpe.append(float(weight['rpe']))
             volumes.append(
                 (float(weight['rep_count']) * float(weight['weight'])))
 
-    session_reps = int(sum([float(reps) for reps in reps_lifted]))
-    rpe = [float(rpe) for rpe in rate_perceived_exertion]
-    average_rpe = round(sum(rpe) / len(rpe), 2)
-    session_volume = sum(volumes)
+    # data for each individual exercise
+    exercise_volumes = []
+    exercise_reps = []
+    exercise_average_rpe = []
 
-    print(exercise_volumes)
+    for sets in set_count:
+        exercise_volumes.append(sum(volumes[0:sets]))
+        exercise_reps.append(sum(reps_lifted[0:sets]))
+        exercise_average_rpe.append(round(sum(
+            rate_perceived_exertion[0:sets]) / sets, 2))
+        del volumes[0:sets]
+        del reps_lifted[0:sets]
+        del rate_perceived_exertion[0:sets]
+
+    # workout metrics
+    session_reps = sum(exercise_reps)
+    average_rpe = round(sum(session_rpe) / len(session_rpe), 2)
+    session_volume = sum(exercise_volumes)
+
+    # data zipped for easier access in template
+    workout_data_zipped = zip(
+        workout.workout, exercise_volumes, exercise_reps, exercise_average_rpe)
 
     context = {
         'workout': workout,
+        'workout_zipped': workout_data_zipped,
         'session_reps': session_reps,
         'average_rpe': average_rpe,
         'session_volume': session_volume,
-        'volumes': volumes,
     }
 
     return render(request, 'workout_tracker/workout.html', context)
