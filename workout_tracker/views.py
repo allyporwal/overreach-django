@@ -1,3 +1,4 @@
+import collections, functools, operator
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .forms import WorkoutTrackerForm
 from profiles.models import UserProfile
@@ -128,28 +129,33 @@ def workout(request, workout_id):
     """Show an individual workout"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
 
-    weights = []
     reps_lifted = []
     rate_perceived_exertion = []
+    set_count = []
+    volumes = []
+    exercise_volumes = []
 
     for exercise in workout.workout:
+        set_count.append(int(exercise['sets']))
         for weight in exercise['set_volumes']:
-            weights.append(weight['weight'])
             reps_lifted.append(weight['rep_count'])
             rate_perceived_exertion.append(weight['rpe'])
+            volumes.append(
+                (float(weight['rep_count']) * float(weight['weight'])))
 
-    print(reps_lifted)
+    session_reps = int(sum([float(reps) for reps in reps_lifted]))
+    rpe = [float(rpe) for rpe in rate_perceived_exertion]
+    average_rpe = round(sum(rpe) / len(rpe), 2)
+    session_volume = sum(volumes)
 
-    # total_volume = [
-    #     weight * reps for weight, reps in zip(weights, reps_lifted)]
-    # total_reps = sum(reps_lifted)
-    # average_rpe = sum(rate_perceived_exertion) / len(rate_perceived_exertion)
+    print(exercise_volumes)
 
     context = {
         'workout': workout,
-        # 'total_volume': total_volume,
-        # 'total_reps': total_reps,
-        # 'average_rpe': average_rpe,
+        'session_reps': session_reps,
+        'average_rpe': average_rpe,
+        'session_volume': session_volume,
+        'volumes': volumes,
     }
 
     return render(request, 'workout_tracker/workout.html', context)
