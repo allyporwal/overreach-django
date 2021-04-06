@@ -5,9 +5,7 @@
 {% if in_progress %}
 <form class="mt-3" action="{% url 'log_workout' %}" method="POST">
     {% csrf_token %}
-    {{ form.session_name.label }}:
-    {{ form.session_name }}
-    {{ form.workout.as_hidden }}
+    {{ form }}
     <button type="submit">Save Workout</button>
 </form>
 {% endif %}

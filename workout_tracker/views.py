@@ -36,13 +36,13 @@ def active_workout(request):
         workout = [{'exercise': exercise,
                     'sets': sets,
                     'reps': reps,
-                    'set_volumes': []
+                    'set_volumes': [],
                     } for (
                         exercise, sets, reps) in zip(*exercises_sets_reps)]
 
         weights_lifted = [{'weight': weight,
                            'rep_count': rep_count,
-                           'rpe': rpe
+                           'rpe': rpe,
                            } for (
                                weight, rep_count, rpe) in zip(
                                    *weight_rep_count_rpe)]
@@ -102,6 +102,9 @@ def log_workout(request):
         form_data = {
             'session_name': request.POST['session_name'],
             'workout': request.session['workout'],
+            'session_reps': session_reps,
+            'session_average_rpe': session_average_rpe,
+            'session_volume': session_volume,
         }
 
         form = WorkoutTrackerForm(form_data)
@@ -160,7 +163,7 @@ def workout(request, workout_id):
 
     # workout metrics
     session_reps = sum(exercise_reps)
-    average_rpe = round(sum(session_rpe) / len(session_rpe), 2)
+    session_average_rpe = round(sum(session_rpe) / len(session_rpe), 2)
     session_volume = sum(exercise_volumes)
 
     # data zipped for easier access in template
@@ -171,7 +174,7 @@ def workout(request, workout_id):
         'workout': workout,
         'workout_zipped': workout_data_zipped,
         'session_reps': session_reps,
-        'average_rpe': average_rpe,
+        'average_rpe': session_average_rpe,
         'session_volume': session_volume,
     }
 
