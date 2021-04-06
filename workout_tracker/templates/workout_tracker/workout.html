@@ -19,54 +19,54 @@
         <div class="col-sm-8 mt-2 mb-4">
             <div class="accordion" id="workout-accordian">
                 {% for exercise, exercise_volume, exercise_reps, exercise_average_rpe in workout_zipped %}
-                <div class="card">
-                    <div class="card-header" id="heading-{{ forloop.counter }}">
-                        <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left w-100 h-100" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse-{{ forloop.counter }}">
-                                {{ exercise.exercise}} for {{ exercise.sets }} sets of {{ exercise.reps }} reps
-                            </button>
-                        </h2>
-                    </div>
-                    <div id="collapse-{{ forloop.counter }}" class="collapse show" aria-labelledby="heading-{{ forloop.counter }}" >
-                        <div class="card-body">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Set</th>
-                                    <th scope="col">Weight</th>
-                                    <th scope="col">Reps</th>
-                                    <th scope="col">RPE</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for weight_reps_rpe in exercise.set_volumes %}
+                    <div class="card">
+                        <div class="card-header" id="heading-{{ forloop.counter }}">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left w-100 h-100" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse-{{ forloop.counter }}">
+                                    {{ exercise.exercise}} for {{ exercise.sets }} sets of {{ exercise.reps }} reps
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapse-{{ forloop.counter }}" class="collapse show" aria-labelledby="heading-{{ forloop.counter }}" >
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead class="thead-dark">
                                     <tr>
-                                        <th scope="row">{{ forloop.counter }}</th>
-                                        <td>{{ weight_reps_rpe.weight }}</td>
-                                        <td>{{ weight_reps_rpe.rep_count }}</td>
-                                        <td>{{ weight_reps_rpe.rpe  }}</td>
+                                        <th scope="col">Set</th>
+                                        <th scope="col">Weight</th>
+                                        <th scope="col">Reps</th>
+                                        <th scope="col">RPE</th>
                                     </tr>
-                                {% endfor %}
-                                </tbody>
-                                </table>
-                                <table class="table sub-table">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col"><small>Volume</small></th>
-                                            <th scope="col"><small>Exercise reps</small></th>
-                                            <th scope="col"><small>Average RPE</small></th>
-                                        </tr>
                                     </thead>
                                     <tbody>
+                                    {% for weight_reps_rpe in exercise.set_volumes %}
                                         <tr>
-                                            <th scope="row"><small>Totals:</small></th>
-                                            <td>{{ exercise_volume }}</td>
-                                            <td>{{ exercise_reps }}</td>
-                                            <td>{{ exercise_average_rpe }}</td>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>{{ weight_reps_rpe.weight }}</td>
+                                            <td>{{ weight_reps_rpe.rep_count }}</td>
+                                            <td>{{ weight_reps_rpe.rpe  }}</td>
                                         </tr>
+                                    {% endfor %}
                                     </tbody>
-                                </table>
+                                    </table>
+                                    <table class="table sub-table">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col"><small>Volume</small></th>
+                                                <th scope="col"><small>Exercise reps</small></th>
+                                                <th scope="col"><small>Average RPE</small></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row"><small>Totals:</small></th>
+                                                <td>{{ exercise_volume }}</td>
+                                                <td>{{ exercise_reps }}</td>
+                                                <td>{{ exercise_average_rpe }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                             </div>
                         </div>
                     </div>

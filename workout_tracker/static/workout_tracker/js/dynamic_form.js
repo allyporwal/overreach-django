@@ -17,7 +17,7 @@ $('#workout-sets').on('click', '.log-exercise', function () {
             `<div class="form-row weight-reps-rpe-${x}">
                 <div class="form-group col-6">
                     <label class="sr-only" for="weight-${i + 1}-exercise-${x}">Weight</label>
-                    <input type="number" step="0.5" name="weight-${i + 1}-exercise-${x}" placeholder="Weight lifted" min="1" max="1200" class="form-control" required>
+                    <input type="number" step="0.5" name="weight-${i + 1}-exercise-${x}" placeholder="Weight lifted" min="0" max="1200" class="form-control" required>
                 </div>
                 <div class="form-group col-2">
                     <label class="sr-only" for="reps-${i + 1}-exercise-${x}">Reps</label>

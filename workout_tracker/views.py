@@ -300,9 +300,46 @@ def edit_workout(request, workout_id):
 
 def update_workout(request, workout_id):
     """Updates a user's workout in the database"""
-    workout = get_object_or_404(WorkoutTracker, pk=workout_id)
+    workout_to_update = get_object_or_404(WorkoutTracker, pk=workout_id)
+
+    # sort workout data into lists for processing
+    set_count = []
+    reps_lifted = []
+    rate_perceived_exertion = []
+    session_rpe = []
+    volumes = []
+
+    for exercise in workout_to_update.workout:
+        set_count.append(int(exercise['sets']))
+        for weight in exercise['set_volumes']:
+            reps_lifted.append(int(weight['rep_count']))
+            rate_perceived_exertion.append(float(weight['rpe']))
+            session_rpe.append(float(weight['rpe']))
+            volumes.append(
+                (float(weight['rep_count']) * float(weight['weight'])))
+
+    # data for each individual exercise to calculate overall workout metrics
+    exercise_volumes = []
+    exercise_reps = []
+    exercise_average_rpe = []
+
+    for sets in set_count:
+        exercise_volumes.append(sum(volumes[0:sets]))
+        exercise_reps.append(sum(reps_lifted[0:sets]))
+        exercise_average_rpe.append(round(sum(
+            rate_perceived_exertion[0:sets]) / sets, 2))
+        del volumes[0:sets]
+        del reps_lifted[0:sets]
+        del rate_perceived_exertion[0:sets]
+
+    # workout metrics to be saved in database
+    session_reps = sum(exercise_reps)
+    session_average_rpe = round(sum(session_rpe) / len(session_rpe), 2)
+    session_volume = sum(exercise_volumes)
+
     # Check that the user created the workout they want to edit
-    if UserProfile.objects.get(user=request.user) == workout.created_by:
+    if UserProfile.objects.get(
+            user=request.user) == workout_to_update.created_by:
 
         if request.method == 'POST':
 
@@ -312,27 +349,33 @@ def update_workout(request, workout_id):
             form_data = {
                 'session_name': request.POST['session_name'],
                 'workout': request.session['workout_edited'],
+                'session_reps': session_reps,
+                'session_average_rpe': session_average_rpe,
+                'session_volume': session_volume,
+                'session_notes': request.POST['session_notes']
             }
 
-            form = WorkoutTrackerForm(form_data, instance=workout)
+            form = WorkoutTrackerForm(form_data, instance=workout_to_update)
 
             if form.is_valid:
                 form.save()
                 # clear the workout from the session after saving
                 del request.session['workout_to_edit']
                 del request.session['workout_edited']
-                return redirect(reverse('dashboard'))
+                return redirect(reverse(
+                    'workout', args=[workout_to_update.id]))
 
     else:
         return redirect(reverse('dashboard'))
 
     form = WorkoutTrackerForm(initial={
-            'session_name': workout.session_name,
+            'session_name': workout_to_update.session_name,
+            'session_notes': workout_to_update.session_notes,
         })
 
     template = 'workout_tracker/update_workout.html'
     context = {
-        'workout': workout,
+        'workout': workout_to_update,
         'form': form,
     }
     return render(request, template, context)
