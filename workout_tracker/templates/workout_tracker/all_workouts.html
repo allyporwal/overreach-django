@@ -2,36 +2,37 @@
 {% load static %}
 
 {% block content %}
-<h1>All workouts</h1>
-
-<div class="row">
-    {% for workout in workouts %}
-        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{ workout.session_name }}</h5>
-                    <p class="card-text"><small>Logged on: {{ workout.created_at }} by {{ workout.created_by }}</small></p>                        
-                    <div class="row">
-                        <div class="col-4"><small>Vol:</small></div>
-                        <div class="col-4"><small>Reps:</small></div>
-                        <div class="col-4"><small>RPE:</small></div>
+<div class="container">
+    <h1>All workouts</h1>
+    <div class="row">
+        {% for workout in workouts %}
+            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ workout.session_name }}</h5>
+                        <p class="card-text"><small>Logged on: {{ workout.created_at }} by {{ workout.created_by }}</small></p>                        
+                        <div class="row">
+                            <div class="col-4"><small>Vol:</small></div>
+                            <div class="col-4"><small>Reps:</small></div>
+                            <div class="col-4"><small>RPE:</small></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">{{ workout.session_volume }}</div>
+                            <div class="col-4">{{ workout.session_reps }}</div>
+                            <div class="col-4">{{ workout.session_average_rpe }}</div>
+                        </div>
+                        <a href="{% url 'workout' workout.id %}" class="btn btn-primary">View</a>
+                        {% if workout.created_by.user == request.user %}
+                            <a href="{% url 'edit_workout' workout.id %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'delete_workout' workout.id %}" class="btn btn-primary">Delete</a>
+                        {% endif %}
                     </div>
-                    <div class="row">
-                        <div class="col-4">{{ workout.session_volume }}</div>
-                        <div class="col-4">{{ workout.session_reps }}</div>
-                        <div class="col-4">{{ workout.session_average_rpe }}</div>
-                    </div>
-                    <a href="{% url 'workout' workout.id %}" class="btn btn-primary">View</a>
-                    {% if workout.created_by.user == request.user %}
-                        <a href="{% url 'edit_workout' workout.id %}" class="btn btn-primary">Edit</a>
-                        <a href="{% url 'delete_workout' workout.id %}" class="btn btn-primary">Delete</a>
-                    {% endif %}
                 </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
+    {% endblock %}
 </div>
-{% endblock %}
 
 {% block postloadjs %}
 {% endblock %}

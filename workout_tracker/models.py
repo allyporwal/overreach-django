@@ -12,6 +12,7 @@ class WorkoutTracker(models.Model):
     session_reps = models.IntegerField(blank=False, null=False)
     session_average_rpe = models.FloatField(blank=False, null=False)
     session_volume = models.FloatField(blank=False, null=False)
+    session_notes = models.TextField(blank=True, null=False)
 
     def __str__(self):
         return self.session_name
