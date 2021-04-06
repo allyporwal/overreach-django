@@ -11,8 +11,16 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ workout.session_name }}</h5>
                     <p class="card-text"><small>Logged on: {{ workout.created_at }} by {{ workout.created_by }}</small></p>                        
-                        <p class="card-text">{{ workout.workout.0.exercise }} for {{ workout.workout.0.sets }} sets of {{ workout.workout.0.reps }} reps</p>
-                        <p class="card-text">Weight: {{ workout.workout.0.set_volumes.1.weight }} </p>
+                    <div class="row">
+                        <div class="col-4"><small>Vol:</small></div>
+                        <div class="col-4"><small>Reps:</small></div>
+                        <div class="col-4"><small>RPE:</small></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">{{ workout.session_volume }}</div>
+                        <div class="col-4">{{ workout.session_reps }}</div>
+                        <div class="col-4">{{ workout.session_average_rpe }}</div>
+                    </div>
                     <a href="{% url 'workout' workout.id %}" class="btn btn-primary">View</a>
                     {% if workout.created_by.user == request.user %}
                         <a href="{% url 'edit_workout' workout.id %}" class="btn btn-primary">Edit</a>

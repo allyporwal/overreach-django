@@ -94,6 +94,43 @@ def delete_active_workout(request):
 
 def log_workout(request):
     """Stores a user's workout to the database"""
+    workout_to_log = request.session['workout']
+
+    # sort workout data into lists for processing
+    set_count = []
+    reps_lifted = []
+    rate_perceived_exertion = []
+    session_rpe = []
+    volumes = []
+
+    for exercise in workout_to_log:
+        set_count.append(int(exercise['sets']))
+        for weight in exercise['set_volumes']:
+            reps_lifted.append(int(weight['rep_count']))
+            rate_perceived_exertion.append(float(weight['rpe']))
+            session_rpe.append(float(weight['rpe']))
+            volumes.append(
+                (float(weight['rep_count']) * float(weight['weight'])))
+
+    # data for each individual exercise to calculate overall workout metrics
+    exercise_volumes = []
+    exercise_reps = []
+    exercise_average_rpe = []
+
+    for sets in set_count:
+        exercise_volumes.append(sum(volumes[0:sets]))
+        exercise_reps.append(sum(reps_lifted[0:sets]))
+        exercise_average_rpe.append(round(sum(
+            rate_perceived_exertion[0:sets]) / sets, 2))
+        del volumes[0:sets]
+        del reps_lifted[0:sets]
+        del rate_perceived_exertion[0:sets]
+
+    # workout metrics to be saved in database
+    session_reps = sum(exercise_reps)
+    session_average_rpe = round(sum(session_rpe) / len(session_rpe), 2)
+    session_volume = sum(exercise_volumes)
+
     if request.method == 'POST':
 
         # Allow the user to name their workout and
@@ -161,11 +198,6 @@ def workout(request, workout_id):
         del reps_lifted[0:sets]
         del rate_perceived_exertion[0:sets]
 
-    # workout metrics
-    session_reps = sum(exercise_reps)
-    session_average_rpe = round(sum(session_rpe) / len(session_rpe), 2)
-    session_volume = sum(exercise_volumes)
-
     # data zipped for easier access in template
     workout_data_zipped = zip(
         workout.workout, exercise_volumes, exercise_reps, exercise_average_rpe)
@@ -173,9 +205,6 @@ def workout(request, workout_id):
     context = {
         'workout': workout,
         'workout_zipped': workout_data_zipped,
-        'session_reps': session_reps,
-        'average_rpe': session_average_rpe,
-        'session_volume': session_volume,
     }
 
     return render(request, 'workout_tracker/workout.html', context)
