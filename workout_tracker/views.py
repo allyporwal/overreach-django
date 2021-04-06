@@ -142,6 +142,7 @@ def log_workout(request):
             'session_reps': session_reps,
             'session_average_rpe': session_average_rpe,
             'session_volume': session_volume,
+            'session_notes': request.POST['session_notes']
         }
 
         form = WorkoutTrackerForm(form_data)
@@ -199,12 +200,12 @@ def workout(request, workout_id):
         del rate_perceived_exertion[0:sets]
 
     # data zipped for easier access in template
-    workout_data_zipped = zip(
+    workout_zipped = zip(
         workout.workout, exercise_volumes, exercise_reps, exercise_average_rpe)
 
     context = {
         'workout': workout,
-        'workout_zipped': workout_data_zipped,
+        'workout_zipped': workout_zipped,
     }
 
     return render(request, 'workout_tracker/workout.html', context)

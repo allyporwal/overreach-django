@@ -10,6 +10,7 @@ class WorkoutTrackerForm(forms.ModelForm):
                   'session_reps',
                   'session_average_rpe',
                   'session_volume',
+                  'session_notes',
                   )
 
     session_name = forms.CharField()
@@ -17,3 +18,4 @@ class WorkoutTrackerForm(forms.ModelForm):
     session_reps = forms.IntegerField(widget=forms.HiddenInput())
     session_average_rpe = forms.FloatField(widget=forms.HiddenInput())
     session_volume = forms.FloatField(widget=forms.HiddenInput())
+    session_notes = forms.Textarea()

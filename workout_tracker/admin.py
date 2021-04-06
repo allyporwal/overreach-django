@@ -8,7 +8,6 @@ class WorkoutTrackerAdmin(admin.ModelAdmin):
         'created_at',
         'created_by',
         'session_name',
-        'workout',
     )
 
     ordering = ('pk',)

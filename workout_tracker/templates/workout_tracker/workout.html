@@ -9,6 +9,7 @@
         <div class="col-sm-4">
             <h2>{{ workout.session_name }}</h2>
             <p><small>Logged by {{ workout.created_by }} on {{ workout.created_at }}</small></p>
+            <p>{{ workout.session_notes }}</p>
             {% if request.user == workout.created_by.user %}
                 <a href="{% url 'edit_workout' workout.id %}">
                     <button class="btn btn-primary btn-sm btn-block">Edit</button>
