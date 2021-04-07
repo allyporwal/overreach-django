@@ -3,8 +3,6 @@
 
 {% block content %}
 
-{{ only_date }}
-
 <div class="container">
     <h1>Dashboard</h1>
     <h4>{{ request.user.username }}</h4>
@@ -55,7 +53,31 @@
         {% endfor %}    
     </div>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <canvas id="avgRpe"></canvas>
+        </div>
+    </div>
+    <div class="row">    
+        <div class="col-12">
+            <canvas id="totalReps"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <canvas id="totalVolume"></canvas>
+        </div>
+    </div>  
+</div>
+
+{{ rpe_chart_data|json_script:"rpe_chart_data" }}
+{{ total_reps_chart_data|json_script:"total_reps_chart_data" }}
+{{ total_volume_chart_data|json_script:"total_volume_chart_data" }}
+
 {% endblock %}
 
 {% block postloadjs %}
+    <script src="{% static 'dashboard/js/workout_charts.js' %}"></script>
 {% endblock %}
