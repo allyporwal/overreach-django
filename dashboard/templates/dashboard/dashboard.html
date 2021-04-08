@@ -54,27 +54,21 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <canvas id="avgRpe"></canvas>
-        </div>
-    </div>
-    <div class="row">    
-        <div class="col-12">
-            <canvas id="totalReps"></canvas>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <canvas id="totalVolume"></canvas>
-        </div>
-    </div>  
+<div class="container chart-container">
+    <canvas id="avgRpe"></canvas>
+</div>
+<div class="container chart-container">
+    <canvas id="totalReps"></canvas>
+</div>
+<div class="container chart-container">
+    <canvas id="totalVolume"></canvas>
 </div>
 
+<!-- json script to be used in charts-->
 {{ rpe_chart_data|json_script:"rpe_chart_data" }}
 {{ total_reps_chart_data|json_script:"total_reps_chart_data" }}
 {{ total_volume_chart_data|json_script:"total_volume_chart_data" }}
+<!--  -->
 
 {% endblock %}
 

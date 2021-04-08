@@ -27,7 +27,7 @@ def dashboard(request):
     only_date = []
 
     for date in only_date_raw:
-        only_date.append(date.strftime('%d/%m/%Y, %H:%M '))
+        only_date.append(date.strftime('%d/%m/%Y, %H:%M'))
 
     # zip all data into lists of dicts for graphing in JS on template
     rpe_chart_data = [{
@@ -44,8 +44,6 @@ def dashboard(request):
         'x': date,
         'y': reps,
     } for date, reps in zip(only_date, session_reps)]
-
-    print(total_reps_chart_data)
 
     context = {
         'profile': profile,
