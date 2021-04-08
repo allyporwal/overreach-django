@@ -353,7 +353,8 @@ def update_workout(request, workout_id):
                     'session_notes': request.POST['session_notes']
                 }
 
-                form = WorkoutTrackerForm(form_data, instance=workout_to_update)
+                form = WorkoutTrackerForm(
+                    form_data, instance=workout_to_update)
 
                 if form.is_valid:
                     form.save()
