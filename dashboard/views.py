@@ -45,6 +45,7 @@ def dashboard(request):
         'y': reps,
     } for date, reps in zip(only_date, session_reps)]
 
+    template = 'dashboard/dashboard.html'
     context = {
         'profile': profile,
         'recent_workouts': recent_workouts,
@@ -52,6 +53,4 @@ def dashboard(request):
         'total_volume_chart_data': total_volume_chart_data,
         'total_reps_chart_data': total_reps_chart_data,
     }
-
-    template = 'dashboard/dashboard.html'
     return render(request, template, context)

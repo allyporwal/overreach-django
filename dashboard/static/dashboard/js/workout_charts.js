@@ -29,7 +29,6 @@ let avgRpeChart = new Chart(avgRpe, {
             borderWidth: 2,
         }]
     },
-
     options: options,
 });
 
@@ -51,7 +50,6 @@ let totalRepsChart = new Chart(totalReps, {
             borderWidth: 2
         }]
     },
-
     options: options,
 });
 
@@ -73,6 +71,5 @@ let totalVolumeChart = new Chart(totalVolume, {
             borderWidth: 2
         }]
     },
-
     options: options,
 });

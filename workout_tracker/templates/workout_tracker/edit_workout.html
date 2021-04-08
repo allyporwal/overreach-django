@@ -7,8 +7,6 @@
     {{ error }}
 {% endfor %}
 
-
-
 <div class="container">
     <form id="workout-sets" class="mt-3" action="{% url 'edit_workout' workout.id %}" method="POST">
         {% csrf_token %}
