@@ -1,13 +1,33 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<h2>Profile</h2>
 
-{% if profile.image %}
-    <a href="{{ profile.image.url }}" target="_blank">
-        <img class="card-img-top img-fluid" src="{{ profile.image.url }}" alt="{{ profile.user.username }}">
-    </a>
-{% endif %}
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-12 col-md-4 text-center">
+            <h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
+            <p>Member since: %INFO TO ADD TO MODEL%</p>
+            {% if profile.image %}
+                <a href="{{ profile.image.url }}" target="_blank">
+                    <img class="card-img-top img-fluid rounded-circle" src="{{ profile.image.url }}" alt="{{ profile.user.username }}">
+                </a>
+            {% endif %}
+        </div>
+        <div class="col-6 col-md-4">
+            <p>Number of workouts logged: {{ number_of_workouts }}</p>
+        </div>
+        <div class="col-6 col-md-4">
+            <p>Total training volume shifted since joining Overreach: ###</p>
+        </div>
+        <div class="col-6 col-md-4 offset-md-4">
+            <p>Total reps lifted since joining Overreach: ###</p>
+        </div>
+        <div class="col-6 col-md-4">
+            <p>Main goals: ###</p>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
 {% block postloadjs %}

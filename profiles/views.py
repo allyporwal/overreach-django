@@ -3,12 +3,14 @@ from .models import UserProfile
 from .forms import UserProfileForm
 
 
-def profile(request):
+def profile(request, profile_id):
     """Show the user's profile page"""
-    profile = get_object_or_404(UserProfile, user=request.user)
+    profile = get_object_or_404(UserProfile, pk=profile_id)
+    number_of_workouts = len(profile.workouts.all())
 
     context = {
         'profile': profile,
+        'number_of_workouts': number_of_workouts,
     }
     template = 'profiles/profile.html'
     return render(request, template, context)

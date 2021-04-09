@@ -73,7 +73,7 @@
                                 My Profile
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{% url 'profile' %}">View Profile</a>
+                                <a class="dropdown-item" href="{% url 'profile' user.userprofile.id %}">View Profile</a>
                                 <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a>
                             </div>
                         </li>
