@@ -12,7 +12,9 @@
                     <img class="card-img-top img-fluid rounded-circle mt-3" src="{{ profile.image.url }}" alt="{{ profile.user.username }}">
                 </a>
             {% endif %}
-            <button class="btn btn-primary btn-sm btn-block mt-5" href="{{ url 'add_follower' profile.id }}">Follow</button>
+            <a href="{% url 'add_follower' profile.id %}">
+                <button class="btn btn-primary btn-sm btn-block mt-5">Follow</button>
+            </a>
         </div>
         <div class="col-6 col-md-4">
             <p>Number of workouts logged:</p>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import UserProfile, Followers
 from .forms import UserProfileForm
+from workout_tracker.models import WorkoutTracker
 
 
 def profile(request, profile_id):
@@ -54,3 +55,20 @@ def add_follower(request, profile_id):
     )
 
     return redirect(reverse('dashboard'))
+
+
+def friends(request):
+    """A feed showing more detailed overview of friends' workouts"""
+    profile = get_object_or_404(UserProfile, user=request.user)
+    friends = profile.follower.values('is_following')
+    friends_profiles = UserProfile.objects.filter(pk__in=friends)
+    friends_workouts = WorkoutTracker.objects.filter(
+        created_by__in=friends_profiles)
+
+    template = 'profiles/friends.html'
+    context = {
+        'profile': profile,
+        'friends': friends,
+        'friends_workouts': friends_workouts,
+    }
+    return render(request, template, context)

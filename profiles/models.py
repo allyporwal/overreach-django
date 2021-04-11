@@ -36,7 +36,8 @@ class UserProfile(models.Model):
 class Followers(models.Model):
     """Model that allows users to follow other users on their friends feed"""
     follower = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
-                                 null=False, blank=False)
+                                 null=False, blank=False,
+                                 related_name='follower')
     is_following = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
                                      null=False, blank=False,
                                      related_name='is_following')
@@ -44,8 +45,7 @@ class Followers(models.Model):
     status = models.BooleanField(default=True)
 
     def __str__(self):
-        return f'{self.follower} has been following \
-            {self.is_following} since {self.following_date}'
+        return self.is_following.user.username
 
 
 @receiver(post_save, sender=User)
