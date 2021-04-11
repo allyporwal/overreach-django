@@ -33,6 +33,21 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+class Followers(models.Model):
+    """Model that allows users to follow other users on their friends feed"""
+    follower = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
+                                 null=False, blank=False)
+    is_following = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
+                                     null=False, blank=False,
+                                     related_name='is_following')
+    following_date = models.DateTimeField(auto_now_add=True)
+    status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f'{self.follower} has been following \
+            {self.is_following} since {self.following_date}'
+
+
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     """Create or update the user profile"""
