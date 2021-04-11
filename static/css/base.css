@@ -10,3 +10,8 @@ h1 {
     max-width: 768px;
     margin: auto;
 }
+
+.profile-image-wrapper {
+    height: 200px;
+    width: 200px;
+}

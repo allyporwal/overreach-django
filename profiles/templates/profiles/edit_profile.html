@@ -2,6 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
+
 <div class="container">
     <div class="row mt-4">
         <div class="col-12 col-md-4">
@@ -10,7 +11,19 @@
         <div class="col-12 col-md-8">
             <form method="POST" action="{% url 'edit_profile' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form|crispy }}
+                <h5>Information for your public profile:</h5>
+                {{ form.first_name | as_crispy_field }}
+                {{ form.last_name | as_crispy_field }}
+                {{ form.main_goals | as_crispy_field }}
+                {{ form.image | as_crispy_field }}
+                <hr>
+                <h5>Save your default billing address (will not be displayed):</h5>
+                {{ form.default_street_address1  | as_crispy_field }}
+                {{ form.default_street_address2  | as_crispy_field }}            
+                {{ form.default_town_or_city  | as_crispy_field }}
+                {{ form.default_county  | as_crispy_field }}
+                {{ form.default_postcode  | as_crispy_field }}
+                {{ form.default_country  | as_crispy_field }}
                 <div id="button-container" class="form-row justify-content-center">
                     <div class="form-group col-sm-6"> 
                         <button class="btn btn-primary form-control text-uppercase" id="save-profile" type="submit">Update Profile</button>
@@ -20,6 +33,7 @@
         </div>
     </div>
 </div>
+
 {% endblock %}
 {% block postloadjs %}
 {% endblock %}

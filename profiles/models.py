@@ -10,8 +10,11 @@ class UserProfile(models.Model):
     """User profile to hold billing information,
     profile image and workout history"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    signup_date = models.DateTimeField(auto_now_add=True)
+    is_subscribed = models.BooleanField(default=False)
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
+    main_goals = models.TextField(max_length=350, blank=True, null=False)
     image = models.ImageField(null=True, blank=True)
     default_street_address1 = models.CharField(max_length=80,
                                                null=True, blank=True)
