@@ -16,6 +16,7 @@
             <a href="{% url 'unfollow' displayed_profile.id %}">
                 <button class="btn btn-primary btn-sm btn-block mt-5">Unfollow</button>
             </a>
+            {% elif not is_following %}
             {% else %}
             <a href="{% url 'add_follower' displayed_profile.id %}">
                 <button class="btn btn-primary btn-sm btn-block mt-5">Follow</button>
@@ -36,7 +37,7 @@
         </div>
         <div class="col-6 col-md-4">
             <p>Main goals:</p> 
-            <p>{{ profile.main_goals }}</p>
+            <p>{{ displayed_profile.main_goals }}</p>
         </div>
     </div>
 </div>

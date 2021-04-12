@@ -30,6 +30,7 @@ def profile(request, profile_id):
             template = 'profiles/profile.html'
             return render(request, template, context)
 
+        # render page without is_following in context
         except Followers.DoesNotExist:
             context = {
                 'displayed_profile': displayed_profile,
@@ -39,6 +40,15 @@ def profile(request, profile_id):
             }
         template = 'profiles/profile.html'
         return render(request, template, context)
+
+    context = {
+        'displayed_profile': displayed_profile,
+        'number_of_workouts': number_of_workouts,
+        'total_training_volume': total_training_volume,
+        'total_training_reps': total_training_reps,
+    }
+    template = 'profiles/profile.html'
+    return render(request, template, context)
 
 
 def edit_profile(request):
@@ -73,7 +83,7 @@ def add_follower(request, profile_id):
         # allow user to re-follow someone they previously unfollowed
         is_follower_following.status = True
         is_follower_following.save()
-        return redirect(reverse('dashboard'))
+        return redirect(reverse('profile', args=[profile.id]))
 
     # only create entry if follower is not following the profile
     # of the user they're viewing
@@ -81,7 +91,7 @@ def add_follower(request, profile_id):
         follow = Followers.objects.create(
             follower=follower, is_following=profile,
         )
-        return redirect(reverse('friends'))
+        return redirect(reverse('profile', args=[profile.id]))
 
 
 def unfollow(request, profile_id):
