@@ -18,27 +18,27 @@ def profile(request, profile_id):
 
     # On another profile page check to see if user is following displayed user
     if profile != displayed_profile:
-        is_following = profile.follower.get(is_following=displayed_profile)
+        try:
+            is_following = profile.follower.get(is_following=displayed_profile)
+            context = {
+                'displayed_profile': displayed_profile,
+                'number_of_workouts': number_of_workouts,
+                'total_training_volume': total_training_volume,
+                'total_training_reps': total_training_reps,
+                'is_following': is_following,
+            }
+            template = 'profiles/profile.html'
+            return render(request, template, context)
 
-        context = {
-            'displayed_profile': displayed_profile,
-            'number_of_workouts': number_of_workouts,
-            'total_training_volume': total_training_volume,
-            'total_training_reps': total_training_reps,
-            'is_following': is_following,
-        }
+        except Followers.DoesNotExist:
+            context = {
+                'displayed_profile': displayed_profile,
+                'number_of_workouts': number_of_workouts,
+                'total_training_volume': total_training_volume,
+                'total_training_reps': total_training_reps,
+            }
         template = 'profiles/profile.html'
         return render(request, template, context)
-
-    # return the user's public profile page otherwise
-    context = {
-            'displayed_profile': displayed_profile,
-            'number_of_workouts': number_of_workouts,
-            'total_training_volume': total_training_volume,
-            'total_training_reps': total_training_reps,
-    }
-    template = 'profiles/profile.html'
-    return render(request, template, context)
 
 
 def edit_profile(request):
@@ -67,36 +67,54 @@ def add_follower(request, profile_id):
     profile = get_object_or_404(UserProfile, pk=profile_id)
     follower = UserProfile.objects.get(user=request.user)
 
-    follow = Followers.objects.create(
-        follower=follower, is_following=profile,
-    )
+    # prevent duplicate entries into Followers table
+    try:
+        is_follower_following = follower.follower.get(is_following=profile)
+        # allow user to re-follow someone they previously unfollowed
+        is_follower_following.status = True
+        is_follower_following.save()
+        return redirect(reverse('dashboard'))
 
-    return redirect(reverse('dashboard'))
+    # only create entry if follower is not following the profile
+    # of the user they're viewing
+    except Followers.DoesNotExist:
+        follow = Followers.objects.create(
+            follower=follower, is_following=profile,
+        )
+        return redirect(reverse('friends'))
 
 
 def unfollow(request, profile_id):
     """Allow a user to unfollow another user"""
+    profile = get_object_or_404(UserProfile, pk=profile_id)
+    follower = UserProfile.objects.get(user=request.user)
 
+    # modify the status field in the database entry
+    try:
+        is_following = follower.follower.get(is_following=profile)
+        is_following.status = False
+        is_following.save()
+        return redirect(reverse('profile', args=[profile.id]))
+
+    # redirect if user uses url but doesn't follow profile
+    except Followers.DoesNotExist:
+        return redirect(reverse('dashboard'))
 
 
 def friends(request):
     """A feed showing more detailed overview of friends' workouts,
     more data on display in the template than the all_workouts view"""
     profile = get_object_or_404(UserProfile, user=request.user)
-    friends = profile.follower.values('is_following')
+    # filter out people the user has unfollowed
+    friends = profile.follower.values('is_following').filter(status=True)
     friends_profiles = UserProfile.objects.filter(pk__in=friends)
     friends_workouts = WorkoutTracker.objects.filter(
         created_by__in=friends_profiles)
-    
-    print(len(friends_profiles))
-
-    friend_status = profile.follower.values('status')
-    print(friend_status)
 
     template = 'profiles/friends.html'
     context = {
         'profile': profile,
-        'friends': friends,
+        'friends_profiles': friends_profiles,
         'friends_workouts': friends_workouts,
     }
     return render(request, template, context)

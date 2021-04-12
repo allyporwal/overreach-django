@@ -13,7 +13,7 @@
                 </a>
             {% endif %}
             {% if is_following.status == True %}
-            <a href="">
+            <a href="{% url 'unfollow' displayed_profile.id %}">
                 <button class="btn btn-primary btn-sm btn-block mt-5">Unfollow</button>
             </a>
             {% else %}
