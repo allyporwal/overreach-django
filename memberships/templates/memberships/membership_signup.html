@@ -6,30 +6,33 @@
 <div class="container">
     <div class="row mt-4">
         <div class="col-12 col-md-4">
-            <h2>Edit Profile</h2>
-            <a href="">
-                <button class="btn btn-primary btn-block">Manage subscription</button>
-            </a>   
+            <h2>Welcome to Overreach</h2>
+            <p>You're nearly good to go! Once you're a paying member, you will be able to:</p>
+            <ul>
+                <li>Log workouts</li>
+                <li>View key training data</li>
+                <li>Follow other users</li>                
+            </ul>
         </div>
         <div class="col-12 col-md-8">
-            <form method="POST" action="{% url 'edit_profile' %}" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'membership_signup' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                <h5>Information for your public profile:</h5>
+                <h5 class="mb-3">First, please fill in information for your public profile:</h5>
                 {{ form.first_name | as_crispy_field }}
                 {{ form.last_name | as_crispy_field }}
                 {{ form.main_goals | as_crispy_field }}
                 {{ form.image | as_crispy_field }}
-                <hr>
-                <h5>Save your default billing address (will not be displayed):</h5>
+                <hr class="mt-3">
+                <h5 class="mb-3">Save your default billing address (will not be displayed publicly):</h5>
                 {{ form.default_street_address1  | as_crispy_field }}
                 {{ form.default_street_address2  | as_crispy_field }}            
                 {{ form.default_town_or_city  | as_crispy_field }}
                 {{ form.default_county  | as_crispy_field }}
                 {{ form.default_postcode  | as_crispy_field }}
                 {{ form.default_country  | as_crispy_field }}
-                <div id="button-container" class="form-row justify-content-center">
+                <div id="button-container" class="form-row justify-content-center mt-3">
                     <div class="form-group col-sm-6"> 
-                        <button class="btn btn-primary form-control text-uppercase" id="save-profile" type="submit">Update Profile</button>
+                        <button class="btn btn-primary form-control text-uppercase" id="save-profile" type="submit">Save and continue</button>
                     </div>
                 </div>
             </form>
@@ -38,5 +41,4 @@
 </div>
 
 {% endblock %}
-{% block postloadjs %}
-{% endblock %}
+
