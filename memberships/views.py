@@ -4,8 +4,8 @@ from profiles.models import UserProfile
 from django.conf import settings
 
 
-# Create your views here.
 def membership_signup(request):
+    """Gather information from the user before payment"""
     profile = get_object_or_404(UserProfile, user=request.user)
 
     if request.method == 'POST':
@@ -18,6 +18,7 @@ def membership_signup(request):
     form = UserProfileForm(instance=profile)
     template = 'memberships/membership_signup.html'
     context = {
+        'profile': profile,
         'form': form,
     }
     return render(request, template, context)
@@ -26,6 +27,8 @@ def membership_signup(request):
 def checkout(request):
     profile = get_object_or_404(UserProfile, user=request.user)
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_secret_key = settings.STRIPE_SECRET_KEY
+
     template = 'memberships/checkout.html'
     context = {
         'profile': profile,
