@@ -20,7 +20,10 @@
                 <a href="{% url 'add_follower' displayed_profile.id %}">
                     <button class="btn btn-primary btn-sm btn-block mt-5">Follow</button>
                 </a>
-            {% else %}
+            {% elif is_following == False %}
+                <a href="{% url 'add_follower' displayed_profile.id %}">
+                    <button class="btn btn-primary btn-sm btn-block mt-5">Follow</button>
+                </a>
             {% endif %}
         </div>
         <div class="col-6 col-md-4">

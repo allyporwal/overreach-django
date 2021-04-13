@@ -30,17 +30,21 @@ def profile(request, profile_id):
             template = 'profiles/profile.html'
             return render(request, template, context)
 
-        # render page without is_following in context
+        # render page with is_following as false to allow conditional
+        # formatting in template
         except Followers.DoesNotExist:
+            is_following = False
             context = {
                 'displayed_profile': displayed_profile,
                 'number_of_workouts': number_of_workouts,
                 'total_training_volume': total_training_volume,
                 'total_training_reps': total_training_reps,
+                'is_following': is_following,
             }
         template = 'profiles/profile.html'
         return render(request, template, context)
 
+    # displays the logged in user's own profile
     context = {
         'displayed_profile': displayed_profile,
         'number_of_workouts': number_of_workouts,

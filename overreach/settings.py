@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'profiles',
     'workout_tracker',
     'crispy_forms',
+    'memberships',
 ]
 
 MIDDLEWARE = [
@@ -173,5 +174,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Stripe
+
+STRIPE_CURRENCY = 'eur'
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
 
 # Add context processer variables here
