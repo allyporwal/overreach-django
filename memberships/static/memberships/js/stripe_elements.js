@@ -39,3 +39,43 @@ function displayError(event) {
   }
 }
 
+let form = document.getElementById('subscription-payment');
+
+form.addEventListener('submit', function (ev) {
+  ev.preventDefault();
+});
+
+// $(document).ready(function() {
+//   let billingName = $('#id_billing_name').text().slice(1, -1);
+//   let priceId = $('#id_price_id').text().toUpperCase().slice(1, -1);
+//   console.log(priceId)
+// });
+
+function createPaymentMethod({ card }) {
+  const customerId = $('#id_customer_id').text().slice(1, -1);
+
+  // Set up payment method for recurring usage
+  let billingName = $('#id_billing_name').text().slice(1, -1);
+  let billingEmail = $('#id_billing_email').text().slice(1, -1);
+  let priceId = $('#id_price_id').text().toUpperCase().slice(1, -1);
+  stripe
+    .createPaymentMethod({
+      type: 'card',
+      card: card,
+      billing_details: {
+        name: billingName,
+        email: billingEmail,
+      },
+    })
+    .then((result) => {
+      if (result.error) {
+        displayError(result);
+      } else {
+        createSubscription({
+          customerId: customerId,
+          paymentMethodId: result.paymentMethod.id,
+          priceId: priceId,
+        });
+      }
+    });
+}
