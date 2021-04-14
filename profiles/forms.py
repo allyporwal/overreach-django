@@ -19,6 +19,7 @@ class UserProfileForm(forms.ModelForm):
             'last_name': 'Last Name',
             'main_goals': 'What are your main training goals?',
             'image': 'Upload a profile picture',
+            'default_billing_email': 'Email address associated with your card',
             'default_billing_name': 'Your name as it appears on your card',
             'default_street_address1': 'Street Address 1',
             'default_street_address2': 'Street Address 2',

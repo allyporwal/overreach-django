@@ -1,63 +1,54 @@
 from django.conf import settings
+from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-import json
+from memberships.webhook_handler import StripeWH_Handler
+
 import stripe
 
 
 @require_POST
 @csrf_exempt
-def webhook_received(request):
-    # You can use webhooks to receive information
-    # about asynchronous payment events.
-    # For more about our webhook events check out
-    # https://stripe.com/docs/webhooks.
-    webhook_secret = settings.STRIPE_WH_SECRET
-    request_data = json.loads(request.data)
+def webhook(request):
+    """Listen for webhooks from Stripe"""
+    # Setup
+    wh_secret = settings.STRIPE_WH_SECRET
+    stripe.api_key = settings.STRIPE_SECRET_KEY
 
-    if webhook_secret:
-        # Retrieve the event by verifying the signature using
-        # the raw body and secret if webhook signing is configured.
-        signature = request.headers.get('stripe-signature')
-        try:
-            event = stripe.Webhook.construct_event(
-                payload=request.data,
-                sig_header=signature,
-                secret=webhook_secret
-                )
-            data = event['data']
-        except Exception as e:
-            return e
-        # Get the type of webhook event sent -
-        # used to check the status of PaymentIntents.
-        event_type = event['type']
-    else:
-        data = request_data['data']
-        event_type = request_data['type']
+    # Get the webhook data and verify its signature
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
 
-    data_object = data['object']
-    print(data_object)
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, wh_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return HttpResponse(status=400)
+    except Exception as e:
+        return HttpResponse(content=e, status=400)
 
-    if event_type == 'invoice.paid':
-        # Used to provision services after the trial has ended.
-        # The status of the invoice will show up as paid.
-        # Store the status in your database to reference when a
-        # user accesses your service to avoid hitting rate limits.
-        print(data)
+    # Set up a webhook handler
+    handler = StripeWH_Handler(request)
 
-    if event_type == 'invoice.payment_failed':
-        # If the payment fails or the customer does
-        # not have a valid payment method,
-        # an invoice.payment_failed event is sent,
-        # the subscription becomes past_due.
-        # Use this webhook to notify your user that their payment has
-        # failed and to retrieve new card details.
-        print(data)
+    # Map webhook events to relevant handler functions
+    event_map = {
+        'payment_intent.succeeded': handler.handle_payment_intent_succeeded,
+        'payment_intent.payment_failed': handler.handle_payment_intent_payment_failed,
+    }
 
-    if event_type == 'customer.subscription.deleted':
-        # handle subscription cancelled automatically based
-        # upon your subscription settings. Or if the user cancels it.
-        print(data)
+    # Get the webhook type from Stripe
+    event_type = event['type']
 
-    return JsonResponse({'status': 'success'})
+    # If there's a handler for it, get it from the event map
+    # Use the generic one by default
+    event_handler = event_map.get(event_type, handler.handle_event)
+
+    # Call the event handler with the event
+    response = event_handler(event)
+    return response

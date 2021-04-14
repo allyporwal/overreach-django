@@ -23,7 +23,9 @@
                 {{ form.main_goals | as_crispy_field }}
                 {{ form.image | as_crispy_field }}
                 <hr class="mt-3">
-                <h5 class="mb-3">Save your default billing address (will not be displayed publicly):</h5>
+                <h5 class="mb-3">Save your default billing details (will not be displayed publicly):</h5>
+                {{ form.default_billing_name  | as_crispy_field }}
+                {{ form.default_billing_email  | as_crispy_field }}
                 {{ form.default_street_address1  | as_crispy_field }}
                 {{ form.default_street_address2  | as_crispy_field }}            
                 {{ form.default_town_or_city  | as_crispy_field }}
@@ -42,4 +44,6 @@
 </div>
 
 {% endblock %}
-
+{% block postloadjs %}
+    {{ block.super }}
+{% endblock %}
