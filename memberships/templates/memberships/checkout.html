@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+{{ profile.user.email }}
 <div class="container">
     <div class="row mt-4">
         <div class="col-12 col-md-4">
@@ -53,6 +54,7 @@
 
 {% block postloadjs %}
     {{ block.super }}
+    {{ user_email|json_script:"id_user_email" }}
     {{ stripe_public_key|json_script:"id_stripe_public_key" }}
     {{ client_secret|json_script:"id_client_secret" }}
     <script src="{% static 'memberships/js/stripe_elements.js' %}"></script>

@@ -1,5 +1,7 @@
 let stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
+console.log(stripePublicKey)
 let clientSecret = $('#id_client_secret').text().slice(1, -1);
+console.log(clientSecret)
 let stripe = Stripe(stripePublicKey);
 let elements = stripe.elements();
 let style = {
@@ -22,21 +24,6 @@ let style = {
 let card = elements.create('card', { style: style });
 card.mount('#card-element');
 
-// card.addEventListener('change', function (event) {
-//     var errorDiv = document.getElementById('card-element-errors');
-//     if (event.error) {
-//         var html = `
-//             <span class="icon" role="alert">
-//                 <i class="fas fa-times"></i>
-//             </span>
-//             <span>${event.error.message}</span>
-//         `;
-//         $(errorDiv).html(html);
-//     } else {
-//         errorDiv.textContent = '';
-//     }
-// });
-
 card.on('change', function (event) {
     displayError(event);
   });
@@ -48,4 +35,38 @@ card.on('change', function (event) {
     } else {
       displayError.textContent = '';
     }
+  }
+
+  var form = document.getElementById('subscription-form');
+
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+  });
+  
+  function createPaymentMethod({ card }) {
+    const customerId = {{ CUSTOMER_ID }};
+    // Set up payment method for recurring usage
+    let billingName = document.querySelector('#name').value;
+  
+    let priceId = document.getElementById('priceId').innerHTML.toUpperCase();
+  
+    stripe
+      .createPaymentMethod({
+        type: 'card',
+        card: card,
+        billing_details: {
+          name: billingName,
+        },
+      })
+      .then((result) => {
+        if (result.error) {
+          displayError(result);
+        } else {
+          createSubscription({
+            customerId: customerId,
+            paymentMethodId: result.paymentMethod.id,
+            priceId: priceId,
+          });
+        }
+      });
   }

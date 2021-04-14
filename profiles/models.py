@@ -16,6 +16,7 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=32)
     main_goals = models.TextField(max_length=350, blank=True, null=False)
     image = models.ImageField(null=True, blank=True)
+    default_billing_name = models.CharField(max_length=64)
     default_street_address1 = models.CharField(max_length=80,
                                                null=True, blank=True)
     default_street_address2 = models.CharField(max_length=80,
@@ -27,7 +28,9 @@ class UserProfile(models.Model):
     default_postcode = models.CharField(max_length=20,
                                         null=True, blank=True)
     default_country = CountryField(blank_label='Country',
-                                   null=True, blank=True)
+                                   null=True, blank=True),
+    stripe_customer_id = models.CharField(max_length=255)
+    stripe_subscription_id = models.CharField(max_length=255)
 
     def __str__(self):
         return self.user.username
