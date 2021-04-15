@@ -29,7 +29,6 @@ card.mount('#card-element');
 card.on('change', function (event) {
   displayError(event);
 });
-
 function displayError(event) {
   // changeLoadingStatePrices(false);
   let displayError = document.getElementById('card-element-errors');
@@ -51,12 +50,8 @@ form.addEventListener('submit', function (ev) {
 // official Stripe documentation
 function createPaymentMethod({ card }) {
     const customerId = $('#id_customer_id').text().slice(1, -1);
-  
-    // Set up payment method for recurring usage
-    let billingName = $('#id_billing_name').text().slice(1, -1);
-  
-    let billingEmail = $('#id_billing_email').text().slice(1, -1);
-    
+    let billingName = $('#id_billing_name').text().slice(1, -1);  
+    let billingEmail = $('#id_billing_email').text().slice(1, -1);    
     let priceId = $('#id_price_id').text().toUpperCase().slice(1, -1);
   
     stripe
@@ -79,7 +74,6 @@ function createPaymentMethod({ card }) {
           });
         }
       });
-      console.log(billingName)
   }
   
 function createSubscription({ customerId, paymentMethodId, priceId }) {
@@ -117,5 +111,13 @@ function createSubscription({ customerId, paymentMethodId, priceId }) {
           subscription: result,
         };
       })
+      .then(onSubscriptionComplete)
   );
+}
+
+function onSubscriptionComplete(result) {
+  // Payment was successful.
+  if (result.subscription.status === 'active') {
+    window.location.href = '/dashboard';
+  }
 }

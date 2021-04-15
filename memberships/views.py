@@ -55,7 +55,6 @@ def checkout(request):
     """The payment view"""
     profile = get_object_or_404(UserProfile, user=request.user)
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
-    stripe_secret_key = settings.STRIPE_SECRET_KEY
 
     # pass data needed to set up subscription
     price_id = settings.STRIPE_PRICE_ID
@@ -77,7 +76,8 @@ def checkout(request):
 
 @require_POST
 def create_subscription(request):
-    """Create the subscription"""
+    """Create the subscription, adapted from
+    Stripe documentation, link in readme"""
     stripe.api_key = settings.STRIPE_SECRET_KEY
     data = json.loads(request.body.decode('utf-8'))
 

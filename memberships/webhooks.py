@@ -26,10 +26,10 @@ def webhook(request):
         )
     except ValueError as e:
         # Invalid payload
-        return HttpResponse(status=400)
+        return HttpResponse(content=e, status=400)
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
-        return HttpResponse(status=400)
+        return HttpResponse(content=e, status=400)
     except Exception as e:
         return HttpResponse(content=e, status=400)
 
@@ -40,10 +40,13 @@ def webhook(request):
     event_map = {
         'payment_intent.succeeded': handler.handle_payment_intent_succeeded,
         'payment_intent.payment_failed': handler.handle_payment_intent_payment_failed,
+        'customer.subscription.created': handler.handle_customer_subscription_created,
     }
 
     # Get the webhook type from Stripe
     event_type = event['type']
+
+    # print(event.data.object.account)
 
     # If there's a handler for it, get it from the event map
     # Use the generic one by default
