@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from profiles.forms import UserProfileForm
 from profiles.models import UserProfile
 from django.conf import settings
-
-import stripe
 import json
+import stripe
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 
 def membership_signup(request):
@@ -31,9 +32,12 @@ def membership_signup(request):
         form = UserProfileForm(form_data, instance=profile)
 
         if form.is_valid():
+            # create a customer object in Stripe using form data
             subscriber = stripe.Customer.create(
                 email=request.POST['default_billing_email'],
                 name=request.POST['default_billing_name'])
+            # assign the Stripe customer ID to
+            # the user's linked userprofile
             profile.stripe_customer_id = subscriber.id
             form.save()
             return redirect(reverse('checkout'))
@@ -48,9 +52,12 @@ def membership_signup(request):
 
 
 def checkout(request):
+    """The payment view"""
     profile = get_object_or_404(UserProfile, user=request.user)
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+
+    # pass data needed to set up subscription
     price_id = settings.STRIPE_PRICE_ID
     customer_id = profile.stripe_customer_id
     billing_name = profile.default_billing_name
@@ -64,6 +71,40 @@ def checkout(request):
         'customer_id': customer_id,
         'billing_name': billing_name,
         'billing_email': billing_email,
-        # 'client_secret': intent.client_secret,
     }
     return render(request, template, context)
+
+
+@require_POST
+def create_subscription(request):
+    """Create the subscription"""
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    data = json.loads(request.body.decode('utf-8'))
+
+    try:
+        # Attach the payment method to the customer
+        stripe.PaymentMethod.attach(
+            data['paymentMethodId'],
+            customer=data['customerId'],
+        )
+        # Set the default payment method on the customer
+        stripe.Customer.modify(
+            data['customerId'],
+            invoice_settings={
+                'default_payment_method': data['paymentMethodId'],
+            },
+        )
+        # Create the subscription
+        subscription = stripe.Subscription.create(
+            customer=data['customerId'],
+            items=[
+                {
+                    'price': settings.STRIPE_PRICE_ID
+                }
+            ],
+            expand=['latest_invoice.payment_intent'],
+        )
+
+        return JsonResponse(subscription)
+    except Exception as e:
+        return JsonResponse({'error': (e.args[0])}, status=403)

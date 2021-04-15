@@ -22,7 +22,7 @@
                         <div class="col-12">Only €5 per month</div>
                     </div>
                     <hr class="mt-3">
-                    <form id="subscription-payment" method="POST" action="" enctype="">
+                    <form id="subscription-payment">
                         {% csrf_token %}
                         <h5 class="text-center">All subscription payments handled by Stripe</h5>
                         <hr class="mt-3">                   
@@ -32,9 +32,8 @@
                         <div id="card-element-errors" role="alert">
                             <!-- Used to display form errors -->
                         </div>
-                        <!-- Pass the client secret to the view so we can get the payment intent id -->
-                        <input type="hidden" value="{{ client_secret }}" name="client_secret">
                         <!-- Pass the price ID of the subscription -->
+                        {{ price_id|json_script:"id_price_id" }}
                         <hr class="mt-3 mb-3">
                         <div id="button-container" class="form-row justify-content-center mt-3">
                             <div class="form-group col-sm-6"> 
@@ -48,7 +47,6 @@
         </div>
     </div>
 </div>
-
 
 {% endblock %}
 
