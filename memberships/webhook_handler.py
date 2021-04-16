@@ -45,13 +45,13 @@ class StripeWH_Handler:
         try:
             profile = UserProfile.objects.get(
                 stripe_customer_id=stripe_customer_id)
-            first_name = profile.first_name
-            email = profile.user.email
-            email_data = {
-                'first_name': first_name,
-                'email': email,
-                'subscription_id': subscription_id,
-            }
+            # first_name = profile.first_name
+            # email = profile.user.email
+            # email_data = {
+            #     'first_name': first_name,
+            #     'email': email,
+            #     'subscription_id': subscription_id,
+            # }
             profile.is_subscribed = True
             profile.stripe_subscription_id = subscription_id
             profile.save()

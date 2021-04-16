@@ -4,8 +4,10 @@ from .forms import WorkoutTrackerForm
 from profiles.models import UserProfile
 from .models import WorkoutTracker
 from .validators import validate_active_workout
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def active_workout(request):
     """Add workout to be stored in session, to be retrieved later
     on and saved in a Django JSONField"""
@@ -81,6 +83,7 @@ def active_workout(request):
     return render(request, template)
 
 
+@login_required
 def delete_active_workout(request):
     """Delete the active workout from the session"""
     workout = request.session.get('workout', {})
@@ -93,6 +96,7 @@ def delete_active_workout(request):
         return redirect(reverse('dashboard'))
 
 
+@login_required
 def log_workout(request):
     """Stores a user's workout to the database"""
     workout_to_log = request.session['workout']
@@ -163,6 +167,7 @@ def log_workout(request):
     return render(request, template, context)
 
 
+@login_required
 def workout(request, workout_id):
     """Show an individual workout"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
@@ -209,6 +214,7 @@ def workout(request, workout_id):
     return render(request, template, context)
 
 
+@login_required
 def edit_workout(request, workout_id):
     """Allow a user to edit a workout they logged"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
@@ -296,6 +302,7 @@ def edit_workout(request, workout_id):
     return render(request, template, context)
 
 
+@login_required
 def update_workout(request, workout_id):
     """Updates a user's workout in the database"""
     workout_to_update = get_object_or_404(WorkoutTracker, pk=workout_id)
@@ -383,6 +390,7 @@ def update_workout(request, workout_id):
     return render(request, template, context)
 
 
+@login_required
 def delete_workout(request, workout_id):
     """Allow the user to delete a workout they logged"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
@@ -394,6 +402,7 @@ def delete_workout(request, workout_id):
         return redirect(reverse('dashboard'))
 
 
+@login_required
 def all_workouts(request):
     """Display workouts done by everyone"""
     workouts = WorkoutTracker.objects.all()

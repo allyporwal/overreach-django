@@ -6,8 +6,10 @@ import json
 import stripe
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def membership_signup(request):
     """Gather information from the user before payment"""
     profile = get_object_or_404(UserProfile, user=request.user)
@@ -51,6 +53,7 @@ def membership_signup(request):
     return render(request, template, context)
 
 
+@login_required
 def checkout(request):
     """The payment view"""
     profile = get_object_or_404(UserProfile, user=request.user)
@@ -70,6 +73,47 @@ def checkout(request):
         'customer_id': customer_id,
         'billing_name': billing_name,
         'billing_email': billing_email,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def checkout_success(request):
+    """If successful checkout, user sees this page"""
+    profile = get_object_or_404(UserProfile, user=request.user)
+    template = 'memberships/checkout_success.html'
+    context = {
+        'profile': profile,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def subscription_status(request):
+    """Show the user their subscription status and give
+    option to cancel"""
+    profile = get_object_or_404(UserProfile, user=request.user)
+    subscription_id = profile.stripe_subscription_id
+    template = 'memberships/subscription_status.html'
+    context = {
+        'profile': profile,
+    }
+    return render(request, template, context)
+
+
+@login_required
+def cancel_subscription(request):
+    """Allow user to cancel their subscription"""
+    return redirect(reverse('subscription_cancelled'))
+
+
+@login_required
+def subscription_cancelled(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+
+    template = 'memberships/subscription_status.html'
+    context = {
+        'profile': profile,
     }
     return render(request, template, context)
 

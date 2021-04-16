@@ -1,6 +1,5 @@
 // set up Stripe keys and style
 let stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
-let clientSecret = $('#id_client_secret').text().slice(1, -1);
 let stripe = Stripe(stripePublicKey);
 let elements = stripe.elements();
 let style = {
@@ -43,6 +42,7 @@ let form = document.getElementById('subscription-payment');
 
 form.addEventListener('submit', function (ev) {
   ev.preventDefault();
+  $('#subscribe-button').attr('disabled', true);
   createPaymentMethod({ card });
 });
 
@@ -111,15 +111,14 @@ function createSubscription({ customerId, paymentMethodId, priceId }) {
           subscription: result,
         };
       })
-      // pause for 1 second to allow changes in DB to happen
-      .sleep(1000).then(onSubscriptionComplete)
+      .then(onSubscriptionComplete)
   );
 }
 
 function onSubscriptionComplete(result) {
   // Payment was successful, redirect subscriber to dashboard
   if (result.subscription.status === 'active') {
-    window.location.href = '/dashboard';
+    window.location.href = '/memberships/checkout_success';
   } else {
     window.location.href = '/memberships/signup';
   }

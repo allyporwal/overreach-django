@@ -2,8 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import UserProfile, Followers
 from .forms import UserProfileForm
 from workout_tracker.models import WorkoutTracker
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def profile(request, profile_id):
     """Show a user's profile page"""
     profile = get_object_or_404(UserProfile, user=request.user)
@@ -55,6 +57,7 @@ def profile(request, profile_id):
     return render(request, template, context)
 
 
+@login_required
 def edit_profile(request):
     """Allow the user to edit their profile details"""
     profile = get_object_or_404(UserProfile, user=request.user)
@@ -76,6 +79,7 @@ def edit_profile(request):
     return render(request, template, context)
 
 
+@login_required
 def add_follower(request, profile_id):
     """Allow a user to follow other users in a friends feed"""
     profile = get_object_or_404(UserProfile, pk=profile_id)
@@ -98,6 +102,7 @@ def add_follower(request, profile_id):
         return redirect(reverse('profile', args=[profile.id]))
 
 
+@login_required
 def unfollow(request, profile_id):
     """Allow a user to unfollow another user"""
     profile = get_object_or_404(UserProfile, pk=profile_id)
@@ -115,6 +120,7 @@ def unfollow(request, profile_id):
         return redirect(reverse('dashboard'))
 
 
+@login_required
 def friends(request):
     """A feed showing more detailed overview of friends' workouts,
     more data on display in the template than the all_workouts view"""
