@@ -111,13 +111,16 @@ function createSubscription({ customerId, paymentMethodId, priceId }) {
           subscription: result,
         };
       })
-      .then(onSubscriptionComplete)
+      // pause for 1 second to allow changes in DB to happen
+      .sleep(1000).then(onSubscriptionComplete)
   );
 }
 
 function onSubscriptionComplete(result) {
-  // Payment was successful.
+  // Payment was successful, redirect subscriber to dashboard
   if (result.subscription.status === 'active') {
     window.location.href = '/dashboard';
+  } else {
+    window.location.href = '/memberships/signup';
   }
 }

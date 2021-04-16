@@ -41,8 +41,8 @@ def profile(request, profile_id):
                 'total_training_reps': total_training_reps,
                 'is_following': is_following,
             }
-        template = 'profiles/profile.html'
-        return render(request, template, context)
+            template = 'profiles/profile.html'
+            return render(request, template, context)
 
     # displays the logged in user's own profile
     context = {

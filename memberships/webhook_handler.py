@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from profiles.models import UserProfile
-from django.shortcuts import get_object_or_404
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.conf import settings
 
 
 class StripeWH_Handler:
@@ -8,6 +10,25 @@ class StripeWH_Handler:
 
     def __init__(self, request):
         self.request = request
+
+    # def _send_welcome_email(self, email_data):
+    #     """send the user a welcome email when their subscription
+    #     has been created"""
+    #     user_email = email_data.email
+    #     subject = render_to_string(
+    #         'memberships/welcome_emails/welcome_email_subject.txt',
+    #         {'email_data': email_data})
+    #     body = render_to_string(
+    #         'memberships/welcome_emails/welcome_email_body.txt',
+    #         {'email_data': email_data,
+    #          'contact_email': settings.DEFAULT_FROM_EMAIL})
+
+    #     send_mail(subject,
+    #               body,
+    #               settings.DEFAULT_FROM_EMAIL,
+    #               [user_email]
+    #               )
+
 
     def handle_event(self, event):
         """Handle a generic/unknown/unexpected webhook event"""
@@ -17,24 +38,46 @@ class StripeWH_Handler:
 
     def handle_customer_subscription_created(self, event):
         """Assign the customer subscription id to the user's profile"""
-        subscription_id = event['data']['object']['items']['data'][0]['id']
+        subscription_id = (event['data']['object']
+                           ['items']['data'][0]['subscription'])
         stripe_customer_id = event['data']['object']['customer']
-        profile = get_object_or_404(UserProfile, stripe_customer_id=stripe_customer_id)
 
-        profile.stripe_subscription_id = subscription_id
-        profile.save()
-        return HttpResponse(
-            content=f'Webhook received: {event["type"]}',
-            status=200)
+        try:
+            profile = UserProfile.objects.get(
+                stripe_customer_id=stripe_customer_id)
+            first_name = profile.first_name
+            email = profile.user.email
+            email_data = {
+                'first_name': first_name,
+                'email': email,
+                'subscription_id': subscription_id,
+            }
+            profile.is_subscribed = True
+            profile.stripe_subscription_id = subscription_id
+            profile.save()
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]}.\
+                    UserProfile successfully updated', status=200)
 
-    def handle_payment_intent_succeeded(self, event):
-        """Handle the payment_intent.succeeded webhook from Stripe"""
-        return HttpResponse(
-            content=f'Webhook received: {event["type"]}',
-            status=200)
+        except UserProfile.DoesNotExist:
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]}.\
+                    UserProfile does not exist.', status=404)
 
-    def handle_payment_intent_payment_failed(self, event):
-        """Handle the payment_intent.payment_failed webhook from Stripe"""
-        return HttpResponse(
-            content=f'Webhook received: {event["type"]}',
-            status=200)
+    def handle_invoice_payment_failed(self, event):
+        """Suspend user's access if payment fails"""
+        stripe_customer_id = event['data']['object']['customer']
+
+        try:
+            profile = UserProfile.objects.get(
+                stripe_customer_id=stripe_customer_id)
+            profile.is_subscribed = False
+            profile.save()
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]}.\
+                    UserProfile successfully updated', status=200)
+
+        except UserProfile.DoesNotExist:
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]}.\
+                    UserProfile does not exist.', status=404)
