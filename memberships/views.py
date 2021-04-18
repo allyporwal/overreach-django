@@ -104,6 +104,17 @@ def subscription_status(request):
 @login_required
 def cancel_subscription(request):
     """Allow user to cancel their subscription"""
+    profile = get_object_or_404(UserProfile, user=request.user)
+    subscription_id = profile.subscription_id
+
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    try:
+        stripe.Subscription.delete(subscription_id)
+        profile.is_subscribed = False
+    except Exception as e:
+        return JsonResponse({'error': (e.args[0])}, status=403)
+
     return redirect(reverse('subscription_cancelled'))
 
 
@@ -111,7 +122,7 @@ def cancel_subscription(request):
 def subscription_cancelled(request):
     profile = get_object_or_404(UserProfile, user=request.user)
 
-    template = 'memberships/subscription_status.html'
+    template = 'memberships/subscription_cancelled.html'
     context = {
         'profile': profile,
     }

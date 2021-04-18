@@ -3,6 +3,8 @@ from profiles.models import UserProfile
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from datetime import datetime
+from django.utils.timezone import make_aware
 
 
 class StripeWH_Handler:
@@ -52,7 +54,6 @@ class StripeWH_Handler:
             #     'email': email,
             #     'subscription_id': subscription_id,
             # }
-            profile.is_subscribed = True
             profile.stripe_subscription_id = subscription_id
             profile.save()
             return HttpResponse(
@@ -109,18 +110,27 @@ class StripeWH_Handler:
                 content=f'Webhook received: {event["type"]}.\
                     UserProfile does not exist.', status=404)
 
-        def handle_invoice_payment_succeeded(self, event):
-        """Suspend user's access if payment fails"""
+    def handle_invoice_payment_succeeded(self, event):
+        """Update subscription information for the user"""
         stripe_customer_id = event['data']['object']['customer']
+        last_payment_unix = (event['data']['object']['lines']
+                             ['data'][0]['period']['start'])
+        next_payment_unix = (event['data']['object']['lines']
+                             ['data'][0]['period']['end'])
+        # convert timestamp to timezone aware datetime
+        last_payment = make_aware(datetime.fromtimestamp(last_payment_unix))
+        next_payment = make_aware(datetime.fromtimestamp(next_payment_unix))
 
         try:
             profile = UserProfile.objects.get(
                 stripe_customer_id=stripe_customer_id)
-            profile.is_subscribed = False
+            profile.last_payment = last_payment
+            profile.next_payment = next_payment
+            profile.is_subscribed = True
             profile.save()
             return HttpResponse(
                 content=f'Webhook received: {event["type"]}.\
-                    UserProfile access suspended', status=200)
+                    UserProfile payment data updated', status=200)
 
         except UserProfile.DoesNotExist:
             return HttpResponse(

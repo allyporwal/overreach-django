@@ -12,6 +12,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     signup_date = models.DateTimeField(auto_now_add=True)
     is_subscribed = models.BooleanField(default=False)
+    last_payment = models.DateTimeField(null=True, blank=True)
+    next_payment = models.DateTimeField(null=True, blank=True)
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     main_goals = models.TextField(max_length=350, blank=True, null=False)

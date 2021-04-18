@@ -10,7 +10,9 @@ class UserProfileForm(forms.ModelForm):
                    'is_subscribed',
                    'signup_date',
                    'stripe_customer_id',
-                   'stripe_subscription_id')
+                   'stripe_subscription_id',
+                   'next_payment',
+                   'last_payment')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
