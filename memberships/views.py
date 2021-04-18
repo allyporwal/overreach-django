@@ -1,9 +1,9 @@
+import json
+import stripe
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from profiles.forms import UserProfileForm
 from profiles.models import UserProfile
 from django.conf import settings
-import json
-import stripe
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
@@ -89,12 +89,12 @@ def checkout_success(request):
 
 
 @login_required
-def subscription_status(request):
-    """Show the user their subscription status and give
+def membership_status(request):
+    """Show the user their membership status and give
     option to cancel"""
     profile = get_object_or_404(UserProfile, user=request.user)
 
-    template = 'memberships/subscription_status.html'
+    template = 'memberships/membership_status.html'
     context = {
         'profile': profile,
     }
@@ -102,10 +102,10 @@ def subscription_status(request):
 
 
 @login_required
-def cancel_subscription(request):
-    """Allow user to cancel their subscription"""
+def cancel_membership(request):
+    """Allow user to cancel their membership"""
     profile = get_object_or_404(UserProfile, user=request.user)
-    subscription_id = profile.subscription_id
+    subscription_id = profile.stripe_subscription_id
 
     stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -115,14 +115,14 @@ def cancel_subscription(request):
     except Exception as e:
         return JsonResponse({'error': (e.args[0])}, status=403)
 
-    return redirect(reverse('subscription_cancelled'))
+    return redirect(reverse('membership_cancelled'))
 
 
 @login_required
-def subscription_cancelled(request):
+def membership_cancelled(request):
     profile = get_object_or_404(UserProfile, user=request.user)
 
-    template = 'memberships/subscription_cancelled.html'
+    template = 'memberships/membership_cancelled.html'
     context = {
         'profile': profile,
     }

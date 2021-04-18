@@ -2,5 +2,20 @@
 {% load static %}
 
 {% block content %}
-<h2>Thank you for registering!</h2>
+<div class="container">
+    <div class="row mt-4">       
+        <div class="col-12 col-md-4">
+            <h2>You're Registered. Thank you</h2>
+        </div>    
+        <div class="col-12 col-md-8">
+            <p>Your first payment was: <strong>{{ profile.last_payment }}</strong>
+            </p>
+            <p>Your next payment will be on: <strong>{{ profile.next_payment }}</strong>
+            </p>
+                <a href="{% url 'dashboard' %}">
+                    <button class="btn btn-primary btn-block">Go to the Dashboard</button>
+                </a>
+        </div>        
+    </div>            
+</div>
 {% endblock %}

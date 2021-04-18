@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-4">       
+        {% if profile.is_subscribed %}
+        <div class="col-12 col-md-4">
+            <h2>You are currently a paying member</h2>
+            <h3>Thank you!</h3>
+        </div>    
+        <div class="col-12 col-md-8">
+            <p>Your Stripe Subscription ID is: <strong>{{ profile.stripe_subscription_id }}</strong>
+            </p>
+            <p>Your last payment was: <strong>{{ profile.last_payment }}</strong>
+            </p>
+            <p>Your next payment will be on: <strong>{{ profile.next_payment }}</strong>
+            </p>
+            <a href="{% url 'cancel_membership' %}">
+                <button class="btn btn-primary btn-block">Cancel membership</button>
+            </a>
+        </div>
+        {% elif profile.is_subscribed == False %}
+        <div class="col-12 col-md-4">
+            <h2>You are not currently a paying member</h2>
+        </div>
+        <div class="col-12 col-md-8">
+            {% if profile.last_payment %}
+                <p>You will have full access until: <strong>{{ profile.next_payment }}</strong></p>
+            {% endif %}        
+            <a href="{% url 'membership_signup' %}">
+                <button class="btn btn-primary btn-block">Click here to subscribe</button>
+            </a>
+        </div>          
+        {% endif %}
+    </div>        
+</div>            
+{% endblock %}

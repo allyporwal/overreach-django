@@ -75,6 +75,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="{% url 'profile' user.userprofile.id %}">View Profile</a>
                                 <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a>
+                                <a class="dropdown-item" href="{% url 'membership_status' %}">Membership</a>
                             </div>
                         </li>
                         <a class="nav-link" href="{% url 'account_logout' %}">Log Out</a>

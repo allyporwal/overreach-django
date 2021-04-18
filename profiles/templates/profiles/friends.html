@@ -32,12 +32,12 @@
                             <div class="col-4">{{ workout.session_average_rpe }}</div>
                         </div>
                     </div>
-                    <div class="collapse" id="collapseExample">
+                    <div class="collapse" id="collapse-{{ forloop.counter }}">
                         <div class="">
-                          Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                          {{ workout.workout }}
                         </div>
                     </div>
-                    <button class="btn btn-outline-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <button class="btn btn-outline-primary btn-block" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">
                         View session
                     </button>   
                 </div>
