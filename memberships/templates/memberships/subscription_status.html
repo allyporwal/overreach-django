@@ -2,5 +2,28 @@
 {% load static %}
 
 {% block content %}
-<h2>Thank you for registering!</h2>
+<div class="container">
+    <div class="row mt-4">       
+        {% if profile.is_subscribed %}
+        <div class="col-12 col-md-4">
+            <h2>You are currently a paying member</h2>
+            <h3>Thank you!</h3>
+        </div>
+        {% elif profile.is_subscribed == False %}
+        <div class="col-12">
+            <h2>You are not currently a paying member</h2>
+            <a href="{% url 'membership_signup' %}">
+                <button class="btn btn-primary btn-block">Click here to subscribe</button>
+            </a>
+        </div>
+        {% endif %}             
+        <div class="col-12 col-md-8">
+            <p>Your Stripe Subscription ID is: <strong>{{ profile.stripe_subscription_id }}</strong>
+            </p>
+            <a href="{% url 'cancel_subscription' %}">
+                <button class="btn btn-primary btn-block">Cancel membership</button>
+            </a>                
+        </div>
+    </div>
+</div>
 {% endblock %}

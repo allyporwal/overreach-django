@@ -93,7 +93,7 @@ def subscription_status(request):
     """Show the user their subscription status and give
     option to cancel"""
     profile = get_object_or_404(UserProfile, user=request.user)
-    subscription_id = profile.stripe_subscription_id
+
     template = 'memberships/subscription_status.html'
     context = {
         'profile': profile,

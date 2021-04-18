@@ -57,7 +57,34 @@ class StripeWH_Handler:
             profile.save()
             return HttpResponse(
                 content=f'Webhook received: {event["type"]}.\
-                    UserProfile successfully updated', status=200)
+                    UserProfile subscribed', status=200)
+
+        except UserProfile.DoesNotExist:
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]}.\
+                    UserProfile does not exist.', status=404)
+
+    def handle_customer_subscription_deleted(self, event):
+        """Cancel subscription on user's profile and revoke access"""
+        subscription_id = event['data']['object']['id']
+        stripe_customer_id = event['data']['object']['customer']
+
+        try:
+            profile = UserProfile.objects.get(
+                stripe_customer_id=stripe_customer_id)
+            # first_name = profile.first_name
+            # email = profile.user.email
+            # email_data = {
+            #     'first_name': first_name,
+            #     'email': email,
+            #     'subscription_id': subscription_id,
+            # }
+            profile.is_subscribed = False
+            profile.stripe_subscription_id = subscription_id
+            profile.save()
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]}.\
+                    Subscription deleted', status=200)
 
         except UserProfile.DoesNotExist:
             return HttpResponse(
@@ -75,7 +102,25 @@ class StripeWH_Handler:
             profile.save()
             return HttpResponse(
                 content=f'Webhook received: {event["type"]}.\
-                    UserProfile successfully updated', status=200)
+                    UserProfile access suspended', status=200)
+
+        except UserProfile.DoesNotExist:
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]}.\
+                    UserProfile does not exist.', status=404)
+
+        def handle_invoice_payment_succeeded(self, event):
+        """Suspend user's access if payment fails"""
+        stripe_customer_id = event['data']['object']['customer']
+
+        try:
+            profile = UserProfile.objects.get(
+                stripe_customer_id=stripe_customer_id)
+            profile.is_subscribed = False
+            profile.save()
+            return HttpResponse(
+                content=f'Webhook received: {event["type"]}.\
+                    UserProfile access suspended', status=200)
 
         except UserProfile.DoesNotExist:
             return HttpResponse(
