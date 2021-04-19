@@ -37,7 +37,15 @@ def membership_signup(request):
             # create a customer object in Stripe using form data
             subscriber = stripe.Customer.create(
                 email=request.POST['default_billing_email'],
-                name=request.POST['default_billing_name'])
+                name=request.POST['default_billing_name'],
+                address={
+                    'line1': request.POST['default_street_address1'],
+                    'line2': request.POST['default_street_address2'],
+                    'city': request.POST['default_town_or_city'],
+                    'state': request.POST['default_county'],
+                    'postal_code': request.POST['default_postcode'],
+                    'country': request.POST['default_country'],
+                })
             # assign the Stripe customer ID to
             # the user's linked userprofile
             profile.stripe_customer_id = subscriber.id
@@ -129,6 +137,7 @@ def membership_cancelled(request):
     return render(request, template, context)
 
 
+@login_required
 @require_POST
 def create_subscription(request):
     """Create the subscription, adapted from

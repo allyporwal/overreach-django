@@ -93,7 +93,7 @@ class StripeWH_Handler:
                     UserProfile does not exist.', status=404)
 
     def handle_invoice_payment_failed(self, event):
-        """Suspend user's access if payment fails"""
+        """Suspend user's access and contact them if payment fails"""
         stripe_customer_id = event['data']['object']['customer']
 
         try:

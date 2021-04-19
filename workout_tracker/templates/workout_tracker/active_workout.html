@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'workout_tracker/css/workout_tracker.css' %}">
+{% endblock %}%}
 
 {% block content %}
 
@@ -132,9 +135,38 @@
 </div>
 {% endif %}   
 
+<!-- Rest timer -->
+<div id="rest-timer-overlay">
+    <div class="row text-center">
+        <div class="col-12">
+            <h2 id="timer-header" class="text-light">Rest Timer</h2>
+            <div id="timer-selector" class="text-light">
+                <div class="btn-group" role="group" aria-label="rest-timer-selector">
+                    <button id="60-seconds" type="button" class="btn btn-timer btn-secondary">60s</button>
+                    <button id="90-seconds" type="button" class="btn btn-timer btn-secondary">90s</button>
+                    <button id="120-seconds" type="button" class="btn btn-timer btn-secondary">120s</button>
+                    <button id="180-seconds" type="button" class="btn btn-timer btn-secondary">180s</button>
+                    <button id="240-seconds" type="button" class="btn btn-timer btn-secondary">240s</button>
+                </div>
+            </div>
+            <div class="text-light">
+                <p id="timer-display">000</p>
+            </div>
+            <div id="close-timer-container" class="continer">
+                <div class="row justify-content-center">
+                    <div class="col-10 col-md-4 text-center">
+                        <button id="close-timer" class="btn-danger btn btn-block text-light"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+            </div>                
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block postloadjs %}
     {{ block.super }}
     <script src="{% static 'workout_tracker/js/dynamic_form.js' %}"></script>
+    <script src="{% static 'workout_tracker/js/rest_timer.js' %}"></script>
 {% endblock %}

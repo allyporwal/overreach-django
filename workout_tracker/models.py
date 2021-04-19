@@ -31,3 +31,5 @@ class WorkoutComments(models.Model):
 
     def __str__(self):
         return self.comment_author
+
+

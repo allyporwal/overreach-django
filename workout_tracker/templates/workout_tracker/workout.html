@@ -17,6 +17,7 @@
             {% endif %}
             <hr>
             {% if comments %}
+            <h4>Comments</h4>
                 {% for comment in comments %}
                     {{ comment.comment_author }}
                     {{ comment.comment_date }}
