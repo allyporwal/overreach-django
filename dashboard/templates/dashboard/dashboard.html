@@ -6,28 +6,32 @@
 {% if recent_workouts|length > 0 %}
     <div class="container">
         <h1>Dashboard</h1>
-        <h4>{{ request.user.username }}</h4>
-        <h5>Recent Workouts</h5>
+        <h4>Welcome, {{ request.user.username }}</h4>
+        <h5>Here's your most recent workouts:</h5>
         <div class="row">        
             {% for workout in recent_workouts %}
-                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">{{ workout.session_name }}</h5>
                             <p class="card-text"><small>Logged on: {{ workout.created_at }}</small></p>                        
-                                <div class="row">
-                                <div class="col-4"><small>Vol:</small></div>
+                                <div class="row text-center">
+                                <div class="col-4 vol-col"><small>Vol:</small></div>
                                 <div class="col-4"><small>Reps:</small></div>
                                 <div class="col-4"><small>RPE:</small></div>
                             </div>
-                            <div class="row">
-                                <div class="col-4">{{ workout.session_volume }}</div>
+                            <div class="row text-center">
+                                <div class="col-4 vol-col">{{ workout.session_volume }}</div>
                                 <div class="col-4">{{ workout.session_reps }}</div>
                                 <div class="col-4">{{ workout.session_average_rpe }}</div>
-                            </div>
-                            <a href="{% url 'workout' workout.id %}" class="btn btn-primary">View</a>
-                            <a href="{% url 'edit_workout' workout.id %}" class="btn btn-primary">Edit</a>
-                            <a href="{% url 'delete_workout' workout.id %}" class="btn btn-primary">Delete</a>
+                            </div>                            
+                        </div>
+                        <div class="row text-center workout-card-footer">
+                            <div class="btn-group card-button-group" role="group" aria-label="Basic example">
+                                <a href="{% url 'workout' workout.id %}" class="col-4 btn btn-secondary">View</a>
+                                <a href="{% url 'edit_workout' workout.id %}" class="col-4 btn btn-secondary">Edit</a>
+                                <a href="{% url 'delete_workout' workout.id %}" class="col-4 btn btn-secondary">Delete</a>
+                              </div>
                         </div>
                     </div>
                 </div>
