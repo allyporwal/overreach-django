@@ -16,3 +16,18 @@ class WorkoutTracker(models.Model):
 
     def __str__(self):
         return self.session_name
+
+
+class WorkoutComments(models.Model):
+    comment_author = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
+                                       null=False, blank=False,
+                                       related_name='comment_author')
+    target_workout = models.ForeignKey(WorkoutTracker,
+                                       on_delete=models.CASCADE,
+                                       null=False, blank=False,
+                                       related_name='target_workout')
+    comment_date = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField(max_length=1000, blank=False, null=False)
+
+    def __str__(self):
+        return self.comment_author

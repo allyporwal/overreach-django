@@ -60,7 +60,7 @@ def profile(request, profile_id):
 @login_required
 def edit_profile(request):
     """Allow the user to edit their profile details"""
-    profile = get_object_or_404(UserProfile, user=request.user)
+    profile = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=profile)

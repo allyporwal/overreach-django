@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.core.paginator import Paginator
-from .forms import WorkoutTrackerForm
+from .forms import WorkoutTrackerForm, WorkoutCommentsForm
 from profiles.models import UserProfile
-from .models import WorkoutTracker
+from .models import WorkoutTracker, WorkoutComments
 from .validators import validate_active_workout
 from django.contrib.auth.decorators import login_required
 
@@ -171,6 +171,7 @@ def log_workout(request):
 def workout(request, workout_id):
     """Show an individual workout"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
+    comments = workout.target_workout.all()
 
     # sort workout data into lists for processing
     set_count = []
@@ -206,10 +207,13 @@ def workout(request, workout_id):
     workout_zipped = zip(
         workout.workout, exercise_volumes, exercise_reps, exercise_average_rpe)
 
+    form = WorkoutCommentsForm()
     template = 'workout_tracker/workout.html'
     context = {
         'workout': workout,
         'workout_zipped': workout_zipped,
+        'form': form,
+        'comments': comments,
     }
     return render(request, template, context)
 
@@ -326,7 +330,8 @@ def update_workout(request, workout_id):
                 volumes.append(
                     (float(weight['rep_count']) * float(weight['weight'])))
 
-        # data for each individual exercise to calculate overall workout metrics
+        # data for each individual exercise
+        # to calculate overall workout metrics
         exercise_volumes = []
         exercise_reps = []
 
@@ -417,3 +422,26 @@ def all_workouts(request):
         'page_obj': page_obj,
     }
     return render(request, template, context)
+
+
+@login_required
+def comment_on_workout(request, workout_id):
+    """Allow a user to comment on a workout"""
+    profile = UserProfile.objects.get(user=request.user)
+    workout = get_object_or_404(WorkoutTracker, pk=workout_id)
+
+    if request.method == 'POST':
+
+        form_data = {
+            'comment': request.POST['comment'],
+        }
+
+        form = WorkoutCommentsForm(form_data)
+
+        if form.is_valid:
+            comment = form.save(commit=False)
+            comment.target_workout = workout
+            comment.comment_author = profile
+            comment.save()
+
+            return redirect(reverse('workout', args=[workout.id]))

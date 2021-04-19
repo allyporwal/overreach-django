@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load volume_tools %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div class="container mt-4">
@@ -15,6 +15,20 @@
                     <button class="btn btn-primary btn-sm btn-block">Edit</button>
                 </a>
             {% endif %}
+            <hr>
+            {% if comments %}
+                {% for comment in comments %}
+                    {{ comment.comment_author }}
+                    {{ comment.comment_date }}
+                    {{ comment.comment }}
+                    <hr>
+                {% endfor %}
+            {% endif %}
+            <form class="mt-3" action="{% url 'comment_on_workout' workout.id %}" method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}                
+                    <button class="btn btn-primary btn-sm btn-block" type="submit">Add comment</button>
+            </form>
         </div>
         <div class="col-sm-8 mt-2 mb-4">
             <div class="accordion" id="workout-accordian">

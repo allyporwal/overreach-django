@@ -1,5 +1,5 @@
 from django import forms
-from .models import WorkoutTracker
+from .models import WorkoutTracker, WorkoutComments
 
 
 class WorkoutTrackerForm(forms.ModelForm):
@@ -19,3 +19,13 @@ class WorkoutTrackerForm(forms.ModelForm):
     session_average_rpe = forms.FloatField(widget=forms.HiddenInput())
     session_volume = forms.FloatField(widget=forms.HiddenInput())
     session_notes = forms.Textarea()
+
+
+class WorkoutCommentsForm(forms.ModelForm):
+    class Meta:
+        model = WorkoutComments
+        exclude = ('comment_author',
+                   'target_workout',
+                   'comment_date')
+
+    comment = forms.Textarea()
