@@ -118,8 +118,22 @@
     margin: auto;
 }
 
+/* individual workout page */
+
+th {
+    width: 25%;
+}
+
 /* all images */
 .profile-image-wrapper {
     height: 200px;
     width: 200px;
 }
+
+/* media queries */
+
+@media (min-width: 768px) {
+    .push-right  {
+      float: left !important;
+    }
+  }

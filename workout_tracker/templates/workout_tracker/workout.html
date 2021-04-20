@@ -34,59 +34,58 @@
         <div class="col-sm-8 mt-2 mb-4">
             <div class="accordion" id="workout-accordian">
                 {% for exercise, exercise_volume, exercise_reps, exercise_average_rpe in workout_zipped %}
-                    <div class="card">
+                    <div class="workout-accordian-header">
                         <div class="card-header" id="heading-{{ forloop.counter }}">
                             <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left w-100 h-100" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse-{{ forloop.counter }}">
-                                    {{ exercise.exercise}} for {{ exercise.sets }} sets of {{ exercise.reps }} reps
+                                <button id="collapse-btn-{{ forloop.counter }}" class="btn btn-block text-left w-100 h-100" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse-{{ forloop.counter }}">
+                                    {{ exercise.exercise}} for {{ exercise.sets }} sets of {{ exercise.reps }} reps <i class="fas fa-chevron-down float-right mt-1" hidden></i><i class="fas fa-chevron-up float-right mt-1"></i>
                                 </button>
+                                
                             </h2>
                         </div>
                         <div id="collapse-{{ forloop.counter }}" class="collapse show" aria-labelledby="heading-{{ forloop.counter }}" >
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead class="thead-dark">
+                            <table class="table">
+                                <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col">Set</th>
+                                        <th scope="col mw-25">Set</th>
                                         <th scope="col">Weight</th>
                                         <th scope="col">Reps</th>
                                         <th scope="col">RPE</th>
                                     </tr>
+                                </thead>
+                                <tbody>
+                                {% for weight_reps_rpe in exercise.set_volumes %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ weight_reps_rpe.weight }}</td>
+                                        <td>{{ weight_reps_rpe.rep_count }}</td>
+                                        <td>{{ weight_reps_rpe.rpe  }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                </table>
+                                <table class="table sub-table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"><small>Volume</small></th>
+                                            <th scope="col"><small>Exercise reps</small></th>
+                                            <th scope="col"><small>Average RPE</small></th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    {% for weight_reps_rpe in exercise.set_volumes %}
                                         <tr>
-                                            <th scope="row">{{ forloop.counter }}</th>
-                                            <td>{{ weight_reps_rpe.weight }}</td>
-                                            <td>{{ weight_reps_rpe.rep_count }}</td>
-                                            <td>{{ weight_reps_rpe.rpe  }}</td>
+                                            <th scope="row"><small>Totals:</small></th>
+                                            <td>{{ exercise_volume }}</td>
+                                            <td>{{ exercise_reps }}</td>
+                                            <td>{{ exercise_average_rpe }}</td>
                                         </tr>
-                                    {% endfor %}
                                     </tbody>
-                                    </table>
-                                    <table class="table sub-table">
-                                        <thead class="thead-light">
-                                            <tr>
-                                                <th scope="col"></th>
-                                                <th scope="col"><small>Volume</small></th>
-                                                <th scope="col"><small>Exercise reps</small></th>
-                                                <th scope="col"><small>Average RPE</small></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row"><small>Totals:</small></th>
-                                                <td>{{ exercise_volume }}</td>
-                                                <td>{{ exercise_reps }}</td>
-                                                <td>{{ exercise_average_rpe }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
+                                </table>
                         </div>
                     </div>
                 {% endfor %}
-                <div class="card">
+                <div class="">
                     <div class="card-header" id="heading-totals">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left w-100 h-100" type="button" data-toggle="collapse" data-target="#collapse-totals" aria-expanded="true" aria-controls="collapse-{{ forloop.counter }}">
@@ -95,7 +94,7 @@
                         </h2>
                     </div>
                     <div id="collapse-totals" class="collapse show" aria-labelledby="heading-totals" >
-                        <div class="card-body">
+                        <div class="table-responsive">
                                 <table class="table">
                                     <thead class="thead-dark">
                                         <tr>
@@ -123,7 +122,11 @@
 </div>
 
 
-
+<script>
+    $("button[id*='collapse']").click(function() {
+        $(this).children().toggle()
+    })
+</script>
 
 {% endblock %}
 
