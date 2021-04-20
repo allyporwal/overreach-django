@@ -410,7 +410,7 @@ def delete_workout(request, workout_id):
 @login_required
 def all_workouts(request):
     """Display workouts done by everyone"""
-    workouts = WorkoutTracker.objects.all()
+    workouts = WorkoutTracker.objects.all().order_by('-pk')
     workout_paginator = Paginator(workouts, 20)
 
     page_number = request.GET.get('page')

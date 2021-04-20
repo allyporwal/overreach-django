@@ -6,10 +6,10 @@
 {% if recent_workouts|length > 0 %}
     <div class="container mt-3">
         <div class="row">
-            <div class="col-12">
-            <h2 class="mt-3">Dashboard</h2>
-            <h4>Welcome, {{ request.user.username }}</h4>
-        </div>
+            <div class="col-12 text-center">
+                <h2 class="mt-3">Dashboard</h2>
+                <h6>Welcome, {{ request.user.username }}</h6>
+            </div>
         </div>
         <div class="row mt-3">       
             {% for workout in recent_workouts %}
@@ -37,8 +37,7 @@
                               </div>
                         </div>
                     </div>
-                </div>
- 
+                </div> 
             {% endfor %}
             <div class="col-12 col-lg-4">
                 <a class="all-workouts-db-link" href="">
@@ -61,6 +60,11 @@
         </div>
     </div>
     <div class="container chart-container">
+        <div class="row mb-3">
+            <div class="col-12 text-center">
+                <h4>Recent Metrics</h4>
+            </div>
+        </div>
         <div class="row mb-3">
             <div class="col-12 col-md-4">
                 <h6 class="chart-title mt-4 mb-4 d-flex align-middle justify-content-center">Reps vs Average RPE:</h6>
@@ -161,7 +165,40 @@
     {{ total_volume_chart_data|json_script:"total_volume_chart_data" }}
     <!--  -->
 {% else %}
-    <p>Get started to see your workout data presented here</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <a class="all-workouts-db-link" href="{% url 'active_workout' %}">
+            <div  class="card all-workouts-db-link-card">
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>Log a workout to activate your dashboard<i class="fas fa-dumbbell ml-3"></i></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <a class="all-workouts-db-link" href="{% url 'all_workouts' %}">
+            <div  class="card all-workouts-db-link-card">
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>Find some people to follow<i class="fas fa-user-friends ml-3"></i></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+</div>
 {% endif %}
 
 {% endblock %}

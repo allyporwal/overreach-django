@@ -89,7 +89,26 @@
 }
 
 .scroll-icon-up {
-  margin-bottom: 12%;
+    margin-bottom: 12%;
+}
+/* friends template */
+
+.friends-workout-container {
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+    padding: 1.25rem;
+}
+
+.fa-thumbs-up {
+    font-size: 1.15rem;
+}
+
+.interactions-container {
+    background-color: rgba(0, 166, 2, 0.3);
+}
+
+.fa-comment-alt {
+    font-size: 1.15rem;
 }
 
 /* all forms */
