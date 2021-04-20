@@ -60,5 +60,6 @@ def dashboard(request):
         'total_volume_chart_data': total_volume_chart_data,
         'total_reps_chart_data': total_reps_chart_data,
         'friends_workouts': friends_workouts,
+        'friends': friends,
     }
     return render(request, template, context)
