@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from profiles.models import UserProfile
+from workout_tracker.models import WorkoutTracker
 from django.contrib.auth.decorators import login_required
 
 
@@ -45,6 +46,12 @@ def dashboard(request):
         'y': reps,
     } for date, reps in zip(only_date, session_reps)]
 
+    # load friends most recent 2 workouts
+    friends = profile.follower.values('is_following').filter(status=True)
+    friends_profiles = UserProfile.objects.filter(pk__in=friends)
+    friends_workouts = WorkoutTracker.objects.filter(
+        created_by__in=friends_profiles)[:2]
+
     template = 'dashboard/dashboard.html'
     context = {
         'profile': profile,
@@ -52,5 +59,6 @@ def dashboard(request):
         'rpe_chart_data': rpe_chart_data,
         'total_volume_chart_data': total_volume_chart_data,
         'total_reps_chart_data': total_reps_chart_data,
+        'friends_workouts': friends_workouts,
     }
     return render(request, template, context)

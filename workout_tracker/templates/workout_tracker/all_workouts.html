@@ -4,30 +4,52 @@
 {% block content %}
 
 <div class="container">
-    <h1>All workouts</h1>
-    <div class="row">
+    <h1>Everyone's workouts</h1>
+    <div class="row mt-3">
         {% for workout in page_obj %}
             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
+                <div class="card mb-0">
+                    <div class="card-body overflow-auto">
+                        {% if workout.session_notes %}
+                        <div class="scroll-icon">
+                            <i class="fas fa-chevron-down mt-1 float-right"></i>
+                        </div>
+                        {% endif %}  
                         <h5 class="card-title">{{ workout.session_name }}</h5>
-                        <p class="card-text"><small>Logged on: {{ workout.created_at }} by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>                        
-                        <div class="row">
-                            <div class="col-4"><small>Vol:</small></div>
-                            <div class="col-4"><small>Reps:</small></div>
-                            <div class="col-4"><small>RPE:</small></div>
+                        <p class="card-text"><small>{{ workout.created_at }} by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>
+                        {% if workout.session_notes %}                            
+                            <p class="card-text"><small>Session notes:</small></p>
+                            <p class="card-text mt-0"><small>{{ workout.session_notes }}</small></p>
+                            <div class="scroll-icon-up">
+                                <i class="fas fa-chevron-up float-right"></i>
+                            </div>
+                        {% endif %}                        
+                    </div>                        
+                        <div class="row workout-metrics text-center">
+                            <div class="col-4 vol-col"><small>Vol:</small></div>
+                            <div class="col-4 reps-col"><small>Reps:</small></div>
+                            <div class="col-4 rpe-col"><small>RPE:</small></div>
                         </div>
-                        <div class="row">
-                            <div class="col-4">{{ workout.session_volume }}</div>
-                            <div class="col-4">{{ workout.session_reps }}</div>
-                            <div class="col-4">{{ workout.session_average_rpe }}</div>
+                        <div class="row workout-metrics text-center">
+                            <div class="col-4 vol-col">{{ workout.session_volume|floatformat:"0" }}</div>
+                            <div class="col-4 reps-col">{{ workout.session_reps }}</div>
+                            <div class="col-4 rpe-col">{{ workout.session_average_rpe }}</div>
                         </div>
-                        <a href="{% url 'workout' workout.id %}" class="btn btn-primary">View</a>
                         {% if workout.created_by.user == request.user %}
-                            <a href="{% url 'edit_workout' workout.id %}" class="btn btn-primary">Edit</a>
-                            <a href="{% url 'delete_workout' workout.id %}" class="btn btn-primary">Delete</a>
+                            <div class="row text-center workout-card-footer">
+                                <div class="btn-group card-button-group" role="group" aria-label="Workout actions">
+                                    <a href="{% url 'workout' workout.id %}" class="col-4 btn btn-secondary">View</a>
+                                    <a href="{% url 'edit_workout' workout.id %}" class="col-4 btn btn-secondary">Edit</a>
+                                    <a href="{% url 'delete_workout' workout.id %}" class="col-4 btn btn-secondary">Delete</a>
+                                  </div>
+                            </div>
+                        {% else %}
+                            <div class="row text-center workout-card-footer">
+                                <div class="btn-group card-button-group" role="group" aria-label="Friends workout actions">
+                                    <a href="{% url 'workout' workout.id %}" class="col-12 view-other-users-workout btn btn-secondary">View</a>
+                                </div>
+                            </div>
                         {% endif %}
-                    </div>
                 </div>
             </div>
             {% if forloop.counter|divisibleby:1 %}
@@ -75,4 +97,6 @@
 {% endblock %}
 
 {% block postloadjs %}
+{{ block.super }}
+    <script src="{% static 'workout_tracker/js/auto_scroll.js' %}"></script>
 {% endblock %}

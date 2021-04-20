@@ -1,12 +1,11 @@
 /* all text */
 
-h1 {
-    color: green;
-}
+
 
 /* card components */
 .card {
-    min-height: 220px;
+    min-height: 245px;
+    max-height: 245px;
     margin-bottom: 1.5rem;
 }
 
@@ -16,6 +15,11 @@ h1 {
 
 .card-button-group {
     width: 100%;
+}
+
+.view-other-users-workout {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 .card-text {
@@ -55,25 +59,37 @@ h1 {
     border: none;
 }
 
-#all-workouts-db-link-card {
+.all-workouts-db-link-card {
     background-color: rgba(8, 114, 128, 0.5);
     text-decoration: none;
     color: black;
 }
 
-#all-workouts-db-link-card:hover {
+.all-workouts-db-link-card:hover {
     background-color: rgba(8, 114, 128, 0.3);
     text-decoration: none;
 }
 
-#all-workouts-db-link:hover {
-    background-color: rgba(8, 114, 128, 0.3);
+.all-workouts-db-link:hover {
+    background-color: rgba(8, 114, 128, 0.2);
     text-decoration: none;
 }
 
-.graph-label-card {
-    border: none;
-    max-height: 5vh;
+.empty-friends-workouts {
+    background-color: rgba(8, 114, 128, 0.2);
+}
+
+.card-body::-webkit-scrollbar {
+    display: none;
+}
+
+.card-body {
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+}
+
+.scroll-icon-up {
+  margin-bottom: 12%;
 }
 
 /* all forms */

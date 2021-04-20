@@ -7,7 +7,7 @@
     <div class="container mt-3">
         <div class="row">
             <div class="col-12">
-            <h2>Dashboard</h2>
+            <h2 class="mt-3">Dashboard</h2>
             <h4>Welcome, {{ request.user.username }}</h4>
         </div>
         </div>
@@ -15,10 +15,9 @@
             {% for workout in recent_workouts %}
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body overflow-auto">
                             <h5 class="card-title">{{ workout.session_name }}</h5>
-                            <p class="card-text"><small>Logged on: {{ workout.created_at }}</small></p>                        
-                                                        
+                            <p class="card-text"><small>Logged on: {{ workout.created_at }}</small></p>
                         </div>
                         <div class="row workout-metrics text-center">
                             <div class="col-4 vol-col"><small>Vol:</small></div>
@@ -26,12 +25,12 @@
                             <div class="col-4 rpe-col"><small>RPE:</small></div>
                             </div>
                             <div class="row workout-metrics text-center">
-                                <div class="col-4 vol-col">{{ workout.session_volume }}</div>
+                                <div class="col-4 vol-col">{{ workout.session_volume|floatformat:"0" }}</div>
                                 <div class="col-4 reps-col">{{ workout.session_reps }}</div>
                                 <div class="col-4 rpe-col">{{ workout.session_average_rpe }}</div>
                             </div>
                         <div class="row text-center workout-card-footer">
-                            <div class="btn-group card-button-group" role="group" aria-label="Basic example">
+                            <div class="btn-group card-button-group" role="group" aria-label="Workout actions">
                                 <a href="{% url 'workout' workout.id %}" class="col-4 btn btn-secondary">View</a>
                                 <a href="{% url 'edit_workout' workout.id %}" class="col-4 btn btn-secondary">Edit</a>
                                 <a href="{% url 'delete_workout' workout.id %}" class="col-4 btn btn-secondary">Delete</a>
@@ -42,8 +41,8 @@
  
             {% endfor %}
             <div class="col-12 col-lg-4">
-                <a id="all-workouts-db-link" href="">
-                <div id="all-workouts-db-link-card" class="card">
+                <a class="all-workouts-db-link" href="">
+                <div  class="card all-workouts-db-link-card">
                     <div class="card-body d-flex align-items-center justify-content-center">
                         <div class="row">
                             <div class="col-12 ">
@@ -56,16 +55,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 mb-2 mt-2">
+            <div class="col-12">
                 <hr>
             </div>
         </div>
     </div>
-
     <div class="container chart-container">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-12 col-md-4">
-                <h6>Reps vs Average RPE:</h6>
+                <h6 class="chart-title mt-4 mb-4 d-flex align-middle justify-content-center">Reps vs Average RPE:</h6>
             </div>
             <div class="col-12 col-md-8">
                 <canvas id="totalReps"></canvas>
@@ -73,13 +71,89 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-4">
-                <h6>Reps vs Average RPE:</h6>
+                <h6 class="chart-title mt-4 mb-4 d-flex align-middle justify-content-center">Volume vs Average RPE:</h6>
             </div>
             <div class="col-12 col-md-8">
                 <canvas id="totalVolume"></canvas>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <hr>
+            </div>
+        </div>
     </div>
+    {% if friends_workouts %}
+    <div class="container mt-3">
+        <div class="row mt-3">
+            <div class="col-12 col-lg-4">
+                <a class="all-workouts-db-link" href="{% url 'friends' %}">
+                <div class="card all-workouts-db-link-card">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row">
+                            <div class="col-12 ">
+                                <h4>Friends workouts <i class="fas fa-chevron-right"></i></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>       
+            {% for workout in friends_workouts %}
+                <div class="d-none d-sm-block col-sm-6 col-md-6 col-lg-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ workout.session_name }}</h5>
+                            <p class="card-text"><small>{{ workout.created_at }} by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>                 
+                        </div>
+                        <div class="row workout-metrics text-center">
+                            <div class="col-4 vol-col"><small>Vol:</small></div>
+                            <div class="col-4 reps-col"><small>Reps:</small></div>
+                            <div class="col-4 rpe-col"><small>RPE:</small></div>
+                            </div>
+                            <div class="row workout-metrics text-center">
+                                <div class="col-4 vol-col">{{ workout.session_volume }}</div>
+                                <div class="col-4 reps-col">{{ workout.session_reps }}</div>
+                                <div class="col-4 rpe-col">{{ workout.session_average_rpe }}</div>
+                            </div>
+                        <div class="row text-center workout-card-footer">
+                            <div class="btn-group card-button-group" role="group" aria-label="Friends workout actions">
+                                <a href="{% url 'workout' workout.id %}" class="col-12 view-other-users-workout btn btn-secondary">View</a>
+                              </div>
+                        </div>
+                    </div>
+                </div> 
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="container mt-3">
+        <div class="row mt-3">
+            <div class="col-12 col-lg-4">
+                <a class="all-workouts-db-link" href="{% url 'all_workouts' %}">
+                <div class="card all-workouts-db-link-card">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row">
+                            <div class="col-12 ">
+                                <h4>Find people to follow<i class="fas fa-chevron-right"></i></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+            <div class="d-none d-sm-block col-12 col-lg-8">
+                <div class="card">
+                    <div class="card-body empty-friends-workouts d-flex align-items-center justify-content-center">
+                        <h5 class="card-title">Their workouts will appear here</h5>                                         
+                    </div>
+                    <div class="row text-center workout-card-footer">
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    {% endif %}
 
     <!-- json script to be used in charts-->
     {{ rpe_chart_data|json_script:"rpe_chart_data" }}
