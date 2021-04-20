@@ -9,7 +9,7 @@ def dashboard(request):
     profile = get_object_or_404(UserProfile, user=request.user)
 
     # load four most recent workouts to display
-    recent_workouts = profile.workouts.all().order_by('-id')[:4]
+    recent_workouts = profile.workouts.all().order_by('-id')[:2]
 
     # retreive data from last 8 workouts to display on graphs
     average_rpe_raw = profile.workouts.values('session_average_rpe')[:8]

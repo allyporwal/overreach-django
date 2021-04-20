@@ -4,28 +4,32 @@
 {% block content %}
 
 {% if recent_workouts|length > 0 %}
-    <div class="container">
-        <h1>Dashboard</h1>
-        <h4>Welcome, {{ request.user.username }}</h4>
-        <h5>Here's your most recent workouts:</h5>
-        <div class="row">        
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-12">
+            <h2>Dashboard</h2>
+            <h4>Welcome, {{ request.user.username }}</h4>
+        </div>
+        </div>
+        <div class="row mt-3">       
             {% for workout in recent_workouts %}
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">{{ workout.session_name }}</h5>
                             <p class="card-text"><small>Logged on: {{ workout.created_at }}</small></p>                        
-                                <div class="row text-center">
-                                <div class="col-4 vol-col"><small>Vol:</small></div>
-                                <div class="col-4"><small>Reps:</small></div>
-                                <div class="col-4"><small>RPE:</small></div>
-                            </div>
-                            <div class="row text-center">
-                                <div class="col-4 vol-col">{{ workout.session_volume }}</div>
-                                <div class="col-4">{{ workout.session_reps }}</div>
-                                <div class="col-4">{{ workout.session_average_rpe }}</div>
-                            </div>                            
+                                                        
                         </div>
+                        <div class="row workout-metrics text-center">
+                            <div class="col-4 vol-col"><small>Vol:</small></div>
+                            <div class="col-4 reps-col"><small>Reps:</small></div>
+                            <div class="col-4 rpe-col"><small>RPE:</small></div>
+                            </div>
+                            <div class="row workout-metrics text-center">
+                                <div class="col-4 vol-col">{{ workout.session_volume }}</div>
+                                <div class="col-4 reps-col">{{ workout.session_reps }}</div>
+                                <div class="col-4 rpe-col">{{ workout.session_average_rpe }}</div>
+                            </div>
                         <div class="row text-center workout-card-footer">
                             <div class="btn-group card-button-group" role="group" aria-label="Basic example">
                                 <a href="{% url 'workout' workout.id %}" class="col-4 btn btn-secondary">View</a>
@@ -35,38 +39,46 @@
                         </div>
                     </div>
                 </div>
-                {% if forloop.counter|divisibleby:1 %}
-                    <div class="col-12 d-sm-none mb-2 mt-2">
-                        <hr>
+ 
+            {% endfor %}
+            <div class="col-12 col-lg-4">
+                <a id="all-workouts-db-link" href="">
+                <div id="all-workouts-db-link-card" class="card">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row">
+                            <div class="col-12 ">
+                                <h4>View all workouts <i class="fas fa-chevron-right"></i></h4>
+                            </div>
+                        </div>
                     </div>
-                {% endif %}                        
-                {% if forloop.counter|divisibleby:2 %}
-                    <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-2 mt-2">
-                        <hr>
-                    </div>
-                {% endif %}
-                {% if forloop.counter|divisibleby:3 %}
-                    <div class="col-12 d-none d-lg-block d-xl-none mb-2 mt-2">
-                        <hr>
-                    </div>
-                {% endif %}
-                {% if forloop.counter|divisibleby:4 %}
-                    <div class="col-12 d-none d-xl-block mb-2 mt-2">
-                        <hr>
-                    </div>
-                {% endif %}
-            {% endfor %}    
+                </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-2 mt-2">
+                <hr>
+            </div>
         </div>
     </div>
 
     <div class="container chart-container">
-        <canvas id="avgRpe"></canvas>
-    </div>
-    <div class="container chart-container">
-        <canvas id="totalReps"></canvas>
-    </div>
-    <div class="container chart-container">
-        <canvas id="totalVolume"></canvas>
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <h6>Reps vs Average RPE:</h6>
+            </div>
+            <div class="col-12 col-md-8">
+                <canvas id="totalReps"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <h6>Reps vs Average RPE:</h6>
+            </div>
+            <div class="col-12 col-md-8">
+                <canvas id="totalVolume"></canvas>
+            </div>
+        </div>
     </div>
 
     <!-- json script to be used in charts-->

@@ -5,6 +5,11 @@ h1 {
 }
 
 /* card components */
+.card {
+    min-height: 220px;
+    margin-bottom: 1.5rem;
+}
+
 .workout-card-footer {
     margin: 0;
 }
@@ -13,8 +18,26 @@ h1 {
     width: 100%;
 }
 
+.card-text {
+    margin-top: 1.5rem;
+}
+
 .vol-col {
     background-color: rgba(8, 114, 128, 0.664);
+}
+
+.reps-col {
+    background-color: rgba(8, 114, 128, 0.664);
+}
+
+.rpe-col {
+    background-color: rgba(8, 114, 128, 0.664);
+}
+
+.workout-metrics {
+    margin-left: 0px;
+    margin-right: 0px;
+    min-height: 1.75rem;
 }
 
 .btn-group>.btn:not(:first-child) {
@@ -30,6 +53,27 @@ h1 {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border: none;
+}
+
+#all-workouts-db-link-card {
+    background-color: rgba(8, 114, 128, 0.5);
+    text-decoration: none;
+    color: black;
+}
+
+#all-workouts-db-link-card:hover {
+    background-color: rgba(8, 114, 128, 0.3);
+    text-decoration: none;
+}
+
+#all-workouts-db-link:hover {
+    background-color: rgba(8, 114, 128, 0.3);
+    text-decoration: none;
+}
+
+.graph-label-card {
+    border: none;
+    max-height: 5vh;
 }
 
 /* all forms */
