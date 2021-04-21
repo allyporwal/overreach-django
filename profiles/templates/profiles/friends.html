@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container mb-5">
     <div class="row mt-4">
         <div class="col-12 col-md-8 offset-md-2 text-center">
             <h2>Workouts by Friends</h2>
@@ -80,7 +80,7 @@
                     </div>        
                     <p class="card-text"><small class="pl-3 lightweight-text">Logged on: <a href="{% url 'workout' workout.id %}">{{ workout.created_at }}</a> by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>                     
                         <div class="row text-center">
-                        <div class="col-4"><small>Vol:</small></div>
+                        <div class="col-4"><small>Volume:</small></div>
                         <div class="col-4"><small>Reps:</small></div>
                         <div class="col-4"><small>RPE:</small></div>
                     </div>
@@ -115,7 +115,9 @@
                         <div class="row">
                             <div class="col-10 offset-1">
                                 <hr>
-                                <p><small class="lightweight-text">{{ workout.session_notes }}</small></p>
+                                {% if workout.session_notes %}
+                                    <p><small class="lightweight-text">{{ workout.session_notes }}</small></p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>                     

@@ -1,9 +1,15 @@
 /* all text */
 
-body {
+
+
+/* Global settings */
+
+html, body {
     font-family: 'Montserrat', sans-serif;
     color: rgba(53, 58, 77, 1);
     background-color: rgba(0, 0, 0, .0125);
+    height: 100%;
+    margin: 0;
 }
 
 .navbar {
@@ -14,18 +20,70 @@ body {
     font-weight: 200;
 }
 
+#push-footer-outer {
+    min-height: 100%;
+}
+
+#push-footer-inner {
+    padding-bottom: 5vh;
+}
+
 /* navbar */
 
 .navbar {
     background-color: rgba(0, 0, 0, .075);
 }
 
-/* disable shadows on buttons */
+/* footer */
+
+footer {
+    background-color: rgba(0, 0, 0, .075);
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 7vh;
+    margin-top: -7vh;
+    padding-bottom: 1.5vh;
+}
+
+#footer {
+    background-color: rgba(0, 0, 0, .075);
+}
+
+.socialMedia-links i {
+    padding-bottom: 15px;
+}
+
+.socialMedia-links a i {
+  width: 32px;
+  height: 32px;
+  padding: 12px 0;
+  border-radius: 0.25rem;
+  font-size: 14px;
+  line-height: 7px;
+  text-align: center;
+  color: #fafaff;
+  background: rgba(0, 178, 131, 1);
+  transition: all 0.35s ease-in-out;
+  -moz-transition: all 0.35s ease-in-out;
+  -webkit-transition: all 0.35s ease-in-out;
+  -o-transition: all 0.35s ease-in-out;
+}
+
+.socialMedia-links i:hover {
+    background: rgba(0, 178, 131, 0.75);
+}
+
+.socialMedia-links a:hover {
+    text-decoration: none;
+}
+
+
+/* disable shadows and borders on all buttons */
 
 .btn:hover, .btn:active, .btn:focus {
     box-shadow: none !important;
-    /* background-color: #1F2838 !important;
-    border-color: #494F57 !important; */
+    /* border: none !important; */
 }
 
 /* card components */
@@ -55,15 +113,15 @@ body {
 }
 
 .vol-col {
-    background-color: rgba(0, 178, 131, 1);
+    background-color: rgba(53, 58, 77, 0.5);
 }
 
 .reps-col {
-    background-color: rgba(0, 178, 131, 1);
+    background-color: rgba(53, 58, 77, 0.5);
 }
 
 .rpe-col {
-    background-color: rgba(0, 178, 131, 1);
+    background-color: rgba(53, 58, 77, 0.5);
 }
 
 .workout-metrics {
@@ -98,13 +156,13 @@ body {
 }
 
 .all-workouts-db-link-card {
-    background-color: rgba(8, 114, 128, 0.5);
+    background-color: rgba(0, 178, 131, 1);
     text-decoration: none;
     color: rgba(53, 58, 77, 1);
 }
 
 .all-workouts-db-link-card:hover {
-    background-color: rgba(8, 114, 128, 0.3);
+    background-color: rgba(0, 178, 131, 0.75);
     text-decoration: none;
 }
 
@@ -159,9 +217,6 @@ body {
 }
 
 .view-workout:hover {
-    border-color: rgba(0, 178, 131, 1);
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
     background-color: rgba(0, 178, 131, 0.75);
     color: white;
 }
@@ -181,6 +236,12 @@ body {
 
 .thead-friends {
     background-color: rgba(53, 58, 77, 1);
+}
+
+.view-workout:hover, .view-workout:active, .view-workout:focus {
+    box-shadow: none !important;
+    border: none !important;
+    background-color: rgba(0, 178, 131, 0.75) !important;
 }
 
 /* all forms */

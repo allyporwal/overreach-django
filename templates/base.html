@@ -48,6 +48,8 @@
 </head>
 
 <body>
+    <div id="push-footer-outer">
+        <div id="push-footer-inner">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light">
             {% if request.user.is_authenticated %}
@@ -70,7 +72,7 @@
                         <a class="nav-link" href="{% url 'all_workouts' %}">Everyone</a>
                     {% endif %}
                 </div>  
-                <div class="navbar-nav ml-auto">
+                <div class="navbar-nav mt-1 ml-auto">
                     {% if request.user.is_authenticated %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -95,12 +97,48 @@
     {% block page_header %}
     {% endblock %}
     
+
     {% block content %}
     {% endblock %}
+        </div>    
+    </div>
 
     {% block postloadjs %}
     {% endblock %}
-
+    <footer class="container-fluid w-100">
+        <!-- <div id="footer" class="container-fluid w-100"> -->
+            <div class="row mh-50 mb-0 pb-0">
+                <div class="col-12 text-left">
+                    <p class="lightweight-text pb-0 mb-0">
+                        <small>Find us</small>                        
+                    </p>
+                </div>
+            </div>
+            <div class="row mh-50">
+                <div class="col-6 text-left">
+                    <p class="socialMedia-links mb-0 text-light">
+                        <a target="_blank" href="https://www.facebook.com/counterpointfitness">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a target="_blank" href="https://www.instagram.com/counterpointfitness">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a target="_blank" href="https://www.youtube.com/channel/UCOO4KTnw0RBOHLXTtHrLWrQ">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a target="_blank" href="https://www.linkedin.com/in/alastair-porwal-30385557/">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </p>
+                </div>
+                <div class="col-6 text-right">
+                    <p class="lightweight-text mb-0">
+                        <small>Copyright Overreach 2021</small>                        
+                    </p>
+                </div>
+            </div>            
+        <!-- </div> -->
+    </footer>
 </body>
 
 </html>

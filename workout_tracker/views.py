@@ -411,7 +411,7 @@ def delete_workout(request, workout_id):
 def all_workouts(request):
     """Display workouts done by everyone"""
     workouts = WorkoutTracker.objects.all().order_by('-pk')
-    workout_paginator = Paginator(workouts, 20)
+    workout_paginator = Paginator(workouts, 12)
 
     page_number = request.GET.get('page')
     page_obj = workout_paginator.get_page(page_number)

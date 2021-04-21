@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
-{% load volume_tools %}
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="container mt-3 mb-3">
+<div class="container mt-3 mb-5">
     <div class="row">
         <div class="col-sm-12 mt-3">
             <h2>{{ workout.session_name }}</h2>
@@ -15,6 +14,9 @@
             {% if request.user == workout.created_by.user %}
                 <a href="{% url 'edit_workout' workout.id %}">
                     <button class="btn btn-primary btn-sm btn-block mt-3">Edit</button>
+                </a>
+                <a href="{% url 'delete_workout' workout.id %}">
+                    <button class="btn btn-danger btn-sm btn-block mt-3">Delete</button>
                 </a>
             {% endif %}
         </div>
@@ -27,8 +29,7 @@
                             <h2 class="mb-0">
                                 <button id="collapse-btn-{{ forloop.counter }}" class="btn btn-block text-left w-100 h-100" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse-{{ forloop.counter }}">
                                     {{ exercise.exercise}} for {{ exercise.sets }} sets of {{ exercise.reps }} reps <i class="fas fa-chevron-down float-right mt-1" hidden></i><i class="fas fa-chevron-up float-right mt-1"></i>
-                                </button>
-                                
+                                </button>                                
                             </h2>
                         </div>
                         <div id="collapse-{{ forloop.counter }}" class="collapse show" aria-labelledby="heading-{{ forloop.counter }}" >
@@ -106,14 +107,12 @@
                     </div>
             </div>
         </div>
-        <div class="col-sm-6 offset-sm-4">
+        <div class="col-sm-6 mt-3 offset-sm-4">
             {% if comments %}
                 <h4>Comments</h4>
                     {% for comment in comments %}
-                        {{ comment.comment_author }}
-                        {{ comment.comment_date }}
-                        {{ comment.comment }}
-                        <hr>
+                        <small class="lightweight-text"><a href="{% url 'profile' comment.comment_author.id %}">{{ comment.comment_author }}</a> commented on {{ comment.comment_date }}</small>
+                        <p><small>{{ comment.comment }}</small></p>
                     {% endfor %}
             {% endif %}
             <form class="mt-3" action="{% url 'comment_on_workout' workout.id %}" method="POST">

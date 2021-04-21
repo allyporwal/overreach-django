@@ -191,8 +191,8 @@ let totalRepsChart = new Chart(totalReps, {
         data: JSON.parse(
           document.getElementById("total_reps_chart_data").textContent
         ),
-        backgroundColor: ["rgba(0, 166, 2, 0.3)"],
-        borderColor: ["rgba(0, 166, 2, 0.3)"],
+        backgroundColor: ["rgba(0, 178, 131, 0.3)"],
+        borderColor: ["rgba(0, 178, 131, 0.3)"],
         borderWidth: 1,
         yAxisID: "y",
         fill: true,
@@ -201,8 +201,8 @@ let totalRepsChart = new Chart(totalReps, {
         label: "Average RPE",
         lineTension: 0.2,
         data: JSON.parse(document.getElementById("rpe_chart_data").textContent),
-        backgroundColor: ["rgba(255, 99, 132, 1)"],
-        borderColor: ["rgba(255, 99, 132, 1)"],
+        backgroundColor: ["rgba(178, 33, 0, 0.6)"],
+        borderColor: ["rgba(178, 33, 0, 0.6)"],
         borderWidth: 1,
         yAxisID: "y1",
       },
@@ -223,8 +223,8 @@ let totalVolumeChart = new Chart(totalVolume, {
         data: JSON.parse(
           document.getElementById("total_volume_chart_data").textContent
         ),
-        backgroundColor: ["rgba(0, 166, 2, 0.3)"],
-        borderColor: ["rgba(0, 166, 2, 0.3)"],
+        backgroundColor: ["rgba(0, 178, 131, 0.3)"],
+        borderColor: ["rgba(0, 178, 131, 0.3)"],
         borderWidth: 1,
         yAxisID: "y",
         fill: true,
@@ -233,8 +233,8 @@ let totalVolumeChart = new Chart(totalVolume, {
         label: "Average RPE",
         lineTension: 0.2,
         data: JSON.parse(document.getElementById("rpe_chart_data").textContent),
-        backgroundColor: ["rgba(255, 99, 132, 1)"],
-        borderColor: ["rgba(255, 99, 132, 1)"],
+        backgroundColor: ["rgba(178, 33, 0, 0.6)"],
+        borderColor: ["rgba(178, 33, 0, 0.6)"],
         borderWidth: 1,
         yAxisID: "y1",
       },
