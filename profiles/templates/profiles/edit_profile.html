@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="container">
+<div class="container mb-5">
     <div class="row mt-4">
         <div class="col-12 col-md-4">
             <h2>Edit Profile</h2>
@@ -30,7 +30,7 @@
                 {{ form.default_postcode | as_crispy_field }}
                 {{ form.default_country | as_crispy_field }}
                 <div id="button-container" class="form-row justify-content-center">
-                    <div class="form-group col-sm-6"> 
+                    <div class="form-group mt-3 col-sm-6"> 
                         <button class="btn btn-primary form-control text-uppercase" id="save-profile" type="submit">Update Profile</button>
                     </div>
                 </div>

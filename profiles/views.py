@@ -17,6 +17,8 @@ def profile(request, profile_id):
         'session_volume', flat=True))
     total_training_reps = sum(displayed_profile.workouts.values_list(
         'session_reps', flat=True))
+    average_rpe = round(sum(displayed_profile.workouts.values_list(
+        'session_average_rpe', flat=True)) / number_of_workouts, 2)
 
     # On another profile page check to see if user is following displayed user
     if profile != displayed_profile:
@@ -27,6 +29,7 @@ def profile(request, profile_id):
                 'number_of_workouts': number_of_workouts,
                 'total_training_volume': total_training_volume,
                 'total_training_reps': total_training_reps,
+                'average_rpe': average_rpe,
                 'is_following': is_following,
             }
             template = 'profiles/profile.html'
@@ -41,6 +44,7 @@ def profile(request, profile_id):
                 'number_of_workouts': number_of_workouts,
                 'total_training_volume': total_training_volume,
                 'total_training_reps': total_training_reps,
+                'average_rpe': average_rpe,
                 'is_following': is_following,
             }
             template = 'profiles/profile.html'
@@ -51,6 +55,7 @@ def profile(request, profile_id):
         'displayed_profile': displayed_profile,
         'number_of_workouts': number_of_workouts,
         'total_training_volume': total_training_volume,
+        'average_rpe': average_rpe,
         'total_training_reps': total_training_reps,
     }
     template = 'profiles/profile.html'

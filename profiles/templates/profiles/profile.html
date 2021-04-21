@@ -2,15 +2,18 @@
 {% load static %}
 {% block content %}
 
-<div class="container">
-    <div class="row mt-3">
-        <div class="col-12 col-md-4 text-center">
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 text-center">
             <h2>{{ displayed_profile.first_name }} {{ displayed_profile.last_name }}</h2>
             <p>Member since: {{ displayed_profile.signup_date }}</p>
+            <hr>
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-10 offset-1 offset-md-0 col-md-3 text-center">
             {% if displayed_profile.image %}
-                <a href="{{ displayed_profile.image.url }}" target="_blank">
-                    <img class="card-img-top img-fluid rounded-circle mt-3" src="{{ displayed_profile.image.url }}" alt="{{ displayed_profile.user.username }}">
-                </a>
+                <img class="card-img-top img-fluid rounded mb-5 mt-3" src="{{ displayed_profile.image.url }}" alt="{{ displayed_profile.user.username }}">
             {% endif %}
             {% if is_following.status == True %}
                 <a href="{% url 'unfollow' displayed_profile.id %}">
@@ -26,21 +29,17 @@
                 </a>
             {% endif %}
         </div>
-        <div class="col-6 col-md-4">
-            <p>Number of workouts logged:</p>
-            <p>{{ number_of_workouts }}</p>
-        </div>
-        <div class="col-6 col-md-4">
-            <p>Total training volume shifted since joining Overreach:</p>
-            <p>{{ total_training_volume }} kilos</p>
-        </div>
-        <div class="col-6 col-md-4 offset-md-4">
-            <p>Total reps lifted since joining Overreach:</p>
-            <p>{{ total_training_reps }}</p>
-        </div>
-        <div class="col-6 col-md-4">
-            <p>Main goals:</p> 
-            <p>{{ displayedprofile.main_goals }}</p>
+        <div class="col-12 col-md-9">   
+            <div id="profile-card" class="card mt-3">           
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <ul>                    
+                        <li><h4>{{ number_of_workouts }} workouts logged</h4>
+                        <li><h4>{{ total_training_volume }} kilos lifted</h4></li>
+                        <li><h4>{{ total_training_reps }} reps lifted</h4></li>
+                        <li><h4>{{ average_rpe }} average RPE</h4></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>

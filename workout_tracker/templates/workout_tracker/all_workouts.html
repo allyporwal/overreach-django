@@ -21,7 +21,18 @@
                         </div>
                         {% endif %}  
                         <h5 class="card-title">{{ workout.session_name }}</h5>
-                        <p class="card-text"><small class="lightweight-text">{{ workout.created_at }} by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>
+                        <div class="row">
+                            <div class="col-10">
+                                <p class="card-text"><small class="lightweight-text">{{ workout.created_at }} by 
+                                    <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small>
+                                </p>
+                            </div>
+                            <div class="col-2">
+                                {% if workout.created_by.image %}
+                                    <img class="img-fluid rounded-circle" width="80" height="80" src="{{ workout.created_by.image.url }}" alt="{{ displayed_profile.user.username }}">
+                                {% endif %}
+                            </div>
+                        </div>
                         {% if workout.session_notes %}                            
                             <p class="card-text"><small>Session notes:</small></p>
                             <p class="card-text mt-0"><small>{{ workout.session_notes }}</small></p>

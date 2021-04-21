@@ -6,8 +6,7 @@
 
 html, body {
     font-family: 'Montserrat', sans-serif;
-    color: rgba(53, 58, 77, 1);
-    background-color: rgba(0, 0, 0, .0125);
+    color: rgba(53, 58, 77, 1);    
     height: 100%;
     margin: 0;
 }
@@ -26,6 +25,7 @@ html, body {
 
 #push-footer-inner {
     padding-bottom: 5vh;
+    background-color: rgba(0, 0, 0, .0125);
 }
 
 /* navbar */
@@ -113,15 +113,15 @@ footer {
 }
 
 .vol-col {
-    background-color: rgba(53, 58, 77, 0.5);
+    background-color: rgba(178, 33, 0, 0.6);
 }
 
 .reps-col {
-    background-color: rgba(53, 58, 77, 0.5);
+    background-color: #2E85AF;
 }
 
 .rpe-col {
-    background-color: rgba(53, 58, 77, 0.5);
+    background-color: rgba(178, 33, 0, 0.6);
 }
 
 .workout-metrics {
