@@ -129,7 +129,7 @@ def friends(request):
     friends = profile.follower.values('is_following').filter(status=True)
     friends_profiles = UserProfile.objects.filter(pk__in=friends)
     friends_workouts = WorkoutTracker.objects.filter(
-        created_by__in=friends_profiles)
+        created_by__in=friends_profiles).order_by('-pk')
 
     template = 'profiles/friends.html'
     context = {

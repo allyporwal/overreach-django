@@ -1,12 +1,40 @@
 /* all text */
 
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(53, 58, 77, 1);
+    background-color: rgba(0, 0, 0, .0125);
+}
 
+.navbar {
+    font-weight: 400;
+}
+
+.lightweight-text {
+    font-weight: 200;
+}
+
+/* navbar */
+
+.navbar {
+    background-color: rgba(0, 0, 0, .075);
+}
+
+/* disable shadows on buttons */
+
+.btn:hover, .btn:active, .btn:focus {
+    box-shadow: none !important;
+    /* background-color: #1F2838 !important;
+    border-color: #494F57 !important; */
+}
 
 /* card components */
+
 .card {
     min-height: 245px;
     max-height: 245px;
     margin-bottom: 1.5rem;
+    background-color: rgba(0, 0, 0, .0250);
 }
 
 .workout-card-footer {
@@ -27,15 +55,15 @@
 }
 
 .vol-col {
-    background-color: rgba(8, 114, 128, 0.664);
+    background-color: rgba(0, 178, 131, 1);
 }
 
 .reps-col {
-    background-color: rgba(8, 114, 128, 0.664);
+    background-color: rgba(0, 178, 131, 1);
 }
 
 .rpe-col {
-    background-color: rgba(8, 114, 128, 0.664);
+    background-color: rgba(0, 178, 131, 1);
 }
 
 .workout-metrics {
@@ -50,6 +78,11 @@
     border-bottom-left-radius: 0;
     border: none;
     margin-left: 0;
+    background-color: rgba(53, 58, 77, 1);
+}
+
+.btn-group>.btn:not(:first-child):hover {
+    background-color: rgba(53, 58, 77, 0.75);
 }
 
 .btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
@@ -57,12 +90,17 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border: none;
+    background-color: rgba(53, 58, 77, 1);
+}
+
+.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child):not(.dropdown-toggle):hover {
+    background-color: rgba(53, 58, 77, 0.75);
 }
 
 .all-workouts-db-link-card {
     background-color: rgba(8, 114, 128, 0.5);
     text-decoration: none;
-    color: black;
+    color: rgba(53, 58, 77, 1);
 }
 
 .all-workouts-db-link-card:hover {
@@ -91,24 +129,58 @@
 .scroll-icon-up {
     margin-bottom: 12%;
 }
+
+.view-other-users-workout {
+    background-color: rgba(53, 58, 77, 1);
+    max-height: 36px;
+}
+
 /* friends template */
 
 .friends-workout-container {
     border: 1px solid rgba(0,0,0,.125);
     border-radius: 0.25rem;
-    padding: 1.25rem;
+    padding: 1.25rem 0 0 0;
+    background-color: rgba(0, 0, 0, .0250);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .fa-thumbs-up {
     font-size: 1.15rem;
 }
 
-.interactions-container {
-    background-color: rgba(0, 166, 2, 0.3);
+.view-workout {
+    border-color: rgba(0, 178, 131, 1);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background-color: rgba(0, 178, 131, 1);
+    color: white;
+}
+
+.view-workout:hover {
+    border-color: rgba(0, 178, 131, 1);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background-color: rgba(0, 178, 131, 0.75);
+    color: white;
 }
 
 .fa-comment-alt {
     font-size: 1.15rem;
+}
+
+.comments-link {
+    color: black;
+}
+
+.comments-link:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.thead-friends {
+    background-color: rgba(53, 58, 77, 1);
 }
 
 /* all forms */
@@ -124,6 +196,10 @@ th {
     width: 25%;
 }
 
+#workout-accordian {
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
 /* all images */
 .profile-image-wrapper {
     height: 200px;
@@ -132,8 +208,3 @@ th {
 
 /* media queries */
 
-@media (min-width: 768px) {
-    .push-right  {
-      float: left !important;
-    }
-  }

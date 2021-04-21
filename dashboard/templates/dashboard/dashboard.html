@@ -38,17 +38,17 @@
                     <div class="card">
                         <div class="card-body overflow-auto">
                             <h5 class="card-title">{{ workout.session_name }}</h5>
-                            <p class="card-text"><small>Logged on: {{ workout.created_at }}</small></p>
+                            <p class="card-text"><small class="lightweight-text">Logged on: {{ workout.created_at }}</small></p>
                         </div>
                         <div class="row workout-metrics text-center">
-                            <div class="col-4 vol-col"><small>Vol:</small></div>
-                            <div class="col-4 reps-col"><small>Reps:</small></div>
-                            <div class="col-4 rpe-col"><small>RPE:</small></div>
+                            <div class="col-4 vol-col text-light"><small>Vol:</small></div>
+                            <div class="col-4 reps-col text-light"><small>Reps:</small></div>
+                            <div class="col-4 rpe-col text-light"><small>RPE:</small></div>
                             </div>
                             <div class="row workout-metrics text-center">
-                                <div class="col-4 vol-col">{{ workout.session_volume|floatformat:"0" }}</div>
-                                <div class="col-4 reps-col">{{ workout.session_reps }}</div>
-                                <div class="col-4 rpe-col">{{ workout.session_average_rpe }}</div>
+                                <div class="col-4 vol-col text-light">{{ workout.session_volume|floatformat:"0" }}</div>
+                                <div class="col-4 reps-col text-light">{{ workout.session_reps }}</div>
+                                <div class="col-4 rpe-col text-light">{{ workout.session_average_rpe }}</div>
                             </div>
                         <div class="row text-center workout-card-footer">
                             <div class="btn-group card-button-group" role="group" aria-label="Workout actions">
@@ -66,7 +66,7 @@
                     <div class="card-body d-flex align-items-center justify-content-center">
                         <div class="row">
                             <div class="col-12 ">
-                                <h4>View all workouts <i class="fas fa-chevron-right"></i></h4>
+                                <h4 class="text-light">View all workouts <i class="fas fa-chevron-right"></i></h4>
                             </div>
                         </div>
                     </div>
@@ -132,17 +132,17 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{ workout.session_name }}</h5>
-                        <p class="card-text"><small>{{ workout.created_at }} by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>                 
+                        <p class="card-text"><small class="lightweight-text">{{ workout.created_at }} by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>                 
                     </div>
                     <div class="row workout-metrics text-center">
-                        <div class="col-4 vol-col"><small>Vol:</small></div>
-                        <div class="col-4 reps-col"><small>Reps:</small></div>
-                        <div class="col-4 rpe-col"><small>RPE:</small></div>
+                        <div class="col-4 vol-col"><small class="text-light">Vol:</small></div>
+                        <div class="col-4 reps-col"><small class="text-light">Reps:</small></div>
+                        <div class="col-4 rpe-col"><small class="text-light">RPE:</small></div>
                         </div>
                         <div class="row workout-metrics text-center">
-                            <div class="col-4 vol-col">{{ workout.session_volume }}</div>
-                            <div class="col-4 reps-col">{{ workout.session_reps }}</div>
-                            <div class="col-4 rpe-col">{{ workout.session_average_rpe }}</div>
+                            <div class="col-4 vol-col text-light">{{ workout.session_volume }}</div>
+                            <div class="col-4 reps-col text-light">{{ workout.session_reps }}</div>
+                            <div class="col-4 rpe-col text-light">{{ workout.session_average_rpe }}</div>
                         </div>
                     <div class="row text-center workout-card-footer">
                         <div class="btn-group card-button-group" role="group" aria-label="Friends workout actions">

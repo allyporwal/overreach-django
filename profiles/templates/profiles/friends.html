@@ -5,27 +5,65 @@
 
 <div class="container">
     <div class="row mt-4">
-        <div class="col-12 col-md-4">
-            <h2>Friends</h2>
+        <div class="col-12 col-md-8 offset-md-2 text-center">
+            <h2>Workouts by Friends</h2>
+            <hr>
         </div>
         {% if friends_profiles|length == 0 %}
-            <div class="col-12 col-md-8">
-                <h3>Follow some people to see a detailed feed of their workouts</h3>
-            </div>           
+        <div class="container mt-3">
+            <div class="row mt-3">
+                <div class="col-12 col-lg-6 offset-lg-3">
+                    <a class="all-workouts-db-link" href="{% url 'all_workouts' %}">
+                    <div class="card all-workouts-db-link-card">
+                        <div class="card-body d-flex align-items-center justify-content-center">
+                            <div class="row">
+                                <div class="col-12 ">
+                                    <h4>Find people to follow<i class="fas fa-chevron-right"></i></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        </div>           
         {% endif %}
         {% if friends_profiles|length != 0 %}
             {% if friends_workouts|length == 0 %}
-            <div class="col-12 col-md-8">
-                <h3>Your friends haven't logged any workouts yet</h3>
+            <div class="container mt-3">
+                <div class="row mt-3">
+                    <div class="col-12 col-lg-4">
+                        <a class="all-workouts-db-link" href="{% url 'all_workouts' %}">
+                        <div class="card all-workouts-db-link-card">
+                            <div class="card-body d-flex align-items-center justify-content-center">
+                                <div class="row">
+                                    <div class="col-12 ">
+                                        <h4>Find people to follow<i class="fas fa-chevron-right"></i></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                    <div class="d-none d-sm-block col-12 col-lg-8">
+                        <div class="card">
+                            <div class="card-body empty-friends-workouts d-flex align-items-center justify-content-center">
+                                <h5 class="card-title">Your friends are yet to log any workouts</h5>                                         
+                            </div>
+                            <div class="row text-center workout-card-footer">
+                            </div>
+                        </div>
+                    </div> 
+                </div>
             </div>
             {% endif %}
         {% endif %}        
         {% for workout in friends_workouts %}
-            <!-- <div class="container"> -->
-                <div class="col-12 col-md-8 offset-md-4 mb-3 mt-3 friends-workout-container">
+            <div class="container">
+                <div class="col-12 col-md-8 offset-md-2 mt-3 friends-workout-container">
                     <div class="row">
                         <div class="col-12 col-md-8">
-                            <h5 class="card-title">{{ workout.session_name }}</h5>
+                            <h5 class="card-title pl-3">{{ workout.session_name }}</h5>
                         </div>
                         <div class="interactions-container col-3 text-center col-md-1">
                             <i class="fas fa-thumbs-up mb-3"></i>                        
@@ -33,44 +71,78 @@
                         <div class="interactions-container col-3 col-md-1 pl-1">
                             <small>14</small>
                         </div>
-                        <div class="interactions-container col-3 text-center col-md-1 pt-0">
-                            <i class="fas fa-comment-alt"></i>
+                        <div class="interactions-container col-3 text-center col-md-1 pt-1">
+                            <a class="comments-link" href="{% url 'workout' workout.id %}"><i class="fas fa-comment-alt"></i></a>
                         </div>
                         <div class="interactions-container col-3 col-md-1 pl-1">
                             <small>5</small>
                         </div>
                     </div>        
-                            <p class="card-text"><small>Logged on: <a href="{% url 'workout' workout.id %}">{{ workout.created_at }}</a> by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>                     
-                                <div class="row text-center">
-                                <div class="col-4"><small>Vol:</small></div>
-                                <div class="col-4"><small>Reps:</small></div>
-                                <div class="col-4"><small>RPE:</small></div>
-                            </div>
-                            <div class="row text-center">
-                                <div class="col-4">{{ workout.session_volume|floatformat:"0" }}</div>
-                                <div class="col-4">{{ workout.session_reps }}</div>
-                                <div class="col-4">{{ workout.session_average_rpe }}</div>
-                            </div>
-                        <!-- </div>                                
-                    </div> -->
+                    <p class="card-text"><small class="pl-3 lightweight-text">Logged on: <a href="{% url 'workout' workout.id %}">{{ workout.created_at }}</a> by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>                     
+                        <div class="row text-center">
+                        <div class="col-4"><small>Vol:</small></div>
+                        <div class="col-4"><small>Reps:</small></div>
+                        <div class="col-4"><small>RPE:</small></div>
+                    </div>
+                    <div class="row text-center mb-3">
+                        <div class="col-4">{{ workout.session_volume|floatformat:"0" }}</div>
+                        <div class="col-4">{{ workout.session_reps }}</div>
+                        <div class="col-4">{{ workout.session_average_rpe }}</div>
+                    </div>
                     <div class="collapse" id="collapse-{{ forloop.counter }}">
-                        <div class="">
-                            {% for exercise in workout.workout %}
-                                <p>{{ exercise.exercise }} for {{ exercise.sets }} sets of {{ exercise.reps }}</p>
-                            {% endfor %} 
+                        {% for exercise in workout.workout %}
+                            <table class="table">
+                                <thead class="thead-friends text-light">
+                                    <tr>
+                                        <th class="text-uppercase" scope="col">{{ exercise.exercise }}</th>
+                                        <th scope="col">Weight</th>
+                                        <th scope="col">Reps</th>
+                                        <th scope="col">RPE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for weight_reps_rpe in exercise.set_volumes %}
+                                        <tr>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>{{ weight_reps_rpe.weight }}</td>
+                                            <td>{{ weight_reps_rpe.rep_count }}</td>
+                                            <td>{{ weight_reps_rpe.rpe  }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endfor %}
+                        <div class="row">
+                            <div class="col-10 offset-1">
+                                <hr>
+                                <p><small class="lightweight-text">{{ workout.session_notes }}</small></p>
+                            </div>
                         </div>
-                    </div>      
-                    <button class="btn mt-3 btn-outline-primary btn-block" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">
-                        View session
-                    </button>                 
+                    </div>                     
                 </div>
-            <!-- </div> -->
+                <div class="col-12 col-md-8 offset-md-2 p-0">
+                <button class="btn view-workout btn-outline-primary btn-block" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">
+                    View workout
+                </button>
+            </div>
+            </div>
             <hr>
         {% endfor %}        
     </div>
 </div>
 
+
+
 {% endblock %}
 
 {% block postloadjs %}
+<script>
+    // $('.view-session').toggle(function(){
+    //     $(this).text('View Session');
+    // }, function(){
+    //     $(this).text('Hide');
+    // });
+
+
+</script>
 {% endblock %}

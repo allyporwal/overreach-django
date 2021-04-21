@@ -4,34 +4,22 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="container mt-4">
+<div class="container mt-3 mb-3">
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-12 mt-3">
             <h2>{{ workout.session_name }}</h2>
+        </div>
+        <div class="col-sm-4 mt-3">
             <p><small>Logged by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a> on {{ workout.created_at }}</small></p>
             <p>{{ workout.session_notes }}</p>
             {% if request.user == workout.created_by.user %}
                 <a href="{% url 'edit_workout' workout.id %}">
-                    <button class="btn btn-primary btn-sm btn-block">Edit</button>
+                    <button class="btn btn-primary btn-sm btn-block mt-3">Edit</button>
                 </a>
             {% endif %}
-            <hr>
-            {% if comments %}
-            <h4>Comments</h4>
-                {% for comment in comments %}
-                    {{ comment.comment_author }}
-                    {{ comment.comment_date }}
-                    {{ comment.comment }}
-                    <hr>
-                {% endfor %}
-            {% endif %}
-            <form class="mt-3" action="{% url 'comment_on_workout' workout.id %}" method="POST">
-                {% csrf_token %}
-                {{ form|crispy }}                
-                    <button class="btn btn-primary btn-sm btn-block" type="submit">Add comment</button>
-            </form>
         </div>
-        <div class="col-sm-8 mt-2 mb-4">
+        <hr>
+        <div class="col-sm-8 mt-3">
             <div class="accordion" id="workout-accordian">
                 {% for exercise, exercise_volume, exercise_reps, exercise_average_rpe in workout_zipped %}
                     <div class="workout-accordian-header">
@@ -47,7 +35,7 @@
                             <table class="table">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col mw-25">Set</th>
+                                        <th scope="col">Set</th>
                                         <th scope="col">Weight</th>
                                         <th scope="col">Reps</th>
                                         <th scope="col">RPE</th>
@@ -85,10 +73,10 @@
                         </div>
                     </div>
                 {% endfor %}
-                <div class="">
+                <div class="workout-accordian-header">
                     <div class="card-header" id="heading-totals">
                         <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left w-100 h-100" type="button" data-toggle="collapse" data-target="#collapse-totals" aria-expanded="true" aria-controls="collapse-{{ forloop.counter }}">
+                            <button class="btn btn-block text-left w-100 h-100" type="button" data-toggle="collapse" data-target="#collapse-totals" aria-expanded="true" aria-controls="collapse-{{ forloop.counter }}">
                                 Session Totals
                             </button>
                         </h2>
@@ -117,6 +105,22 @@
                         </div>
                     </div>
             </div>
+        </div>
+        <div class="col-sm-6 offset-sm-4">
+            {% if comments %}
+                <h4>Comments</h4>
+                    {% for comment in comments %}
+                        {{ comment.comment_author }}
+                        {{ comment.comment_date }}
+                        {{ comment.comment }}
+                        <hr>
+                    {% endfor %}
+            {% endif %}
+            <form class="mt-3" action="{% url 'comment_on_workout' workout.id %}" method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}                
+                    <button class="btn btn-primary btn-sm btn-block" type="submit">Add comment</button>
+            </form>
         </div>
     </div>
 </div>
