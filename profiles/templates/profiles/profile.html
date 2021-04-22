@@ -7,6 +7,7 @@
         <div class="col-12 text-center">
             <h2>{{ displayed_profile.first_name }} {{ displayed_profile.last_name }}</h2>
             <p>Member since: {{ displayed_profile.signup_date }}</p>
+            <p>{{ displayed_profile.follower.all|length }} followers</p>
             <hr>
         </div>
     </div>    
@@ -17,32 +18,32 @@
             {% endif %}
             {% if is_following.status == True %}
                 <a href="{% url 'unfollow' displayed_profile.id %}">
-                    <button class="btn btn-primary btn-sm btn-block mt-5">Unfollow</button>
+                    <button class="btn btn-primary btn-sm btn-block mt-3">Unfollow</button>
                 </a>
             {% elif is_following.status == False %}
                 <a href="{% url 'add_follower' displayed_profile.id %}">
-                    <button class="btn btn-primary btn-sm btn-block mt-5">Follow</button>
+                    <button class="btn btn-primary btn-sm btn-block mt-3">Follow</button>
                 </a>
             {% elif is_following == False %}
                 <a href="{% url 'add_follower' displayed_profile.id %}">
-                    <button class="btn btn-primary btn-sm btn-block mt-5">Follow</button>
+                    <button class="btn btn-primary btn-sm btn-block mt-3">Follow</button>
                 </a>
             {% endif %}
         </div>
         <div class="col-12 col-md-9">   
-            <div id="profile-card" class="card mt-3">           
-                <div class="card-body d-flex align-items-center justify-content-center">
-                    <ul>                    
-                        <li><h4>{{ number_of_workouts }} workouts logged</h4>
-                        <li><h4>{{ total_training_volume }} kilos lifted</h4></li>
-                        <li><h4>{{ total_training_reps }} reps lifted</h4></li>
-                        <li><h4>{{ average_rpe }} average RPE</h4></li>
-                    </ul>
-                </div>
+            <div class="card-body d-flex align-items-center justify-content-center">
+                <ul>                    
+                    <li><p>{{ number_of_workouts }} workouts logged</p></li>
+                    <li><p>{{ total_training_volume }} kilos lifted</p></li>
+                    <li><p>{{ total_training_reps }} reps lifted</p></li>
+                    <li><p>{{ average_rpe }} average RPE</p></li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
+
+
 
 
 {% endblock %}

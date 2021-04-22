@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import UserProfile, Followers
 from .forms import UserProfileForm
-from workout_tracker.models import WorkoutTracker
+from workout_tracker.models import WorkoutTracker, WorkoutComments
 from django.contrib.auth.decorators import login_required
 
 

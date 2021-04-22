@@ -30,6 +30,6 @@ class WorkoutComments(models.Model):
     comment = models.TextField(max_length=1000, blank=False, null=False)
 
     def __str__(self):
-        return self.comment_author
+        return self.comment_author.user.username
 
 

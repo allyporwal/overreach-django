@@ -62,7 +62,7 @@
             <div class="container">
                 <div class="col-12 col-md-8 offset-md-2 mt-3 friends-workout-container">
                     <div class="row">
-                        <div class="col-12 col-md-8">
+                        <div class="col-12 mb-1 col-md-8">
                             <h5 class="card-title pl-3">{{ workout.session_name }}</h5>
                         </div>
                         <div class="interactions-container col-3 text-center col-md-1">
@@ -74,11 +74,20 @@
                         <div class="interactions-container col-3 text-center col-md-1 pt-1">
                             <a class="comments-link" href="{% url 'workout' workout.id %}"><i class="fas fa-comment-alt"></i></a>
                         </div>
-                        <div class="interactions-container col-3 col-md-1 pl-1">
-                            <small>5</small>
+                        <div class="interactions-container col-3 col-md-1 pl-1">                            
+                            <small>{{ workout.target_workout.all|length }}</small>                            
                         </div>
-                    </div>        
-                    <p class="card-text"><small class="pl-3 lightweight-text">Logged on: <a href="{% url 'workout' workout.id %}">{{ workout.created_at }}</a> by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>                     
+                    </div>
+                    <div class="row">
+                        <div class="col-9 mb-4">        
+                            <p class="pl-3 card-text"><small class="lightweight-text">Logged on: <a href="{% url 'workout' workout.id %}">{{ workout.created_at }}</a> by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>
+                        </div>
+                        <div class="col-2 mt-3 ml-2 pl-2">
+                            {% if workout.created_by.image %}
+                                <img class="img-fluid rounded-circle" width="40" height="40" src="{{ workout.created_by.image.url }}" alt="{{ displayed_profile.user.username }}">
+                            {% endif %}
+                        </div>
+                    </div>                     
                         <div class="row text-center">
                         <div class="col-4"><small>Volume:</small></div>
                         <div class="col-4"><small>Reps:</small></div>
@@ -116,6 +125,7 @@
                             <div class="col-10 offset-1">
                                 <hr>
                                 {% if workout.session_notes %}
+                                    <p><small>Session notes:</small></p>
                                     <p><small class="lightweight-text">{{ workout.session_notes }}</small></p>
                                 {% endif %}
                             </div>
@@ -133,18 +143,20 @@
     </div>
 </div>
 
+<script>
+    // toggle text on friends template
+    $('.view-workout').click(function () {
+        if ($(this).text() == 'Hide') {
+            $(this).text('View workout'); 
+        } else {
+            $(this).text('Hide');
+        }
+    })
+</script>
 
 
 {% endblock %}
 
 {% block postloadjs %}
-<script>
-    // $('.view-session').toggle(function(){
-    //     $(this).text('View Session');
-    // }, function(){
-    //     $(this).text('Hide');
-    // });
 
-
-</script>
 {% endblock %}

@@ -21,11 +21,12 @@ html, body {
 
 #push-footer-outer {
     min-height: 100%;
+    background-color: rgba(0, 0, 0, .0125);
 }
 
 #push-footer-inner {
     padding-bottom: 5vh;
-    background-color: rgba(0, 0, 0, .0125);
+
 }
 
 /* navbar */
@@ -83,8 +84,8 @@ footer {
 
 .btn:hover, .btn:active, .btn:focus {
     box-shadow: none !important;
-    /* border: none !important; */
 }
+
 
 /* card components */
 
@@ -193,6 +194,13 @@ footer {
     max-height: 36px;
 }
 
+.push-up {
+    margin-top: -1rem;
+}
+
+.push-up-half {
+    margin-top: -0.1rem;
+}
 /* friends template */
 
 .friends-workout-container {
@@ -239,8 +247,7 @@ footer {
 }
 
 .view-workout:hover, .view-workout:active, .view-workout:focus {
-    box-shadow: none !important;
-    border: none !important;
+    border-color: rgba(0, 178, 131, 0.75);
     background-color: rgba(0, 178, 131, 0.75) !important;
 }
 

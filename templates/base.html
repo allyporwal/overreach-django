@@ -37,6 +37,7 @@
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Stripe -->
     <script src="https://js.stripe.com/v3/"></script>
     {% endblock %}
@@ -104,40 +105,39 @@
     </div>
 
     {% block postloadjs %}
+    <script src="{% static 'js/base.js' %}"></script>
     {% endblock %}
     <footer class="container-fluid w-100">
-        <!-- <div id="footer" class="container-fluid w-100"> -->
-            <div class="row mh-50 mb-0 pb-0">
-                <div class="col-12 text-left">
-                    <p class="lightweight-text pb-0 mb-0">
-                        <small>Find us</small>                        
-                    </p>
-                </div>
+        <div class="row mh-50 mb-0 pb-0">
+            <div class="col-12 text-left">
+                <p class="lightweight-text pb-0 mb-0">
+                    <small>Find us</small>                        
+                </p>
             </div>
-            <div class="row mh-50">
-                <div class="col-6 text-left">
-                    <p class="socialMedia-links mb-0 text-light">
-                        <a target="_blank" href="https://www.facebook.com/counterpointfitness">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a target="_blank" href="https://www.instagram.com/counterpointfitness">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a target="_blank" href="https://www.youtube.com/channel/UCOO4KTnw0RBOHLXTtHrLWrQ">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        <a target="_blank" href="https://www.linkedin.com/in/alastair-porwal-30385557/">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </p>
-                </div>
-                <div class="col-6 text-right">
-                    <p class="lightweight-text mb-0">
-                        <small>Copyright Overreach 2021</small>                        
-                    </p>
-                </div>
-            </div>            
-        <!-- </div> -->
+        </div>
+        <div class="row mh-50">
+            <div class="col-6 text-left">
+                <p class="socialMedia-links mb-0 text-light">
+                    <a target="_blank" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a target="_blank" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a target="_blank" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a target="_blank" href="https://www.linkedin.com/in/alastair-porwal-30385557/">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </p>
+            </div>
+            <div class="col-6 text-right">
+                <p class="lightweight-text mb-0">
+                    <small>Copyright Overreach 2021</small>                        
+                </p>
+            </div>
+        </div>            
     </footer>
 </body>
 
