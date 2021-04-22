@@ -144,14 +144,6 @@ footer {
     background-color: rgba(53, 58, 77, 0.75);
 }
 
-.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border: none;
-    background-color: rgba(53, 58, 77, 1);
-}
-
 .btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child) {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -162,10 +154,6 @@ footer {
 
 .btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child):not(.dropdown-toggle):hover {
     background-color: rgba(53, 58, 77, 0.75);
-}
-
-.delete-dropdown {
-    border-bottom-right-radius: 0.25rem;
 }
 
 .all-workouts-db-link-card {

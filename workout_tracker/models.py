@@ -33,3 +33,16 @@ class WorkoutComments(models.Model):
         return self.comment_author.user.username
 
 
+class WorkoutLikes(models.Model):
+    liker = models.ForeignKey(UserProfile, on_delete=models.CASCADE,
+                              null=False, blank=False,
+                              related_name='liker')
+    liked_workout = models.ForeignKey(WorkoutTracker,
+                                      on_delete=models.CASCADE,
+                                      null=False, blank=False,
+                                      related_name='liked_workout')
+    liked_date = models.DateTimeField(auto_now_add=True)
+    like_status = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.liker.user.username

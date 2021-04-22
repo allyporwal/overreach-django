@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.core.paginator import Paginator
 from .forms import WorkoutTrackerForm, WorkoutCommentsForm
 from profiles.models import UserProfile
-from .models import WorkoutTracker, WorkoutComments
+from .models import WorkoutTracker, WorkoutComments, WorkoutLikes
 from .validators import validate_active_workout
 from django.contrib.auth.decorators import login_required
 
@@ -172,6 +172,7 @@ def workout(request, workout_id):
     """Show an individual workout"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
     comments = workout.target_workout.all()
+    likes = workout.liked_workout.filter(like_status=True)
 
     # sort workout data into lists for processing
     set_count = []
@@ -214,6 +215,7 @@ def workout(request, workout_id):
         'workout_zipped': workout_zipped,
         'form': form,
         'comments': comments,
+        'likes': likes,
     }
     return render(request, template, context)
 
@@ -445,3 +447,27 @@ def comment_on_workout(request, workout_id):
             comment.save()
 
             return redirect(reverse('workout', args=[workout.id]))
+
+
+@login_required
+def like_workout(request, workout_id):
+    """Allow a user to like another user's workout"""
+    profile = UserProfile.objects.get(user=request.user)
+    workout = WorkoutTracker.objects.get(pk=workout_id)
+
+    # prevent duplicate entries into WorkoutLikes table
+    try:
+        has_user_liked = workout.liked_workout.get(liker=profile)
+        # allow user to re-follow someone they previously unfollowed
+        has_user_liked.like_status = True
+        has_user_liked.save()
+
+        return redirect(reverse('workout', args=[workout.id]))
+
+    # only create entry if follower is not following the profile
+    # of the user they're viewing
+    except WorkoutLikes.DoesNotExist:
+        like = WorkoutLikes.objects.create(
+            liked_workout=workout, liker=profile,
+        )
+        return redirect(reverse('workout', args=[workout.id]))

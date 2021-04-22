@@ -10,7 +10,7 @@
         <div class="col-12 text-left">
             <h2>{{ displayed_profile.first_name }} {{ displayed_profile.last_name }}</h2>
             <p>Member since: {{ displayed_profile.signup_date }}</p>
-            <p>{{ displayed_profile.follower.all|length }} followers</p>
+            <p>{{ followers }} followers</p>
             {% if is_following.status == True %}
                 <a href="{% url 'unfollow' displayed_profile.id %}">
                     <button class="btn btn-primary btn-unfollow col-12 col-md-4 btn-block mb-3 mt-3">Unfollow</button>

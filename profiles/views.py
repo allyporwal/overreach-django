@@ -10,6 +10,7 @@ def profile(request, profile_id):
     """Show a user's profile page"""
     profile = get_object_or_404(UserProfile, user=request.user)
     displayed_profile = get_object_or_404(UserProfile, pk=profile_id)
+    followers = len(profile.follower.values('is_following').filter(status=True))
 
     # display some all time statistics from the profile's workouts
     number_of_workouts = len(displayed_profile.workouts.all())
@@ -31,6 +32,7 @@ def profile(request, profile_id):
                 'total_training_reps': total_training_reps,
                 'average_rpe': average_rpe,
                 'is_following': is_following,
+                'followers': followers,
             }
             template = 'profiles/profile.html'
             return render(request, template, context)
@@ -46,6 +48,7 @@ def profile(request, profile_id):
                 'total_training_reps': total_training_reps,
                 'average_rpe': average_rpe,
                 'is_following': is_following,
+                'followers': followers,
             }
             template = 'profiles/profile.html'
             return render(request, template, context)
@@ -57,6 +60,7 @@ def profile(request, profile_id):
         'total_training_volume': total_training_volume,
         'average_rpe': average_rpe,
         'total_training_reps': total_training_reps,
+        'followers': followers,
     }
     template = 'profiles/profile.html'
     return render(request, template, context)
