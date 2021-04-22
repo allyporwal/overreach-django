@@ -4,6 +4,7 @@
 {% block content %}
 
 <a href="{% url 'like_workout' workout.id %}">Like</a>
+<a href="{% url 'unlike_workout' workout.id %}">Unlike</a>
 
 {{ likes|length }}
 <div class="container mt-3 mb-5">

@@ -18,4 +18,6 @@ urlpatterns = [
          views.comment_on_workout, name='comment_on_workout'),
     path('like/<int:workout_id>/',
          views.like_workout, name='like_workout'),
+    path('unlike/<int:workout_id>/',
+         views.unlike_workout, name='unlike_workout'),
 ]

@@ -471,3 +471,22 @@ def like_workout(request, workout_id):
             liked_workout=workout, liker=profile,
         )
         return redirect(reverse('workout', args=[workout.id]))
+
+
+@login_required
+def unlike_workout(request, workout_id):
+    """Allow a user to unlike a workout"""
+    profile = UserProfile.objects.get(user=request.user)
+    workout = WorkoutTracker.objects.get(pk=workout_id)
+
+    # modify the status field in the database entry
+    try:
+        has_user_liked = workout.liked_workout.get(liker=profile)
+        has_user_liked.like_status = False
+        has_user_liked.save()
+
+        return redirect(reverse('workout', args=[workout.id]))
+
+    # redirect if user uses url but hasn't already liked
+    except WorkoutLikes.DoesNotExist:
+        return redirect(reverse('dashboard'))
