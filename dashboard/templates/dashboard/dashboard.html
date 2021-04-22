@@ -15,7 +15,7 @@
                 <div class="card-body d-flex align-items-center justify-content-center">
                     <div class="row">
                         <div class="col-12">
-                            <h4>Log a workout to activate your dashboard<i class="fas fa-dumbbell ml-3"></i></h4>
+                            <h4 class="text-light">Log a workout to activate your dashboard<i class="fas fa-dumbbell ml-3"></i></h4>
                         </div>
                     </div>
                 </div>
@@ -54,10 +54,16 @@
                                 <div class="col-4 rpe-col text-light">{{ workout.session_average_rpe }}</div>
                             </div>
                         <div class="row text-center workout-card-footer">
-                            <div class="btn-group card-button-group" role="group" aria-label="Workout actions">
+                            <div class="btn-group card-button-group" role="group" aria-label="WorkoutActions">
                                 <a href="{% url 'workout' workout.id %}" class="col-4 btn btn-secondary">View</a>
                                 <a href="{% url 'edit_workout' workout.id %}" class="col-4 btn btn-secondary">Edit</a>
-                                <a href="{% url 'delete_workout' workout.id %}" class="col-4 btn btn-secondary">Delete</a>
+                                <button id="delete-dropdown" type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Delete
+                                  </button>
+                                <div class="dropdown-menu" aria-labelledby="delete-dropdown">
+                                    <p class="ml-4">Sure?</p>
+                                    <a class="dropdown-item" href="{% url 'delete_workout' workout.id %}">Delete</a>
+                                </div>
                               </div>
                         </div>
                     </div>
@@ -169,8 +175,8 @@
                     <div class="card all-workouts-db-link-card">
                         <div class="card-body d-flex align-items-center justify-content-center">
                             <div class="row">
-                                <div class="col-12 ">
-                                    <h4>Find people to follow<i class="fas fa-chevron-right"></i></h4>
+                                <div class="col-12">
+                                    <h4 class="text-light">Find people to follow <i class="fas fa-chevron-right"></i></h4>
                                 </div>
                             </div>
                         </div>

@@ -53,11 +53,17 @@
                         </div>
                         {% if workout.created_by.user == request.user %}
                             <div class="row text-center workout-card-footer">
-                                <div class="btn-group card-button-group" role="group" aria-label="Workout actions">
+                                <div class="btn-group card-button-group" role="group" aria-label="WorkoutActions">
                                     <a href="{% url 'workout' workout.id %}" class="col-4 btn btn-secondary">View</a>
                                     <a href="{% url 'edit_workout' workout.id %}" class="col-4 btn btn-secondary">Edit</a>
-                                    <a href="{% url 'delete_workout' workout.id %}" class="col-4 btn btn-secondary">Delete</a>
-                                  </div>
+                                    <button id="delete-dropdown" type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Delete
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="delete-dropdown">
+                                        <p class="ml-4">Sure?</p>
+                                        <a class="dropdown-item" href="{% url 'delete_workout' workout.id %}">Delete</a>
+                                    </div>
+                                </div>
                             </div>
                         {% else %}
                             <div class="row text-center workout-card-footer">
