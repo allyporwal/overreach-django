@@ -1,13 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
+{% block extra_title %}
+    | {{ displayed_profile }}'s Profile
+{% endblock %}
 {% block content %}
 
 <div class="container mt-4">
     <div class="row">
-        <div class="col-12 text-center">
+        <div class="col-12 text-left">
             <h2>{{ displayed_profile.first_name }} {{ displayed_profile.last_name }}</h2>
             <p>Member since: {{ displayed_profile.signup_date }}</p>
             <p>{{ displayed_profile.follower.all|length }} followers</p>
+            {% if is_following.status == True %}
+                <a href="{% url 'unfollow' displayed_profile.id %}">
+                    <button class="btn btn-primary btn-unfollow col-12 col-md-4 btn-block mb-3 mt-3">Unfollow</button>
+                </a>
+            {% elif is_following.status == False %}
+                <a href="{% url 'add_follower' displayed_profile.id %}">
+                    <button class="btn btn-primary btn-follow col-12 col-md-4 btn-block mb-3 mt-3">Follow</button>
+                </a>
+            {% elif is_following == False %}
+                <a href="{% url 'add_follower' displayed_profile.id %}">
+                    <button class="btn btn-primary btn-follow col-12 col-md-4 btn-block mb-3 mt-3">Follow</button>
+                </a>
+            {% endif %}
             <hr>
         </div>
     </div>    
@@ -16,24 +32,11 @@
             {% if displayed_profile.image %}
                 <img class="card-img-top img-fluid rounded mb-5 mt-3" src="{{ displayed_profile.image.url }}" alt="{{ displayed_profile.user.username }}">
             {% endif %}
-            {% if is_following.status == True %}
-                <a href="{% url 'unfollow' displayed_profile.id %}">
-                    <button class="btn btn-primary btn-sm btn-block mt-3">Unfollow</button>
-                </a>
-            {% elif is_following.status == False %}
-                <a href="{% url 'add_follower' displayed_profile.id %}">
-                    <button class="btn btn-primary btn-sm btn-block mt-3">Follow</button>
-                </a>
-            {% elif is_following == False %}
-                <a href="{% url 'add_follower' displayed_profile.id %}">
-                    <button class="btn btn-primary btn-sm btn-block mt-3">Follow</button>
-                </a>
-            {% endif %}
         </div>
         <div class="col-12 col-md-9">   
             <div class="card-body d-flex align-items-center justify-content-center">
                 <ul>                    
-                    <li><p>{{ number_of_workouts }} workouts logged</p></li>
+                    <li><a href="{% url 'profile_workouts' displayed_profile.id %}"><p>{{ number_of_workouts }} workouts logged</p></a></li>
                     <li><p>{{ total_training_volume }} kilos lifted</p></li>
                     <li><p>{{ total_training_reps }} reps lifted</p></li>
                     <li><p>{{ average_rpe }} average RPE</p></li>

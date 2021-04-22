@@ -201,6 +201,7 @@ footer {
 .push-up-half {
     margin-top: -0.1rem;
 }
+
 /* friends template */
 
 .friends-workout-container {
@@ -249,6 +250,28 @@ footer {
 .view-workout:hover, .view-workout:active, .view-workout:focus {
     border-color: rgba(0, 178, 131, 0.75);
     background-color: rgba(0, 178, 131, 0.75) !important;
+}
+
+.friends-exercise-name {
+    background-color: rgba(178, 33, 0, 0.6);
+}
+
+/* profile template */
+
+.btn-follow {
+    background-color: rgba(0, 178, 131, 1);
+    border-color: rgba(0, 178, 131, 1);
+}
+
+.btn-unfollow {
+    background-color: rgba(178, 33, 0, 1);
+    border-color: rgba(178, 33, 0, 1);
+}
+
+.btn-follow:hover, .btn-follow:active, .btn-follow:focus {
+    border-color: rgba(0, 178, 131, 0.75);
+    background-color: rgba(0, 178, 131, 0.75) !important;
+    text-decoration: none !important;
 }
 
 /* all forms */

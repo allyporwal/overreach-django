@@ -143,3 +143,17 @@ def friends(request):
         'friends_workouts': friends_workouts,
     }
     return render(request, template, context)
+
+
+@login_required
+def profile_workouts(request, profile_id):
+    """Display all workouts by a specific user"""
+    profile = get_object_or_404(UserProfile, pk=profile_id)
+    workouts = profile.workouts.all().order_by('-id')
+
+    template = 'profiles/profile_workouts.html'
+    context = {
+        'profile': profile,
+        'workouts': workouts,
+    }
+    return render(request, template, context)

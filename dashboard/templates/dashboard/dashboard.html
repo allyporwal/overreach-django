@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% block extra_title %}
+    | Dashboard
+{% endblock %}
 {% block content %}
 
 <!-- prompt the user to log a workout -->
@@ -62,8 +64,8 @@
                 </div> 
             {% endfor %}
             <div class="col-12 col-lg-4">
-                <a class="all-workouts-db-link" href="">
-                <div  class="card all-workouts-db-link-card">
+                <a class="all-workouts-db-link" href="{% url 'profile_workouts' profile.id %}">
+                <div class="card all-workouts-db-link-card">
                     <div class="card-body d-flex align-items-center justify-content-center">
                         <div class="row">
                             <div class="col-12 ">

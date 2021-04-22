@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% block extra_title %}
+    | Friends
+{% endblock %}
 {% block content %}
 
 <div class="container mb-5">
@@ -59,7 +61,6 @@
             {% endif %}
         {% endif %}        
         {% for workout in friends_workouts %}
-            <div class="container">
                 <div class="col-12 col-md-8 offset-md-2 mt-3 friends-workout-container">
                     <div class="row">
                         <div class="col-12 mb-1 col-md-8">
@@ -103,7 +104,7 @@
                             <table class="table">
                                 <thead class="thead-friends text-light">
                                     <tr>
-                                        <th class="text-uppercase" scope="col">{{ exercise.exercise }}</th>
+                                        <th class="text-uppercase friends-exercise-name" scope="col">{{ exercise.exercise }}</th>
                                         <th scope="col">Weight</th>
                                         <th scope="col">Reps</th>
                                         <th scope="col">RPE</th>
@@ -136,7 +137,6 @@
                 <button class="btn view-workout btn-outline-primary btn-block" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">
                     View workout
                 </button>
-            </div>
             </div>
             <hr>
         {% endfor %}        
