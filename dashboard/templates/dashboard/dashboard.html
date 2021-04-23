@@ -138,7 +138,7 @@
         </div>       
         {% for workout in friends_workouts %}
             <div class="d-none d-sm-block col-sm-6 col-md-6 col-lg-4">
-                <div class="card">
+                <!-- <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{ workout.session_name }}</h5>
                         <p class="card-text"><small class="lightweight-text">{{ workout.created_at }} by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>                 
@@ -158,6 +158,66 @@
                             <a href="{% url 'workout' workout.id %}" class="col-12 view-other-users-workout btn btn-secondary">View</a>
                             </div>
                     </div>
+                </div> -->
+                <div class="card mb-0">
+                    <div class="card-body overflow-auto">
+                        {% if workout.session_notes %}
+                        <div class="scroll-icon">
+                            <i class="fas fa-chevron-down mt-1 float-right"></i>
+                        </div>
+                        {% endif %}  
+                        <h5 class="card-title">{{ workout.session_name }}</h5>
+                        <div class="row">
+                            <div class="col-8 push-up">
+                                <p class="card-text"><small class="lightweight-text">{{ workout.created_at }} by 
+                                    <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small>
+                                </p>
+                            </div>
+                            <div class="col-4 pb-3 mt-1 pl-0">
+                                {% if workout.created_by.image %}
+                                    <img class="img-fluid profile-thumbnail rounded-circle" width="35" height="35" src="{{ workout.created_by.image.url }}" alt="{{ displayed_profile.user.username }}">
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if workout.session_notes %}                            
+                            <p class="card-text push-up-half"><small>Session notes:</small></p>
+                            <p class="card-text mt-0"><small>{{ workout.session_notes }}</small></p>
+                            <div class="scroll-icon-up">
+                                <i class="fas fa-chevron-up float-right"></i>
+                            </div>
+                        {% endif %}                        
+                    </div>                        
+                        <div class="row workout-metrics text-center">
+                            <div class="col-4 vol-col"><small class="text-light">Vol:</small></div>
+                            <div class="col-4 reps-col"><small class="text-light">Reps:</small></div>
+                            <div class="col-4 rpe-col"><small class="text-light">RPE:</small></div>
+                        </div>
+                        <div class="row workout-metrics text-center">
+                            <div class="col-4 vol-col text-light">{{ workout.session_volume|floatformat:"0" }}</div>
+                            <div class="col-4 reps-col text-light">{{ workout.session_reps }}</div>
+                            <div class="col-4 rpe-col text-light">{{ workout.session_average_rpe }}</div>
+                        </div>
+                        {% if workout.created_by.user == request.user %}
+                            <div class="row text-center workout-card-footer">
+                                <div class="btn-group card-button-group" role="group" aria-label="WorkoutActions">
+                                    <a href="{% url 'workout' workout.id %}" class="col-4 btn btn-secondary">View</a>
+                                    <a href="{% url 'edit_workout' workout.id %}" class="col-4 btn btn-secondary">Edit</a>
+                                    <button id="delete-dropdown" type="button" class="btn dropdown-toggle btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Delete
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="delete-dropdown">
+                                        <p class="ml-4">Sure?</p>
+                                        <a class="dropdown-item" href="{% url 'delete_workout' workout.id %}">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="row text-center workout-card-footer">
+                                <div class="btn-group card-button-group" role="group" aria-label="Friends workout actions">
+                                    <a href="{% url 'workout' workout.id %}" class="col-12 view-other-users-workout btn btn-secondary">View</a>
+                                </div>
+                            </div>
+                        {% endif %}
                 </div>
             </div> 
         {% endfor %}

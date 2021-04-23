@@ -3,8 +3,32 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-
-<a href="{% url 'unlike_workout' workout.id %}">Unlike</a>
+<!-- delete Modal -->
+<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this workout?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            This action cannot be undone
+        </div>
+            <div class="container mb-4">
+            <div class="row">
+                <div class="col-12">
+                    <hr>
+                    <a href="{% url 'delete_workout' workout.id %}">
+                        <button type="button" class="btn btn-block btn-danger">Delete</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <div class="container mt-3 mb-5">
     <div class="row">
@@ -16,13 +40,19 @@
                 <a href="{% url 'edit_workout' workout.id %}">
                     <button class="btn btn-primary btn-sm btn-block mt-3">Edit</button>
                 </a>
-                <a href="{% url 'delete_workout' workout.id %}">
-                    <button class="btn btn-danger btn-sm btn-block mt-3">Delete</button>
-                </a>
+                <button type="button" class="btn btn-danger btn-sm btn-block mb-3 mt-3" data-toggle="modal" data-target="#delete-modal">
+                    Delete
+                </button>
             {% endif %}
-            <a href="{% url 'like_workout' workout.id %}">
-                <i id="like-workout" class="far fa-thumbs-up"></i>
-            </a>
+            {% if liker %}
+                <a href="{% url 'unlike_workout' workout.id %}">
+                    <i id="unlike-workout" class="fas fa-thumbs-up"></i>
+                </a>            
+            {% else %}
+                <a href="{% url 'like_workout' workout.id %}">
+                    <i id="like-workout" class="far fa-thumbs-up"></i>
+                </a> 
+            {% endif %}
             <p id="likes-count">{{ workout.liked_workout.all|length }}</p>
         </div>
         <hr>
@@ -33,7 +63,7 @@
                         <div class="card-header" id="heading-{{ forloop.counter }}">
                             <h2 class="mb-0">
                                 <button id="collapse-btn-{{ forloop.counter }}" class="btn btn-block text-left w-100 h-100" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse-{{ forloop.counter }}">
-                                    {{ exercise.exercise}} for {{ exercise.sets }} sets of {{ exercise.reps }} reps <i class="fas fa-chevron-down float-right mt-1" hidden></i><i class="fas fa-chevron-up float-right mt-1"></i>
+                                    {{ exercise.exercise}} for {{ exercise.sets }} sets of {{ exercise.reps }} reps <i class="fas fa-chevron-down float-right mt-1"></i>
                                 </button>                                
                             </h2>
                         </div>
@@ -128,13 +158,6 @@
         </div>
     </div>
 </div>
-
-
-<script>
-    $("button[id*='collapse']").click(function() {
-        $(this).children().toggle()
-    })
-</script>
 
 {% endblock %}
 

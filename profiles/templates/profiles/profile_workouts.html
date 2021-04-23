@@ -32,13 +32,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-9 mb-4">        
+            <div class="col-12 mb-4">        
                 <p class="pl-3 card-text"><small class="lightweight-text">Logged on: <a href="{% url 'workout' workout.id %}">{{ workout.created_at }}</a> by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>
-            </div>
-            <div class="col-2 mt-3 ml-2 pl-2">
-                {% if workout.created_by.image %}
-                    <img class="img-fluid rounded-circle" width="40" height="40" src="{{ workout.created_by.image.url }}" alt="{{ displayed_profile.user.username }}">
-                {% endif %}
             </div>
         </div>                     
         <div class="row text-center">

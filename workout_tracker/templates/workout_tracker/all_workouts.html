@@ -22,14 +22,14 @@
                         {% endif %}  
                         <h5 class="card-title">{{ workout.session_name }}</h5>
                         <div class="row">
-                            <div class="col-9 push-up">
+                            <div class="col-8 push-up">
                                 <p class="card-text"><small class="lightweight-text">{{ workout.created_at }} by 
                                     <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small>
                                 </p>
                             </div>
-                            <div class="col-3 pb-3 mt-1 pl-0">
+                            <div class="col-4 pb-3 mt-1 pl-0">
                                 {% if workout.created_by.image %}
-                                    <img class="img-fluid rounded-circle" width="40" height="40" src="{{ workout.created_by.image.url }}" alt="{{ displayed_profile.user.username }}">
+                                    <img class="img-fluid profile-thumbnail rounded-circle" width="35" height="35" src="{{ workout.created_by.image.url }}" alt="{{ displayed_profile.user.username }}">
                                 {% endif %}
                             </div>
                         </div>

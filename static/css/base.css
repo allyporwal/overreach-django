@@ -202,7 +202,18 @@ footer {
     margin-top: -0.1rem;
 }
 
+/* everyone's workouts template */
+
+.profile-thumbnail {
+    margin-left: 2.5rem;
+    margin-top: 0.65rem;
+}
+
 /* friends template */
+
+.friends-profile-thumbnail {
+    margin-top: 2rem;
+}
 
 .friends-workout-container {
     border: 1px solid rgba(0,0,0,.125);
@@ -298,6 +309,12 @@ th {
 
 #like-workout {
     font-size: 1.7rem;
+    color: rgba(0, 178, 131, 1);    
+}
+
+#unlike-workout {
+    font-size: 1.7rem;
+    color: rgba(0, 178, 131, 1);
 }
 
 /* all images */

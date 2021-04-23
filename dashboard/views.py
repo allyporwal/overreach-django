@@ -50,7 +50,7 @@ def dashboard(request):
     friends = profile.follower.values('is_following').filter(status=True)
     friends_profiles = UserProfile.objects.filter(pk__in=friends)
     friends_workouts = WorkoutTracker.objects.filter(
-        created_by__in=friends_profiles)[:2]
+        created_by__in=friends_profiles).order_by('-id')[:2]
 
     template = 'dashboard/dashboard.html'
     context = {

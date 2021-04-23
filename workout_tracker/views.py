@@ -172,7 +172,7 @@ def workout(request, workout_id):
     """Show an individual workout"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
     comments = workout.target_workout.all()
-    likes = workout.liked_workout.all()
+    profile = UserProfile.objects.get(user=request.user)
 
     # sort workout data into lists for processing
     set_count = []
@@ -207,17 +207,32 @@ def workout(request, workout_id):
     # data zipped for easier access in template
     workout_zipped = zip(
         workout.workout, exercise_volumes, exercise_reps, exercise_average_rpe)
+    
+    try:
+        liker = workout.liked_workout.get(liker=profile)
+        form = WorkoutCommentsForm()
+        template = 'workout_tracker/workout.html'
+        context = {
+            'workout': workout,
+            'workout_zipped': workout_zipped,
+            'form': form,
+            'comments': comments,
+            'liker': liker,
+        }
+        return render(request, template, context)
 
-    form = WorkoutCommentsForm()
-    template = 'workout_tracker/workout.html'
-    context = {
-        'workout': workout,
-        'workout_zipped': workout_zipped,
-        'form': form,
-        'comments': comments,
-        'likes': likes,
-    }
-    return render(request, template, context)
+    except WorkoutLikes.DoesNotExist:
+        liker = False
+        form = WorkoutCommentsForm()
+        template = 'workout_tracker/workout.html'
+        context = {
+            'workout': workout,
+            'workout_zipped': workout_zipped,
+            'form': form,
+            'comments': comments,
+            'liker': liker,
+        }
+        return render(request, template, context)
 
 
 @login_required
@@ -463,7 +478,7 @@ def like_workout(request, workout_id):
         return redirect(reverse('workout', args=[workout.id]))
 
     except WorkoutLikes.DoesNotExist:
-        like = WorkoutLikes.objects.create(
+        WorkoutLikes.objects.create(
             liked_workout=workout, liker=profile,
         )
         return redirect(reverse('workout', args=[workout.id]))

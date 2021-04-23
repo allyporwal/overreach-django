@@ -10,7 +10,8 @@ def profile(request, profile_id):
     """Show a user's profile page"""
     profile = get_object_or_404(UserProfile, user=request.user)
     displayed_profile = get_object_or_404(UserProfile, pk=profile_id)
-    followers = len(profile.follower.values('is_following').filter(status=True))
+    followers = len(profile.follower.values(
+        'is_following').filter(status=True))
 
     # display some all time statistics from the profile's workouts
     number_of_workouts = len(displayed_profile.workouts.all())
@@ -105,7 +106,7 @@ def add_follower(request, profile_id):
     # only create entry if follower is not following the profile
     # of the user they're viewing
     except Followers.DoesNotExist:
-        follow = Followers.objects.create(
+        Followers.objects.create(
             follower=follower, is_following=profile,
         )
         return redirect(reverse('profile', args=[profile.id]))
