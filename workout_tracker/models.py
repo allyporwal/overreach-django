@@ -42,7 +42,6 @@ class WorkoutLikes(models.Model):
                                       null=False, blank=False,
                                       related_name='liked_workout')
     liked_date = models.DateTimeField(auto_now_add=True)
-    like_status = models.BooleanField(default=True)
 
     def __str__(self):
         return self.liker.user.username

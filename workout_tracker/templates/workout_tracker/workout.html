@@ -3,10 +3,9 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<a href="{% url 'like_workout' workout.id %}">Like</a>
+
 <a href="{% url 'unlike_workout' workout.id %}">Unlike</a>
 
-{{ likes|length }}
 <div class="container mt-3 mb-5">
     <div class="row">
         <div class="col-sm-4 mt-3">
@@ -21,6 +20,10 @@
                     <button class="btn btn-danger btn-sm btn-block mt-3">Delete</button>
                 </a>
             {% endif %}
+            <a href="{% url 'like_workout' workout.id %}">
+                <i id="like-workout" class="far fa-thumbs-up"></i>
+            </a>
+            <p id="likes-count">{{ workout.liked_workout.all|length }}</p>
         </div>
         <hr>
         <div class="col-sm-8 mt-3">

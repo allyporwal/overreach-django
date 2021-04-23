@@ -291,6 +291,15 @@ th {
     border-bottom: 1px solid rgba(0,0,0,.125);
 }
 
+#likes-count {
+    margin-left: 3rem;
+    margin-top: -1.5rem;
+}
+
+#like-workout {
+    font-size: 1.7rem;
+}
+
 /* all images */
 .profile-image-wrapper {
     height: 200px;

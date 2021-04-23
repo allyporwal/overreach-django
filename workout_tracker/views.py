@@ -172,7 +172,7 @@ def workout(request, workout_id):
     """Show an individual workout"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
     comments = workout.target_workout.all()
-    likes = workout.liked_workout.filter(like_status=True)
+    likes = workout.liked_workout.all()
 
     # sort workout data into lists for processing
     set_count = []
@@ -458,14 +458,10 @@ def like_workout(request, workout_id):
     # prevent duplicate entries into WorkoutLikes table
     try:
         has_user_liked = workout.liked_workout.get(liker=profile)
-        # allow user to re-follow someone they previously unfollowed
-        has_user_liked.like_status = True
+        # allow user to re-like a workout they unliked
         has_user_liked.save()
-
         return redirect(reverse('workout', args=[workout.id]))
 
-    # only create entry if follower is not following the profile
-    # of the user they're viewing
     except WorkoutLikes.DoesNotExist:
         like = WorkoutLikes.objects.create(
             liked_workout=workout, liker=profile,
@@ -482,11 +478,10 @@ def unlike_workout(request, workout_id):
     # modify the status field in the database entry
     try:
         has_user_liked = workout.liked_workout.get(liker=profile)
-        has_user_liked.like_status = False
-        has_user_liked.save()
+        has_user_liked.delete()
 
         return redirect(reverse('workout', args=[workout.id]))
 
     # redirect if user uses url but hasn't already liked
     except WorkoutLikes.DoesNotExist:
-        return redirect(reverse('dashboard'))
+        return redirect(reverse('workout', args=[workout.id]))
