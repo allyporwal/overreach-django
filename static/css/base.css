@@ -319,22 +319,22 @@ th {
 
 /* checkout page */
 
-#payment-content {
-    /* min-height: 350px; */
-    /* max-height: 430px; */
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
-}
-
-.checkout-icons {
-    font-size: 1.7rem;
-}
 
 /* all images */
 .profile-image-wrapper {
     height: 200px;
     width: 200px;
 }
+
+/* alerts */
+
+.alerts-container {
+    position: fixed;
+    top: 72px;
+    right: 18px;
+    z-index: 99999999999;
+}
+
 
 /* media queries */
 

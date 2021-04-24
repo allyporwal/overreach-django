@@ -94,6 +94,23 @@
                     </div>
                 </nav>
             </header>
+            {% if messages %}
+                <div class="ml-3 alerts-container">
+                    {% for message in messages %}
+                        {% with message.level as level %}
+                            {% if level == 40 %}
+                                {% include 'includes/alerts/alert_error.html' %}
+                            {% elif level == 30 %}
+                                {% include 'includes/alerts/alert_warning.html' %}
+                            {% elif level == 25 %}
+                                {% include 'includes/alerts/alert_success.html' %}
+                            {% else %}
+                                {% include 'includes/alerts/alert_info.html' %}
+                            {% endif %}
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            {% endif %}
 
     {% block page_header %}
     {% endblock %}
@@ -105,6 +122,9 @@
     </div>
 
     {% block postloadjs %}
+    <script type="text/javascript">
+        $('.alert').alert()
+    </script>
     {% endblock %}
 
     <footer class="container-fluid w-100">

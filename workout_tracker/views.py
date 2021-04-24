@@ -5,6 +5,7 @@ from profiles.models import UserProfile
 from .models import WorkoutTracker, WorkoutComments, WorkoutLikes
 from .validators import validate_active_workout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 @login_required
@@ -90,6 +91,7 @@ def delete_active_workout(request):
 
     if workout:
         del request.session['workout']
+        messages.success(request, 'Workout discarded')
         return redirect(reverse('dashboard'))
 
     else:
@@ -154,6 +156,7 @@ def log_workout(request):
             # attach the workout to the user's profile
             workout.created_by = UserProfile.objects.get(user=request.user)
             workout.save()
+            messages.success(request, 'Workout logged')
             # clear the workout from the session after saving
             del request.session['workout']
             return redirect(reverse('workout', args=[workout.id]))
@@ -207,7 +210,7 @@ def workout(request, workout_id):
     # data zipped for easier access in template
     workout_zipped = zip(
         workout.workout, exercise_volumes, exercise_reps, exercise_average_rpe)
-    
+
     try:
         liker = workout.liked_workout.get(liker=profile)
         form = WorkoutCommentsForm()
@@ -390,6 +393,7 @@ def update_workout(request, workout_id):
                     # clear the workout from the session after saving
                     del request.session['workout_to_edit']
                     del request.session['workout_edited']
+                    messages.success(request, 'Workout successfully updated')
                     return redirect(reverse(
                         'workout', args=[workout_to_update.id]))
 
@@ -419,8 +423,11 @@ def delete_workout(request, workout_id):
 
     if UserProfile.objects.get(user=request.user) == workout.created_by:
         workout.delete()
+        messages.success(request, f'{workout} successfully deleted')
         return redirect(reverse('dashboard'))
     else:
+        messages.error(
+            request, 'You cannot delete a workout you did not create')
         return redirect(reverse('dashboard'))
 
 
@@ -460,7 +467,7 @@ def comment_on_workout(request, workout_id):
             comment.target_workout = workout
             comment.comment_author = profile
             comment.save()
-
+            messages.success(request, f'Comment on {workout} posted')
             return redirect(reverse('workout', args=[workout.id]))
 
 
