@@ -6,9 +6,17 @@ from .models import WorkoutTracker, WorkoutComments, WorkoutLikes
 from .validators import validate_active_workout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
+
+
+def check_membership(user):
+    profile = UserProfile.objects.get(user=user)
+    if profile.is_subscribed:
+        return profile
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def active_workout(request):
     """Add workout to be stored in session, to be retrieved later
     on and saved in a Django JSONField"""
@@ -71,11 +79,11 @@ def active_workout(request):
                 request, 'Error: reps field cannot take blank inputs')
             return redirect(reverse('active_workout'))
 
-        if '' in weight_rep_count_rpe:
-            messages.error(
-                request, 'Error: form cannot take blank inputs')
-            return redirect(reverse('active_workout'))
-
+        for arr in weight_rep_count_rpe:
+            if '' in arr:
+                messages.error(
+                    request, 'Error: form cannot take blank inputs')
+                return redirect(reverse('active_workout'))
 
         for exercise, sets in zip(workout, set_count):
             sets_number = int(sets)
@@ -107,6 +115,7 @@ def active_workout(request):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def delete_active_workout(request):
     """Delete the active workout from the session"""
     del request.session['workout']
@@ -115,6 +124,7 @@ def delete_active_workout(request):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def log_workout(request):
     """Stores a user's workout to the database"""
     workout_to_log = request.session['workout']
@@ -187,6 +197,7 @@ def log_workout(request):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def workout(request, workout_id):
     """Show an individual workout"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
@@ -255,6 +266,7 @@ def workout(request, workout_id):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def edit_workout(request, workout_id):
     """Allow a user to edit a workout they logged"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
@@ -343,6 +355,7 @@ def edit_workout(request, workout_id):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def update_workout(request, workout_id):
     """Updates a user's workout in the database"""
     workout_to_update = get_object_or_404(WorkoutTracker, pk=workout_id)
@@ -433,6 +446,7 @@ def update_workout(request, workout_id):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def delete_workout(request, workout_id):
     """Allow the user to delete a workout they logged"""
     workout = get_object_or_404(WorkoutTracker, pk=workout_id)
@@ -448,6 +462,7 @@ def delete_workout(request, workout_id):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def all_workouts(request):
     """Display workouts done by everyone"""
     workouts = WorkoutTracker.objects.all().order_by('-pk')
@@ -465,6 +480,7 @@ def all_workouts(request):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def comment_on_workout(request, workout_id):
     """Allow a user to comment on a workout"""
     profile = UserProfile.objects.get(user=request.user)
@@ -488,6 +504,7 @@ def comment_on_workout(request, workout_id):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def like_workout(request, workout_id):
     """Allow a user to like another user's workout"""
     profile = UserProfile.objects.get(user=request.user)
@@ -508,6 +525,7 @@ def like_workout(request, workout_id):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def unlike_workout(request, workout_id):
     """Allow a user to unlike a workout"""
     profile = UserProfile.objects.get(user=request.user)

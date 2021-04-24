@@ -4,8 +4,17 @@ from .forms import UserProfileForm
 from workout_tracker.models import WorkoutTracker, WorkoutComments
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import user_passes_test
 
 
+def check_membership(user):
+    profile = UserProfile.objects.get(user=user)
+    if profile.is_subscribed:
+        return profile
+
+
+@login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 @login_required
 def profile(request, profile_id):
     """Show a user's profile page"""
@@ -69,6 +78,8 @@ def profile(request, profile_id):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
+@login_required
 def edit_profile(request):
     """Allow the user to edit their profile details"""
     profile = UserProfile.objects.get(user=request.user)
@@ -90,6 +101,8 @@ def edit_profile(request):
     return render(request, template, context)
 
 
+@login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 @login_required
 def add_follower(request, profile_id):
     """Allow a user to follow other users in a friends feed"""
@@ -114,6 +127,8 @@ def add_follower(request, profile_id):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
+@login_required
 def unfollow(request, profile_id):
     """Allow a user to unfollow another user"""
     profile = get_object_or_404(UserProfile, pk=profile_id)
@@ -131,6 +146,8 @@ def unfollow(request, profile_id):
         return redirect(reverse('dashboard'))
 
 
+@login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 @login_required
 def friends(request):
     """A feed showing more detailed overview of friends' workouts,
@@ -151,6 +168,8 @@ def friends(request):
     return render(request, template, context)
 
 
+@login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 @login_required
 def profile_workouts(request, profile_id):
     """Display all workouts by a specific user"""

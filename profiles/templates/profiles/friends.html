@@ -5,12 +5,13 @@
 {% endblock %}
 {% block content %}
 
-<div class="container mb-5">
-    <div class="row mt-4">
+<div class="container mt-3 mb-5">
+    <div class="row mt-3">
         <div class="col-12 col-md-8 offset-md-2 text-center">
             <h2>Workouts by Friends</h2>
             <hr>
         </div>
+    </div>
         {% if friends_profiles|length == 0 %}
         <div class="container mt-3">
             <div class="row mt-3">
@@ -84,7 +85,7 @@
                             <p class="pl-3 card-text"><small class="lightweight-text">Logged on: <a href="{% url 'workout' workout.id %}">{{ workout.created_at }}</a> by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>
                         </div>
                     </div>                     
-                        <div class="row text-center">
+                    <div class="row text-center">
                         <div class="col-4"><small>Volume:</small></div>
                         <div class="col-4"><small>Reps:</small></div>
                         <div class="col-4"><small>RPE:</small></div>
@@ -135,7 +136,7 @@
             </div>
             <hr>
         {% endfor %}        
-    </div>
+
 </div>
 
 <script>

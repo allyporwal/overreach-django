@@ -9,6 +9,7 @@ html, body {
     color: rgba(53, 58, 77, 1);    
     height: 100%;
     margin: 0;
+    overflow-x: hidden;
 }
 
 .navbar {

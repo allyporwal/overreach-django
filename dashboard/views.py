@@ -2,9 +2,17 @@ from django.shortcuts import render, get_object_or_404
 from profiles.models import UserProfile
 from workout_tracker.models import WorkoutTracker
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
+
+
+def check_membership(user):
+    profile = UserProfile.objects.get(user=user)
+    if profile.is_subscribed:
+        return profile
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def dashboard(request):
     '''Render the user's dashboard'''
     profile = get_object_or_404(UserProfile, user=request.user)
