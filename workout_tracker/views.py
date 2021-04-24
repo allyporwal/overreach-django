@@ -55,6 +55,28 @@ def active_workout(request):
         # add the correct number of sets to each dictionary
         # in the workout list and then delete them from the
         # weights_lifted list
+
+        if '' in set_count:
+            messages.error(
+                request, 'Error: sets field cannot take blank inputs')
+            return redirect(reverse('active_workout'))
+
+        if '0' in set_count:
+            messages.error(
+                request, 'Error: set count must not be 0')
+            return redirect(reverse('active_workout'))
+
+        if '' in exercises_sets_reps[2]:
+            messages.error(
+                request, 'Error: reps field cannot take blank inputs')
+            return redirect(reverse('active_workout'))
+
+        if '' in weight_rep_count_rpe:
+            messages.error(
+                request, 'Error: form cannot take blank inputs')
+            return redirect(reverse('active_workout'))
+
+
         for exercise, sets in zip(workout, set_count):
             sets_number = int(sets)
             sets_to_add = weights_lifted[0:sets_number]
@@ -87,15 +109,9 @@ def active_workout(request):
 @login_required
 def delete_active_workout(request):
     """Delete the active workout from the session"""
-    workout = request.session.get('workout', {})
-
-    if workout:
-        del request.session['workout']
-        messages.success(request, 'Workout discarded')
-        return redirect(reverse('dashboard'))
-
-    else:
-        return redirect(reverse('dashboard'))
+    del request.session['workout']
+    messages.success(request, 'Workout discarded')
+    return redirect(reverse('dashboard'))
 
 
 @login_required
