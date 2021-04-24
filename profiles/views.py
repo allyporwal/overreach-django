@@ -3,6 +3,7 @@ from .models import UserProfile, Followers
 from .forms import UserProfileForm
 from workout_tracker.models import WorkoutTracker, WorkoutComments
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 
 @login_required
@@ -155,10 +156,15 @@ def profile_workouts(request, profile_id):
     """Display all workouts by a specific user"""
     profile = get_object_or_404(UserProfile, pk=profile_id)
     workouts = profile.workouts.all().order_by('-id')
+    workouts_paginator = Paginator(workouts, 12)
+
+    page_number = request.GET.get('page')
+    page_obj = workouts_paginator.get_page(page_number)
 
     template = 'profiles/profile_workouts.html'
     context = {
         'profile': profile,
         'workouts': workouts,
+        'page_obj': page_obj,
     }
     return render(request, template, context)

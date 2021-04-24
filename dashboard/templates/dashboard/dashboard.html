@@ -138,27 +138,6 @@
         </div>       
         {% for workout in friends_workouts %}
             <div class="d-none d-sm-block col-sm-6 col-md-6 col-lg-4">
-                <!-- <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ workout.session_name }}</h5>
-                        <p class="card-text"><small class="lightweight-text">{{ workout.created_at }} by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>                 
-                    </div>
-                    <div class="row workout-metrics text-center">
-                        <div class="col-4 vol-col"><small class="text-light">Vol:</small></div>
-                        <div class="col-4 reps-col"><small class="text-light">Reps:</small></div>
-                        <div class="col-4 rpe-col"><small class="text-light">RPE:</small></div>
-                        </div>
-                        <div class="row workout-metrics text-center">
-                            <div class="col-4 vol-col text-light">{{ workout.session_volume }}</div>
-                            <div class="col-4 reps-col text-light">{{ workout.session_reps }}</div>
-                            <div class="col-4 rpe-col text-light">{{ workout.session_average_rpe }}</div>
-                        </div>
-                    <div class="row text-center workout-card-footer">
-                        <div class="btn-group card-button-group" role="group" aria-label="Friends workout actions">
-                            <a href="{% url 'workout' workout.id %}" class="col-12 view-other-users-workout btn btn-secondary">View</a>
-                            </div>
-                    </div>
-                </div> -->
                 <div class="card mb-0">
                     <div class="card-body overflow-auto">
                         {% if workout.session_notes %}

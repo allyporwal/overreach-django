@@ -13,6 +13,7 @@
     <div class="row">
         <div class="col-12 text-center">
             <h1>Edit Workout</h1>
+            <h5>{{ workout.session_name }}</h5>
         </div>
     </div> 
     <form id="workout-sets" class="mt-3" action="{% url 'edit_workout' workout.id %}" method="POST">
