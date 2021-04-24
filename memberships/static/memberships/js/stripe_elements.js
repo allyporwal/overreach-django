@@ -43,6 +43,8 @@ let form = document.getElementById('subscription-payment');
 form.addEventListener('submit', function (ev) {
   ev.preventDefault();
   $('#subscribe-button').attr('disabled', true);
+  $('#payment-content').fadeToggle(500);
+  $('#payment-processing-overlay').fadeToggle(500);
   createPaymentMethod({ card });
 });
 

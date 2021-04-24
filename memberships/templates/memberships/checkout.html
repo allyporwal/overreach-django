@@ -3,6 +3,9 @@
 {% block extra_title %}
     | Membership Payment
 {% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'memberships/css/memberships.css' %}">
+{% endblock %}
 {% load crispy_forms_tags %}
 {% block content %}
 
@@ -55,6 +58,13 @@
             </div>            
         </div>
     </div>
+</div>
+<div id="payment-processing-overlay">
+    <h1 class="text-light logo-font dumbbell-spinner">
+        <span class="icon">
+            <i class="fas fa-3x fa-spin fa-dumbbell"></i>
+        </span>
+    </h1>
 </div>
 
 {% endblock %}

@@ -51,49 +51,49 @@
 <body>
     <div id="push-footer-outer">
         <div id="push-footer-inner">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light">
-            {% if request.user.is_authenticated %}
-                <a class="navbar-brand" href="{% url 'dashboard' %}">
-                    <img src="/media/3_Overreach.svg" width="150" height="30" alt="Overreach logo">
-                </a>
-            {% else %}
-                <a class="navbar-brand" href="{% url 'home' %}">Overreach</a>
-            {% endif %}
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav mt-1">
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-light">
                     {% if request.user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-                        <a class="nav-link" href="{% url 'active_workout' %}">Workout</a>
-                        <a class="nav-link" href="{% url 'friends' %}">Friends</a>
-                        <a class="nav-link" href="{% url 'all_workouts' %}">Everyone</a>
+                        <a class="navbar-brand" href="{% url 'dashboard' %}">
+                            <img src="/media/3_Overreach.svg" width="150" height="30" alt="Overreach logo">
+                        </a>
+                    {% else %}
+                        <a class="navbar-brand" href="{% url 'home' %}">Overreach</a>
                     {% endif %}
-                </div>  
-                <div class="navbar-nav mt-1 ml-auto">
-                    {% if request.user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                My Profile
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{% url 'profile' user.userprofile.id %}">View Profile</a>
-                                <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a>
-                                <a class="dropdown-item" href="{% url 'membership_status' %}">Membership</a>
-                            </div>
-                        </li>
-                        <a class="nav-link" href="{% url 'account_logout' %}">Log Out</a>
-                    {% else %}                        
-                        <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
-                        <a class="nav-link" href="{% url 'account_login' %}">Log In</a>
-                    {% endif %}
-                </div>
-            </div>
-        </nav>
-    </header>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav mt-1">
+                            {% if request.user.is_authenticated %}
+                                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                                <a class="nav-link" href="{% url 'active_workout' %}">Workout</a>
+                                <a class="nav-link" href="{% url 'friends' %}">Friends</a>
+                                <a class="nav-link" href="{% url 'all_workouts' %}">Everyone</a>
+                            {% endif %}
+                        </div>  
+                        <div class="navbar-nav mt-1 ml-auto">
+                            {% if request.user.is_authenticated %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        My Profile
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="{% url 'profile' user.userprofile.id %}">View Profile</a>
+                                        <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a>
+                                        <a class="dropdown-item" href="{% url 'membership_status' %}">Membership</a>
+                                    </div>
+                                </li>
+                                <a class="nav-link" href="{% url 'account_logout' %}">Log Out</a>
+                            {% else %}                        
+                                <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
+                                <a class="nav-link" href="{% url 'account_login' %}">Log In</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </nav>
+            </header>
 
     {% block page_header %}
     {% endblock %}
@@ -105,8 +105,8 @@
     </div>
 
     {% block postloadjs %}
-    <script src="{% static 'js/base.js' %}"></script>
     {% endblock %}
+
     <footer class="container-fluid w-100">
         <div class="row mh-50 mb-0 pb-0">
             <div class="col-12 text-left">
