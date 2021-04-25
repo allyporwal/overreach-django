@@ -12,15 +12,15 @@
             <p>Member since: {{ displayed_profile.signup_date }}</p>
             <p>{{ followers }} followers</p>
             {% if is_following.status == True %}
-                <a href="{% url 'unfollow' displayed_profile.id %}">
+                <a href="{% url 'unfollow' displayed_profile.id %}" class="no-decoration">
                     <button class="btn btn-primary btn-unfollow col-12 col-md-4 btn-block mb-3 mt-3">Unfollow</button>
                 </a>
             {% elif is_following.status == False %}
-                <a href="{% url 'add_follower' displayed_profile.id %}">
+                <a href="{% url 'add_follower' displayed_profile.id %}" class="no-decoration">
                     <button class="btn btn-primary btn-follow col-12 col-md-4 btn-block mb-3 mt-3">Follow</button>
                 </a>
             {% elif is_following == False %}
-                <a href="{% url 'add_follower' displayed_profile.id %}">
+                <a href="{% url 'add_follower' displayed_profile.id %}" class="no-decoration">
                     <button class="btn btn-primary btn-follow col-12 col-md-4 btn-block mb-3 mt-3">Follow</button>
                 </a>
             {% endif %}

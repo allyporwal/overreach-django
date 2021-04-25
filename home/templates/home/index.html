@@ -5,5 +5,41 @@
 {% endblock %}
 
 {% block content %}
+<section class="container-fluid callout-background" id="callout">
+    <div id="callout-container">
+        <div id="callout-bg-overlay">
+            <div class="row">
+                <div class="col-12 col-sm-8 offset-sm-2">
+                    <div class="jumbotron p-4 text-center">
+                        <img src="/media/3_Overreach.svg" id="overreach-logo" alt="OverReach">
+                        <hr class="jumbotron-hr">
+                        <div class="row">
+                            <div class="col-12 mt-2 text-center"><h4 id="jumbotron-header">The social network for weightlifters</h4>
+                            </div>
+                        </div>
+                        <hr class="jumbotron-hr">                                            
+                        <div class="row">
+                            <div class="col-4 jumbotron-text text-center">Track workouts</div>
+                            <div class="col-4 jumbotron-text text-center">See useful data</div>
+                            <div class="col-4 jumbotron-text text-center">Follow other users</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 jumbotron-text text-center"><i class="fas callout-icons fa-dumbbell mt-3 mb-2"></i></div>
+                            <div class="col-4 jumbotron-text text-center"><i class="fas callout-icons fa-chart-line mt-3 mb-2"></i></div>
+                            <div class="col-4 jumbotron-text text-center"><i class="fas callout-icons fa-users mt-3 mb-2"></i></div>
+                        </div>
+                        <hr>
+                        <div class="row jumbotron-text text-center mb-3 mt-3">
+                            <div class="col-12">Only €5 per month</div>                               
+                        </div>
+                        <a href="{% url 'account_signup' %}" class="no-decoration">
+                            <button class="btn btn-block text-light mt-3 allauth-button">Sign Up</button>
+                        </a>                                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

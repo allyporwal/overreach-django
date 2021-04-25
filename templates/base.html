@@ -121,16 +121,11 @@
         </div>    
     </div>
 
-    {% block postloadjs %}
-    <script type="text/javascript">
-        $('.alert').alert()
-    </script>
-    {% endblock %}
 
     <footer class="container-fluid w-100">
         <div class="row mh-50 mb-0 pb-0">
             <div class="col-12 text-left">
-                <p class="lightweight-text pb-0 mb-0">
+                <p class="lightweight-text pb-0 mt-2 mb-0">
                     <small>Find us</small>                        
                 </p>
             </div>
@@ -159,6 +154,13 @@
             </div>
         </div>            
     </footer>
+
+    {% block postloadjs %}
+    <script type="text/javascript">
+        $('.alert').alert()
+    </script>
+    {% endblock %}
+
 </body>
 
 </html>
