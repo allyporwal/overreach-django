@@ -18,7 +18,7 @@ def membership_signup(request):
     stripe_secret_key = settings.STRIPE_SECRET_KEY
 
     if request.method == 'POST':
-        form = UserProfileForm(request.post, request.files)
+        form = UserProfileForm(request.POST, request.FILES)
         stripe.api_key = stripe_secret_key
         # form_data = {
         #     'first_name': request.POST['first_name'],
