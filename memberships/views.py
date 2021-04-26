@@ -57,7 +57,7 @@ def membership_signup(request):
             messages.error(request, 'Please ensure the form is valid.')
 
     else:
-        form = UserProfileForm
+        form = UserProfileForm()
 
     # form = UserProfileForm(instance=profile)
     template = 'memberships/membership_signup.html'
