@@ -7,6 +7,7 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 @login_required
@@ -16,6 +17,7 @@ def membership_signup(request):
     stripe_secret_key = settings.STRIPE_SECRET_KEY
 
     if request.method == 'POST':
+        form = UserProfileForm(request.post, request.files)
         stripe.api_key = stripe_secret_key
         # form_data = {
         #     'first_name': request.POST['first_name'],
@@ -32,7 +34,6 @@ def membership_signup(request):
         #     'default_country': request.POST['default_country'],
         # }
         # form = UserProfileForm(form_data, instance=profile)
-        form = UserProfileForm(request.POST, request.FILES)
 
         if form.is_valid():
             # create a customer object in Stripe using form data
@@ -52,8 +53,13 @@ def membership_signup(request):
             profile.stripe_customer_id = subscriber.id
             form.save()
             return redirect(reverse('checkout'))
+        else:
+            messages.error(request, 'Please ensure the form is valid.')
 
-    form = UserProfileForm(instance=profile)
+    else:
+        form = UserProfileForm
+
+    # form = UserProfileForm(instance=profile)
     template = 'memberships/membership_signup.html'
     context = {
         'profile': profile,
