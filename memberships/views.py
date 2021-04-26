@@ -3,6 +3,7 @@ import stripe
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from profiles.forms import UserProfileForm
 from profiles.models import UserProfile
+
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
