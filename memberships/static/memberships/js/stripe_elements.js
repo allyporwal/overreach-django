@@ -28,6 +28,7 @@ card.mount('#card-element');
 card.on('change', function (event) {
   displayError(event);
 });
+
 function displayError(event) {
   // changeLoadingStatePrices(false);
   let displayError = document.getElementById('card-element-errors');
@@ -113,7 +114,12 @@ function createSubscription({ customerId, paymentMethodId, priceId }) {
           subscription: result,
         };
       })
-      .then(setTimeout(onSubscriptionComplete, 2000))
+      .then(onSubscriptionComplete)
+      .catch((error) => {
+        // An error has happened. Display the failure to the user here.
+        // We utilize the HTML element we created.
+        showCardError(error);
+      })
   );
 }
 

@@ -39,7 +39,9 @@
                     <li><a href="{% url 'profile_workouts' displayed_profile.id %}"><p>{{ number_of_workouts }} workouts logged</p></a></li>
                     <li><p>{{ total_training_volume }} kilos lifted</p></li>
                     <li><p>{{ total_training_reps }} reps lifted</p></li>
-                    <li><p>{{ average_rpe }} average RPE</p></li>
+                    {% if average_rpe > 0 %}
+                        <li><p>{{ average_rpe }} average RPE</p></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

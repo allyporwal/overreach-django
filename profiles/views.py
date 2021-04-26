@@ -29,8 +29,12 @@ def profile(request, profile_id):
         'session_volume', flat=True))
     total_training_reps = sum(displayed_profile.workouts.values_list(
         'session_reps', flat=True))
-    average_rpe = round(sum(displayed_profile.workouts.values_list(
-        'session_average_rpe', flat=True)) / number_of_workouts, 2)
+
+    if number_of_workouts == 0:
+        average_rpe = 0
+    else:
+        average_rpe = round(sum(displayed_profile.workouts.values_list(
+            'session_average_rpe', flat=True)) / number_of_workouts, 2)
 
     # On another profile page check to see if user is following displayed user
     if profile != displayed_profile:
