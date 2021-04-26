@@ -1,6 +1,8 @@
 /* all text */
 
-
+.lightweight-text {
+    font-weight: 200;
+}
 
 /* Global settings */
 
@@ -10,16 +12,6 @@ html, body {
     height: 100%;
     margin: 0;
     overflow-x: hidden;
-}
-
-.navbar {
-    font-weight: 400;
-    max-height: 60px;
-    min-height: 60px;
-}
-
-.lightweight-text {
-    font-weight: 200;
 }
 
 #push-footer-outer {
@@ -35,7 +27,13 @@ html, body {
 .no-decoration:hover {
     text-decoration: none;
 }
+
 /* navbar */
+
+.navbar {
+    font-weight: 400;
+    min-height: 60px;
+}
 
 .navbar {
     background-color: rgba(0, 0, 0, .075);
@@ -369,7 +367,6 @@ th {
 .jumbotron {
     margin-top: 15vh;
 }
-
 
 /* all images */
 .profile-image-wrapper {
