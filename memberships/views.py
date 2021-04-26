@@ -18,7 +18,7 @@ def membership_signup(request):
     stripe_secret_key = settings.STRIPE_SECRET_KEY
 
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES)
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
         stripe.api_key = stripe_secret_key
         # form_data = {
         #     'first_name': request.POST['first_name'],
@@ -58,7 +58,7 @@ def membership_signup(request):
             messages.error(request, 'Please ensure the form is valid.')
 
     else:
-        form = UserProfileForm()
+        form = UserProfileForm(instance=profile)
 
     # form = UserProfileForm(instance=profile)
     template = 'memberships/membership_signup.html'
