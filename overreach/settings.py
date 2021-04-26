@@ -31,7 +31,6 @@ DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = ['overreach.herokuapp.com', 'localhost']
 
-
 # Application definition
 
 INSTALLED_APPS = [
