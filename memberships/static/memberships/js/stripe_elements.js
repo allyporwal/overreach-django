@@ -113,7 +113,7 @@ function createSubscription({ customerId, paymentMethodId, priceId }) {
           subscription: result,
         };
       })
-      .then(onSubscriptionComplete)
+      .then(setTimeout(onSubscriptionComplete, 2000))
   );
 }
 

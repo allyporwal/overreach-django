@@ -17,21 +17,22 @@ def membership_signup(request):
 
     if request.method == 'POST':
         stripe.api_key = stripe_secret_key
-        form_data = {
-            'first_name': request.POST['first_name'],
-            'last_name': request.POST['last_name'],
-            'main_goals': request.POST['main_goals'],
-            'image': request.POST['image'],
-            'default_billing_email': request.POST['default_billing_email'],
-            'default_billing_name': request.POST['default_billing_name'],
-            'default_street_address1': request.POST['default_street_address1'],
-            'default_street_address2': request.POST['default_street_address2'],
-            'default_town_or_city': request.POST['default_town_or_city'],
-            'default_county': request.POST['default_county'],
-            'default_postcode': request.POST['default_postcode'],
-            'default_country': request.POST['default_country'],
-        }
-        form = UserProfileForm(form_data, instance=profile)
+        # form_data = {
+        #     'first_name': request.POST['first_name'],
+        #     'last_name': request.POST['last_name'],
+        #     'main_goals': request.POST['main_goals'],
+        #     'image': request.POST['image'],
+        #     'default_billing_email': request.POST['default_billing_email'],
+        #     'default_billing_name': request.POST['default_billing_name'],
+        #     'default_street_address1': request.POST['default_street_address1'],
+        #     'default_street_address2': request.POST['default_street_address2'],
+        #     'default_town_or_city': request.POST['default_town_or_city'],
+        #     'default_county': request.POST['default_county'],
+        #     'default_postcode': request.POST['default_postcode'],
+        #     'default_country': request.POST['default_country'],
+        # }
+        # form = UserProfileForm(form_data, instance=profile)
+        form = UserProfileForm(request.POST, request.FILES)
 
         if form.is_valid():
             # create a customer object in Stripe using form data
