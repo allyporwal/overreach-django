@@ -1,6 +1,5 @@
 from django.http import HttpResponse
 from profiles.models import UserProfile
-from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
@@ -48,7 +47,7 @@ class StripeWH_Handler:
             profile = UserProfile.objects.get(
                 stripe_customer_id=stripe_customer_id)
             first_name = profile.first_name
-            email = profile.user.email
+            email = profile.default_billing_email
             email_data = {
                 'first_name': first_name,
                 'email': email,
