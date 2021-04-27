@@ -115,16 +115,11 @@ function createSubscription({ customerId, paymentMethodId, priceId }) {
         };
       })
       .then(onSubscriptionComplete)
-      .catch((error) => {
-        // An error has happened. Display the failure to the user here.
-        // We utilize the HTML element we created.
-        showCardError(error);
-      })
   );
 }
 
 function onSubscriptionComplete(result) {
-  // Payment was successful, redirect subscriber to dashboard
+  // Payment was successful, redirect subscriber
   if (result.subscription.status === 'active') {
     window.location.href = '/memberships/checkout_success';
   } else {

@@ -20,8 +20,7 @@ def profile(request, profile_id):
     """Show a user's profile page"""
     profile = get_object_or_404(UserProfile, user=request.user)
     displayed_profile = get_object_or_404(UserProfile, pk=profile_id)
-    followers = len(profile.follower.values(
-        'is_following').filter(status=True))
+    followers = len(displayed_profile.is_following.all().filter(status=True))
 
     # display some all time statistics from the profile's workouts
     number_of_workouts = len(displayed_profile.workouts.all())
