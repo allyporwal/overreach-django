@@ -31,6 +31,60 @@ class StripeWH_Handler:
                   [user_email]
                   )
 
+    def _send_payment_failed_email(self, email_data):
+        """send the user an email when their subscription
+        payment fails"""
+        user_email = email_data['email']
+        subject = render_to_string(
+            'memberships/payment_failed_emails/payment_failed_email_subject.txt',
+            {'email_data': email_data})
+        body = render_to_string(
+            'memberships/payment_failed_emails/payment_failed_email_body.txt',
+            {'email_data': email_data,
+             'contact_email': settings.DEFAULT_FROM_EMAIL})
+
+        send_mail(subject,
+                  body,
+                  settings.DEFAULT_FROM_EMAIL,
+                  [user_email]
+                  )
+
+    def _send_payment_success_email(self, email_data):
+        """send the user an email when their subscription
+        payment succeeds"""
+        user_email = email_data['email']
+        subject = render_to_string(
+            'memberships/payment_success_emails/payment_success_email_subject.txt',
+            {'email_data': email_data})
+        body = render_to_string(
+            'memberships/payment_success_emails/payment_success_email_body.txt',
+            {'email_data': email_data,
+             'contact_email': settings.DEFAULT_FROM_EMAIL})
+
+        send_mail(subject,
+                  body,
+                  settings.DEFAULT_FROM_EMAIL,
+                  [user_email]
+                  )
+
+    def _send_membership_deleted_email(self, email_data):
+        """send the user an email when their subscription
+        payment succeeds"""
+        user_email = email_data['email']
+        subject = render_to_string(
+            'memberships/membership_deleted_emails/membership_deleted_email_subject.txt',
+            {'email_data': email_data})
+        body = render_to_string(
+            'memberships/membership_deleted_emails/membership_deleted_email_body.txt',
+            {'email_data': email_data,
+             'contact_email': settings.DEFAULT_FROM_EMAIL})
+
+        send_mail(subject,
+                  body,
+                  settings.DEFAULT_FROM_EMAIL,
+                  [user_email]
+                  )
+
     def handle_event(self, event):
         """Handle a generic/unknown/unexpected webhook event"""
         return HttpResponse(
@@ -48,6 +102,7 @@ class StripeWH_Handler:
                 stripe_customer_id=stripe_customer_id)
             profile.stripe_subscription_id = subscription_id
             profile.save()
+
             # data for email send
             first_name = profile.first_name
             email = profile.default_billing_email
@@ -57,7 +112,6 @@ class StripeWH_Handler:
                 'subscription_id': subscription_id,
             }
             self._send_welcome_email(email_data)
-
             return HttpResponse(
                 content=f'Webhook received: {event["type"]}.\
                     UserProfile subscribed', status=200)
@@ -75,16 +129,16 @@ class StripeWH_Handler:
         try:
             profile = UserProfile.objects.get(
                 stripe_customer_id=stripe_customer_id)
-            # first_name = profile.first_name
-            # email = profile.default_billing_email
-            # email_data = {
-            #     'first_name': first_name,
-            #     'email': email,
-            #     'subscription_id': subscription_id,
-            # }
             profile.is_subscribed = False
             profile.stripe_subscription_id = f'Cancelled {subscription_id}'
             profile.save()
+
+            email_data = {
+                'first_name': profile.first_name,
+                'email': profile.default_billing_email,
+                'subscription_id': subscription_id,
+            }
+            self._send_membership_deleted_email(email_data)
             return HttpResponse(
                 content=f'Webhook received: {event["type"]}.\
                     Subscription deleted', status=200)
@@ -103,6 +157,13 @@ class StripeWH_Handler:
                 stripe_customer_id=stripe_customer_id)
             profile.is_subscribed = False
             profile.save()
+
+            email_data = {
+                'first_name': profile.first_name,
+                'email': profile.user.email,
+                'last_payment': profile.last_payment,
+            }
+            self._send_payment_failed_email(email_data)
             return HttpResponse(
                 content=f'Webhook received: {event["type"]}.\
                     UserProfile access suspended', status=200)
@@ -131,6 +192,13 @@ class StripeWH_Handler:
             profile.next_payment = next_payment
             profile.is_subscribed = True
             profile.save()
+
+            email_data = {
+                'first_name': profile.first_name,
+                'email': profile.default_billing_email,
+                'last_payment': profile.last_payment,
+            }
+            self._send_payment_success_email(email_data)
             return HttpResponse(
                 content=f'Webhook received: {event["type"]}.\
                     UserProfile payment data updated', status=200)
