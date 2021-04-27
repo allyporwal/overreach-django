@@ -5,6 +5,7 @@ from workout_tracker.models import WorkoutTracker, WorkoutComments
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import user_passes_test
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def check_membership(user):
@@ -139,14 +140,14 @@ def unfollow(request, profile_id):
 
     # modify the status field in the database entry
     try:
-        is_following = follower.follower.get(is_following=profile)
+        is_following = follower.follower.get(is_following=profile, status=True)
         is_following.status = False
         is_following.save()
         return redirect(reverse('profile', args=[profile.id]))
 
     # redirect if user uses url but doesn't follow profile
     except Followers.DoesNotExist:
-        return redirect(reverse('dashboard'))
+        return redirect(reverse('profile', args=[profile.id]))
 
 
 @login_required

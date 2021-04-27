@@ -531,11 +531,10 @@ def unlike_workout(request, workout_id):
     profile = UserProfile.objects.get(user=request.user)
     workout = WorkoutTracker.objects.get(pk=workout_id)
 
-    # modify the status field in the database entry
+    # delete database entry
     try:
         has_user_liked = workout.liked_workout.get(liker=profile)
         has_user_liked.delete()
-
         return redirect(reverse('workout', args=[workout.id]))
 
     # redirect if user uses url but hasn't already liked
