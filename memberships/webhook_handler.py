@@ -42,10 +42,13 @@ class StripeWH_Handler:
         subscription_id = (event['data']['object']
                            ['items']['data'][0]['subscription'])
         stripe_customer_id = event['data']['object']['customer']
+        profile = UserProfile.objects.get(
+            stripe_customer_id=stripe_customer_id)
 
         try:
-            profile = UserProfile.objects.get(
-                stripe_customer_id=stripe_customer_id)
+            profile.stripe_subscription_id = subscription_id
+            profile.save()
+            # data for email send
             first_name = profile.first_name
             email = profile.default_billing_email
             email_data = {
@@ -53,10 +56,8 @@ class StripeWH_Handler:
                 'email': email,
                 'subscription_id': subscription_id,
             }
-            print(email_data)
-            profile.stripe_subscription_id = subscription_id
             self._send_welcome_email(email_data)
-            profile.save()
+
             return HttpResponse(
                 content=f'Webhook received: {event["type"]}.\
                     UserProfile subscribed', status=200)
@@ -70,12 +71,12 @@ class StripeWH_Handler:
         """Cancel subscription on user's profile and revoke access"""
         subscription_id = event['data']['object']['id']
         stripe_customer_id = event['data']['object']['customer']
+        profile = UserProfile.objects.get(
+                stripe_customer_id=stripe_customer_id)
 
         try:
-            profile = UserProfile.objects.get(
-                stripe_customer_id=stripe_customer_id)
             # first_name = profile.first_name
-            # email = profile.user.email
+            # email = profile.default_billing_email
             # email_data = {
             #     'first_name': first_name,
             #     'email': email,
@@ -96,10 +97,10 @@ class StripeWH_Handler:
     def handle_invoice_payment_failed(self, event):
         """Suspend user's access and contact them if payment fails"""
         stripe_customer_id = event['data']['object']['customer']
+        profile = UserProfile.objects.get(
+            stripe_customer_id=stripe_customer_id)
 
         try:
-            profile = UserProfile.objects.get(
-                stripe_customer_id=stripe_customer_id)
             profile.is_subscribed = False
             profile.save()
             return HttpResponse(
@@ -118,13 +119,13 @@ class StripeWH_Handler:
                              ['data'][0]['period']['start'])
         next_payment_unix = (event['data']['object']['lines']
                              ['data'][0]['period']['end'])
+        profile = UserProfile.objects.get(
+                stripe_customer_id=stripe_customer_id)
         # convert timestamp to timezone aware datetime
         last_payment = make_aware(datetime.fromtimestamp(last_payment_unix))
         next_payment = make_aware(datetime.fromtimestamp(next_payment_unix))
 
         try:
-            profile = UserProfile.objects.get(
-                stripe_customer_id=stripe_customer_id)
             profile.last_payment = last_payment
             profile.next_payment = next_payment
             profile.is_subscribed = True
