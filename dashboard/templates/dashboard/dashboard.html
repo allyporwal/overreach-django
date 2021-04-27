@@ -243,14 +243,18 @@
 </div>
 {% endif %}
 
-<!-- json script to be used in charts-->
-{{ rpe_chart_data|json_script:"rpe_chart_data" }}
-{{ total_reps_chart_data|json_script:"total_reps_chart_data" }}
-{{ total_volume_chart_data|json_script:"total_volume_chart_data" }}
-<!-- end of scripts -->
+{% if recent_workouts|length > 0 %}
+    <!-- json script to be used in charts-->
+    {{ rpe_chart_data|json_script:"rpe_chart_data" }}
+    {{ total_reps_chart_data|json_script:"total_reps_chart_data" }}
+    {{ total_volume_chart_data|json_script:"total_volume_chart_data" }}
+    <!-- end of scripts -->
+{% endif %}
 
 {% endblock %}
 
 {% block postloadjs %}
+{% if recent_workouts|length > 0 %}
     <script src="{% static 'dashboard/js/workout_charts.js' %}"></script>
+{% endif %}
 {% endblock %}

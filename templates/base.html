@@ -69,7 +69,7 @@
                         <div class="navbar-nav mt-1">
                             {% if request.user.is_authenticated %}
                                 <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-                                <a class="nav-link" href="{% url 'active_workout' %}">Workout</a>
+                                <a class="nav-link {% if in_progress %}active-workout{% endif %}" href="{% url 'active_workout' %}">Workout</a>
                                 <a class="nav-link" href="{% url 'friends' %}">Friends</a>
                                 <a class="nav-link" href="{% url 'all_workouts' %}">Everyone</a>
                             {% endif %}

@@ -59,11 +59,8 @@ def active_workout(request):
                                weight, rep_count, rpe) in zip(
                                    *weight_rep_count_rpe)]
 
-        # Iterate through workout and set_count lists,
-        # add the correct number of sets to each dictionary
-        # in the workout list and then delete them from the
-        # weights_lifted list
-
+        # catch any unlikey errors if users inspect page and
+        # delete required attribute on form inputs
         if '' in set_count:
             messages.error(
                 request, 'Error: sets field cannot take blank inputs')
@@ -85,6 +82,10 @@ def active_workout(request):
                     request, 'Error: form cannot take blank inputs')
                 return redirect(reverse('active_workout'))
 
+        # Iterate through workout and set_count lists,
+        # add the correct number of sets to each dictionary
+        # in the workout list and then delete them from the
+        # weights_lifted list
         for exercise, sets in zip(workout, set_count):
             sets_number = int(sets)
             sets_to_add = weights_lifted[0:sets_number]
@@ -127,65 +128,70 @@ def delete_active_workout(request):
 @user_passes_test(check_membership, login_url='/memberships/signup/')
 def log_workout(request):
     """Stores a user's workout to the database"""
-    workout_to_log = request.session['workout']
+    workout_to_log = request.session.get('workout', {})
+    workout_in_progress = True if workout_to_log != {} else False
 
-    # sort workout data into lists for processing
-    set_count = []
-    reps_lifted = []
-    rate_perceived_exertion = []
-    session_rpe = []
-    volumes = []
+    if workout_in_progress:
+        # sort workout data into lists for processing
+        set_count = []
+        reps_lifted = []
+        rate_perceived_exertion = []
+        session_rpe = []
+        volumes = []
 
-    for exercise in workout_to_log:
-        set_count.append(int(exercise['sets']))
-        for weight in exercise['set_volumes']:
-            reps_lifted.append(int(weight['rep_count']))
-            rate_perceived_exertion.append(float(weight['rpe']))
-            session_rpe.append(float(weight['rpe']))
-            volumes.append(
-                (float(weight['rep_count']) * float(weight['weight'])))
+        for exercise in workout_to_log:
+            set_count.append(int(exercise['sets']))
+            for weight in exercise['set_volumes']:
+                reps_lifted.append(int(weight['rep_count']))
+                rate_perceived_exertion.append(float(weight['rpe']))
+                session_rpe.append(float(weight['rpe']))
+                volumes.append(
+                    (float(weight['rep_count']) * float(weight['weight'])))
 
-    # data for each individual exercise to calculate overall workout metrics
-    exercise_volumes = []
-    exercise_reps = []
+        # data for each individual exercise to calculate overall workout metrics
+        exercise_volumes = []
+        exercise_reps = []
 
-    for sets in set_count:
-        exercise_volumes.append(sum(volumes[0:sets]))
-        exercise_reps.append(sum(reps_lifted[0:sets]))
-        del volumes[0:sets]
-        del reps_lifted[0:sets]
-        del rate_perceived_exertion[0:sets]
+        for sets in set_count:
+            exercise_volumes.append(sum(volumes[0:sets]))
+            exercise_reps.append(sum(reps_lifted[0:sets]))
+            del volumes[0:sets]
+            del reps_lifted[0:sets]
+            del rate_perceived_exertion[0:sets]
 
-    # workout metrics to be saved in database
-    session_reps = sum(exercise_reps)
-    session_average_rpe = round(sum(session_rpe) / len(session_rpe), 2)
-    session_volume = sum(exercise_volumes)
+        # workout metrics to be saved in database
+        session_reps = sum(exercise_reps)
+        session_average_rpe = round(sum(session_rpe) / len(session_rpe), 2)
+        session_volume = sum(exercise_volumes)
 
-    if request.method == 'POST':
+        if request.method == 'POST':
 
-        # Allow the user to name their workout and
-        # grab the workout from the session to store
-        # in Django JSONField
-        form_data = {
-            'session_name': request.POST['session_name'],
-            'workout': request.session['workout'],
-            'session_reps': session_reps,
-            'session_average_rpe': session_average_rpe,
-            'session_volume': session_volume,
-            'session_notes': request.POST['session_notes']
-        }
+            # Allow the user to name their workout and
+            # grab the workout from the session to store
+            # in Django JSONField
+            form_data = {
+                'session_name': request.POST['session_name'],
+                'workout': request.session['workout'],
+                'session_reps': session_reps,
+                'session_average_rpe': session_average_rpe,
+                'session_volume': session_volume,
+                'session_notes': request.POST['session_notes']
+            }
 
-        form = WorkoutTrackerForm(form_data)
+            form = WorkoutTrackerForm(form_data)
 
-        if form.is_valid:
-            workout = form.save(commit=False)
-            # attach the workout to the user's profile
-            workout.created_by = UserProfile.objects.get(user=request.user)
-            workout.save()
-            messages.success(request, 'Workout logged')
-            # clear the workout from the session after saving
-            del request.session['workout']
-            return redirect(reverse('workout', args=[workout.id]))
+            if form.is_valid:
+                workout = form.save(commit=False)
+                # attach the workout to the user's profile
+                workout.created_by = UserProfile.objects.get(user=request.user)
+                workout.save()
+                messages.success(request, 'Workout logged')
+                # clear the workout from the session after saving
+                del request.session['workout']
+                return redirect(reverse('workout', args=[workout.id]))
+
+    else:
+        return redirect(reverse('dashboard'))
 
     form = WorkoutTrackerForm()
 

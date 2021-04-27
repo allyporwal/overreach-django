@@ -39,6 +39,10 @@ html, body {
     background-color: rgba(0, 0, 0, .075);
 }
 
+.active-workout {
+    color: rgba(178, 33, 0, 0.8) !important;
+}
+
 /* footer */
 
 footer {
@@ -369,6 +373,7 @@ th {
 }
 
 /* all images */
+
 .profile-image-wrapper {
     height: 200px;
     width: 200px;

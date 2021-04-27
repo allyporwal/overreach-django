@@ -1,3 +1,5 @@
+/* rest timer */
+
 #rest-timer-overlay {
 	display: none;
 	position: fixed;
@@ -29,4 +31,11 @@
 
 #timer-display {
     font-size: 2rem;
+}
+
+/* shrink labels */
+
+.small-label {
+    font-weight: 100;
+    font-size: 0.8rem;
 }
