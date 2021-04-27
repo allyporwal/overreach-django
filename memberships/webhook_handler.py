@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from profiles.models import UserProfile
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
@@ -53,6 +54,7 @@ class StripeWH_Handler:
                 'email': email,
                 'subscription_id': subscription_id,
             }
+            print(email_data)
             profile.stripe_subscription_id = subscription_id
             self._send_welcome_email(email_data)
             profile.save()
@@ -81,7 +83,7 @@ class StripeWH_Handler:
             #     'subscription_id': subscription_id,
             # }
             profile.is_subscribed = False
-            profile.stripe_subscription_id = subscription_id
+            profile.stripe_subscription_id = f'Cancelled {subscription_id}'
             profile.save()
             return HttpResponse(
                 content=f'Webhook received: {event["type"]}.\
