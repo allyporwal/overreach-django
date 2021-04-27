@@ -26,97 +26,99 @@
 </div>
 {% endif %}
 
+<!-- Display recent workouts -->
 {% if recent_workouts|length > 0 %}
-    <div class="container mt-3">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2>Dashboard</h2>
-                <h6>Welcome, {{ request.user.username }}</h6>
-                <hr>
-            </div>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2>Dashboard</h2>
+            <h6>Welcome, {{ request.user.username }}</h6>
+            <hr>
         </div>
-        <div class="row mt-3">      
-            {% for workout in recent_workouts %}
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="card">
-                        <div class="card-body overflow-auto">
-                            <h5 class="card-title">{{ workout.session_name }}</h5>
-                            <p class="card-text"><small class="lightweight-text">Logged on: {{ workout.created_at }}</small></p>
+    </div>
+    <div class="row mt-3">      
+        {% for workout in recent_workouts %}
+            <div class="col-sm-6 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body overflow-auto">
+                        <h5 class="card-title">{{ workout.session_name }}</h5>
+                        <p class="card-text"><small class="lightweight-text">Logged on: {{ workout.created_at }}</small></p>
+                    </div>
+                    <div class="row workout-metrics text-center">
+                        <div class="col-4 vol-col text-light"><small>Vol:</small></div>
+                        <div class="col-4 reps-col text-light"><small>Reps:</small></div>
+                        <div class="col-4 rpe-col text-light"><small>RPE:</small></div>
                         </div>
                         <div class="row workout-metrics text-center">
-                            <div class="col-4 vol-col text-light"><small>Vol:</small></div>
-                            <div class="col-4 reps-col text-light"><small>Reps:</small></div>
-                            <div class="col-4 rpe-col text-light"><small>RPE:</small></div>
-                            </div>
-                            <div class="row workout-metrics text-center">
-                                <div class="col-4 vol-col text-light">{{ workout.session_volume|floatformat:"0" }}</div>
-                                <div class="col-4 reps-col text-light">{{ workout.session_reps }}</div>
-                                <div class="col-4 rpe-col text-light">{{ workout.session_average_rpe }}</div>
-                            </div>
-                        <div class="row text-center workout-card-footer">
-                            <div class="btn-group card-button-group" role="group" aria-label="WorkoutActions">
-                                <a href="{% url 'workout' workout.id %}" id="view-card-btn" class="col-4 btn btn-secondary">View</a>
-                                <a href="{% url 'edit_workout' workout.id %}" class="col-4 btn btn-secondary">Edit</a>
-                                <button id="delete-dropdown" type="button" class="btn dropdown-toggle btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Delete
-                                  </button>
-                                <div class="dropdown-menu" aria-labelledby="delete-dropdown">
-                                    <p class="ml-4">Sure?</p>
-                                    <a class="dropdown-item" href="{% url 'delete_workout' workout.id %}">Delete</a>
-                                </div>
-                              </div>
+                            <div class="col-4 vol-col text-light">{{ workout.session_volume|floatformat:"0" }}</div>
+                            <div class="col-4 reps-col text-light">{{ workout.session_reps }}</div>
+                            <div class="col-4 rpe-col text-light">{{ workout.session_average_rpe }}</div>
                         </div>
-                    </div>
-                </div> 
-            {% endfor %}
-            <div class="col-12 col-lg-4">
-                <a class="all-workouts-db-link" href="{% url 'profile_workouts' profile.id %}">
-                <div class="card all-workouts-db-link-card">
-                    <div class="card-body d-flex align-items-center justify-content-center">
-                        <div class="row">
-                            <div class="col-12 ">
-                                <h4 class="text-light">View all workouts <i class="fas fa-chevron-right"></i></h4>
+                    <div class="row text-center workout-card-footer">
+                        <div class="btn-group card-button-group" role="group" aria-label="WorkoutActions">
+                            <a href="{% url 'workout' workout.id %}" id="view-card-btn" class="col-4 btn btn-secondary">View</a>
+                            <a href="{% url 'edit_workout' workout.id %}" class="col-4 btn btn-secondary">Edit</a>
+                            <button id="delete-dropdown" type="button" class="btn dropdown-toggle btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Delete
+                                </button>
+                            <div class="dropdown-menu" aria-labelledby="delete-dropdown">
+                                <p class="ml-4">Sure?</p>
+                                <a class="dropdown-item" href="{% url 'delete_workout' workout.id %}">Delete</a>
                             </div>
+                            </div>
+                    </div>
+                </div>
+            </div> 
+        {% endfor %}
+        <div class="col-12 col-lg-4">
+            <a class="all-workouts-db-link" href="{% url 'profile_workouts' profile.id %}">
+            <div class="card all-workouts-db-link-card">
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <div class="row">
+                        <div class="col-12 ">
+                            <h4 class="text-light">View all workouts <i class="fas fa-chevron-right"></i></h4>
                         </div>
                     </div>
                 </div>
-                </a>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <hr>
-            </div>
+            </a>
         </div>
     </div>
-    <div class="container chart-container mt-3">
-        <div class="row mb-3">
-            <div class="col-12 text-center">
-                <h4>Recent Metrics</h4>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-12 col-md-4">
-                <h6 class="chart-title mt-4 mb-4 d-flex align-middle justify-content-center">Reps vs Average RPE:</h6>
-            </div>
-            <div class="col-12 col-md-8">
-                <canvas id="totalReps"></canvas>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-4">
-                <h6 class="chart-title mt-4 mb-4 d-flex align-middle justify-content-center">Volume vs Average RPE:</h6>
-            </div>
-            <div class="col-12 col-md-8">
-                <canvas id="totalVolume"></canvas>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-12">
-                <hr>
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <hr>
         </div>
     </div>
+</div>
+<!-- Display workout Metrics charts -->
+<div class="container chart-container mt-3">
+    <div class="row mb-3">
+        <div class="col-12 text-center">
+            <h4>Recent Metrics</h4>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-12 col-md-4">
+            <h6 class="chart-title mt-4 mb-4 d-flex align-middle justify-content-center">Reps vs Average RPE:</h6>
+        </div>
+        <div class="col-12 col-md-8">
+            <canvas id="totalReps"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <h6 class="chart-title mt-4 mb-4 d-flex align-middle justify-content-center">Volume vs Average RPE:</h6>
+        </div>
+        <div class="col-12 col-md-8">
+            <canvas id="totalVolume"></canvas>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+</div>
 {% endif %}
 
 <!-- render friends workouts if user has friends with workouts -->
@@ -125,15 +127,15 @@
     <div class="row mt-3">
         <div class="col-12 col-lg-4">
             <a class="all-workouts-db-link" href="{% url 'friends' %}">
-            <div class="card all-workouts-db-link-card">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                    <div class="row">
-                        <div class="col-12 ">
-                            <h4 class="text-light">Friends workouts <i class="fas fa-chevron-right"></i></h4>
+                <div class="card all-workouts-db-link-card">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row">
+                            <div class="col-12 ">
+                                <h4 class="text-light">Friends workouts <i class="fas fa-chevron-right"></i></h4>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </a>
         </div>       
         {% for workout in friends_workouts %}
@@ -166,37 +168,21 @@
                             </div>
                         {% endif %}                        
                     </div>                        
-                        <div class="row workout-metrics text-center">
-                            <div class="col-4 vol-col"><small class="text-light">Vol:</small></div>
-                            <div class="col-4 reps-col"><small class="text-light">Reps:</small></div>
-                            <div class="col-4 rpe-col"><small class="text-light">RPE:</small></div>
+                    <div class="row workout-metrics text-center">
+                        <div class="col-4 vol-col"><small class="text-light">Vol:</small></div>
+                        <div class="col-4 reps-col"><small class="text-light">Reps:</small></div>
+                        <div class="col-4 rpe-col"><small class="text-light">RPE:</small></div>
+                    </div>
+                    <div class="row workout-metrics text-center">
+                        <div class="col-4 vol-col text-light">{{ workout.session_volume|floatformat:"0" }}</div>
+                        <div class="col-4 reps-col text-light">{{ workout.session_reps }}</div>
+                        <div class="col-4 rpe-col text-light">{{ workout.session_average_rpe }}</div>
+                    </div>
+                    <div class="row text-center workout-card-footer">
+                        <div class="btn-group card-button-group" role="group" aria-label="Friends workout actions">
+                            <a href="{% url 'workout' workout.id %}" class="col-12 view-other-users-workout btn btn-secondary">View</a>
                         </div>
-                        <div class="row workout-metrics text-center">
-                            <div class="col-4 vol-col text-light">{{ workout.session_volume|floatformat:"0" }}</div>
-                            <div class="col-4 reps-col text-light">{{ workout.session_reps }}</div>
-                            <div class="col-4 rpe-col text-light">{{ workout.session_average_rpe }}</div>
-                        </div>
-                        {% if workout.created_by.user == request.user %}
-                            <div class="row text-center workout-card-footer">
-                                <div class="btn-group card-button-group" role="group" aria-label="WorkoutActions">
-                                    <a href="{% url 'workout' workout.id %}" class="col-4 btn btn-secondary">View</a>
-                                    <a href="{% url 'edit_workout' workout.id %}" class="col-4 btn btn-secondary">Edit</a>
-                                    <button id="delete-dropdown" type="button" class="btn dropdown-toggle btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Delete
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="delete-dropdown">
-                                        <p class="ml-4">Sure?</p>
-                                        <a class="dropdown-item" href="{% url 'delete_workout' workout.id %}">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="row text-center workout-card-footer">
-                                <div class="btn-group card-button-group" role="group" aria-label="Friends workout actions">
-                                    <a href="{% url 'workout' workout.id %}" class="col-12 view-other-users-workout btn btn-secondary">View</a>
-                                </div>
-                            </div>
-                        {% endif %}
+                    </div>
                 </div>
             </div> 
         {% endfor %}
@@ -211,15 +197,15 @@
             <div class="row mt-3">
                 <div class="col-12 col-lg-4">
                     <a class="all-workouts-db-link" href="{% url 'all_workouts' %}">
-                    <div class="card all-workouts-db-link-card">
-                        <div class="card-body d-flex align-items-center justify-content-center">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h4 class="text-light">Find people to follow <i class="fas fa-chevron-right"></i></h4>
+                        <div class="card all-workouts-db-link-card">
+                            <div class="card-body d-flex align-items-center justify-content-center">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="text-light">Find people to follow <i class="fas fa-chevron-right"></i></h4>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </a>
                 </div>
                 <div class="d-none d-sm-block col-12 col-lg-8">
@@ -242,15 +228,15 @@
     <div class="row">
         <div class="col-12">
             <a class="all-workouts-db-link" href="{% url 'all_workouts' %}">
-            <div  class="card all-workouts-db-link-card">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                    <div class="row">
-                        <div class="col-12">
-                            <h4 class="text-light">Find some people to follow<i class="fas fa-user-friends ml-3"></i></h4>
+                <div  class="card all-workouts-db-link-card">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4 class="text-light">Find some people to follow<i class="fas fa-user-friends ml-3"></i></h4>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </a>
         </div>
     </div>

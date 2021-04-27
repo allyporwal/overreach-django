@@ -7,18 +7,21 @@
 {% block content %}
 <div class="container mt-3">
     <div class="row">       
-        <div class="col-12">
+        <div class="col-12 col-md-4 offset-md-4">
             <h2>Your membership has been cancelled</h2>
-            <h3>Thank you!</h3>
-        </div>    
-        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+    <div class="row">    
+        <div class="col-12 col-md-4 offset-md-4">
             <p>Your last payment was: <strong>{{ profile.last_payment }}</strong>
             </p>
             <p>You can continue to use Overreach until: <strong>{{ profile.next_payment }}</strong>
             </p>
-                <a href="{% url 'membership_signup' %}" class="no-decoration">
-                    <button class="btn btn-primary btn-block">Click here to re-subscribe</button>
-                </a>
+            <hr>
+            <a href="{% url 'membership_signup' %}" class="no-decoration">
+                <button class="btn btn-block btn-primary">Click here to re-subscribe</button>
+            </a>
         </div>        
     </div>            
 </div>

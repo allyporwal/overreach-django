@@ -1,1 +1,5 @@
-Thank you for having been a user of Overreach
+Hi {{ first_name }},
+
+This email is to confirm your cancellation of your Overreach membership. No further payments will be taken from you and you can continue to use Overreach until this subscription period ends.
+
+Thank you for having been a user of Overreach.

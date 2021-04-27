@@ -5,36 +5,46 @@
 {% endblock %}
 {% block content %}
 <div class="container mt-5">
-    <div class="row">       
-        {% if profile.is_subscribed %}
-        <div class="col-12 col-md-4 mb-3">
-            <h2>You are currently a paying member</h2>
-            <h3>Thank you!</h3>
-        </div>    
-        <div class="col-12 col-md-8">
-            <p>Your Stripe Subscription ID is: <strong>{{ profile.stripe_subscription_id }}</strong>
-            </p>
-            <p>Your last payment was: <strong>{{ profile.last_payment }}</strong>
-            </p>
-            <p>Your next payment will be on: <strong>{{ profile.next_payment }}</strong>
-            </p>
-            <a class="mt-3 no-decoration" href="{% url 'cancel_membership' %}" class="no-decoration">
-                <button class="btn btn-warning btn-block">Cancel membership</button>
-            </a>
+    {% if profile.is_subscribed %}
+        <div class="row">
+            <div class="col-12 col-md-4 offset-md-4 mb-3">
+                <h2>You are currently a paying member</h2>
+                <h3>Thank you!</h3>
+                <hr>
+            </div>
         </div>
-        {% elif profile.is_subscribed == False %}
-        <div class="col-12 col-md-4">
-            <h2>You are not currently a paying member</h2>
+        <div class="row">   
+            <div class="col-12 col-md-4 offset-md-4">
+                <p>Your Stripe Subscription ID is: {{ profile.stripe_subscription_id }}
+                </p>
+                <p>Your last payment was: {{ profile.last_payment }}
+                </p>
+                <p>Your next payment will be on: {{ profile.next_payment }}
+                </p>
+                <hr>
+                <a class="mt-3 no-decoration" href="{% url 'cancel_membership' %}">
+                    <button class="btn btn-block btn-warning">Cancel membership</button>
+                </a>
+            </div>
         </div>
-        <div class="col-12 col-md-8">
-            {% if profile.last_payment %}
-                <p>You will have full access until: <strong>{{ profile.next_payment }}</strong></p>
-            {% endif %}        
-            <a href="{% url 'membership_signup' %}" class="mt-3 no-decoration">
-                <button class="btn btn-primary btn-block">Click here to subscribe</button>
-            </a>
+    {% elif profile.is_subscribed == False %}
+        <div class="row">
+            <div class="col-12 offset-md-4 col-md-4">
+                <h2>You are not currently a paying member</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 offset-md-4 col-md-4">
+                {% if profile.last_payment %}
+                    <p class="mt-3">You will have full access until: <strong>{{ profile.next_payment }}</strong></p>
+                {% endif %}      
+                <hr> 
+                <a href="{% url 'membership_signup' %}" class="mt-3 no-decoration">
+                    <button class="btn btn-block btn-primary">Click here to subscribe</button>
+                </a>
+            </div>
         </div>          
-        {% endif %}
-    </div>        
+    {% endif %}           
 </div>            
 {% endblock %}

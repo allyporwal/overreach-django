@@ -1,1 +1,7 @@
-We have suspended your membership. Please sign up again to continue using Overreach.
+Hi {{ first_name }}, 
+
+We just tried to take your recurring payment for your Overreach membership and it failed. 
+
+We have temporarily suspended your membership. 
+
+If this is due to you having a new card, simply log in and sign up again to continue using Overreach.

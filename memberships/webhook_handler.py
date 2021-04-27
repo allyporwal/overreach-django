@@ -103,12 +103,10 @@ class StripeWH_Handler:
             profile.stripe_subscription_id = subscription_id
             profile.save()
 
-            # data for email send
-            first_name = profile.first_name
-            email = profile.default_billing_email
+            # email the user a welcome email
             email_data = {
-                'first_name': first_name,
-                'email': email,
+                'first_name': profile.first_name,
+                'email': profile.default_billing_email,
                 'subscription_id': subscription_id,
             }
             self._send_welcome_email(email_data)
@@ -133,10 +131,10 @@ class StripeWH_Handler:
             profile.stripe_subscription_id = f'Cancelled {subscription_id}'
             profile.save()
 
+            # confirm subscription cancellation
             email_data = {
                 'first_name': profile.first_name,
                 'email': profile.default_billing_email,
-                'subscription_id': subscription_id,
             }
             self._send_membership_deleted_email(email_data)
             return HttpResponse(
@@ -158,9 +156,10 @@ class StripeWH_Handler:
             profile.is_subscribed = False
             profile.save()
 
+            # notify user of failed payment
             email_data = {
                 'first_name': profile.first_name,
-                'email': profile.user.email,
+                'email': profile.default_billing_email,
                 'last_payment': profile.last_payment,
             }
             self._send_payment_failed_email(email_data)
@@ -193,6 +192,7 @@ class StripeWH_Handler:
             profile.is_subscribed = True
             profile.save()
 
+            # thank user for successful payment
             email_data = {
                 'first_name': profile.first_name,
                 'email': profile.default_billing_email,

@@ -65,16 +65,21 @@ def checkout(request):
     billing_name = profile.default_billing_name
     billing_email = profile.default_billing_email
 
-    template = 'memberships/checkout.html'
-    context = {
-        'profile': profile,
-        'stripe_public_key': stripe_public_key,
-        'price_id': price_id,
-        'customer_id': customer_id,
-        'billing_name': billing_name,
-        'billing_email': billing_email,
-    }
-    return render(request, template, context)
+    if not profile.is_subscribed:
+
+        template = 'memberships/checkout.html'
+        context = {
+            'profile': profile,
+            'stripe_public_key': stripe_public_key,
+            'price_id': price_id,
+            'customer_id': customer_id,
+            'billing_name': billing_name,
+            'billing_email': billing_email,
+        }
+        return render(request, template, context)
+
+    else:
+        return redirect(reverse('dashboard'))
 
 
 @login_required

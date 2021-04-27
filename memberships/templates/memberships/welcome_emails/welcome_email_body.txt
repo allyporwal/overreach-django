@@ -1,3 +1,7 @@
-Hi 
+Hi {{ first_name }},
 
-Welcome to Overreachs
+Welcome to Overreach.
+
+As a member, you will be able to track all your workouts, follow other users and discuss training with them and see meaningful training data.
+
+We hope you make great progress with your weight training!

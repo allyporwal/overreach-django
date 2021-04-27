@@ -1,1 +1,7 @@
-Thank you for your payment. 
+Hi {{ first_name }},
+
+Thank you for your payment on {{ last_payment }}.
+
+Your next payment is due exactly one month from now.
+
+Thank you for being an Overreach member.

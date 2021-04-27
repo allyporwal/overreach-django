@@ -13,80 +13,79 @@
         </div>
     </div>
     {% for workout in workouts %}
-    <div class="col-12 col-md-8 offset-md-2 mt-3 friends-workout-container">
-        <div class="row">
-            <div class="col-12 mb-1 col-md-8">
-                <h5 class="card-title pl-3">{{ workout.session_name }}</h5>
-            </div>
-            <div class="interactions-container col-3 text-center col-md-1">
-                <i class="fas fa-thumbs-up mb-3"></i>                        
-            </div>
-            <div class="interactions-container col-3 col-md-1 pl-1">
-                <small>{{ workout.liked_workout.all|length }}</small>
-            </div>
-            <div class="interactions-container col-3 text-center col-md-1 pt-1">
-                <a class="comments-link" href="{% url 'workout' workout.id %}"><i class="fas fa-comment-alt"></i></a>
-            </div>
-            <div class="interactions-container col-3 col-md-1 pl-1">                            
-                <small>{{ workout.target_workout.all|length }}</small>                            
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 mb-4">        
-                <p class="pl-3 card-text"><small class="lightweight-text">Logged on: <a href="{% url 'workout' workout.id %}">{{ workout.created_at }}</a> by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>
-            </div>
-        </div>                     
-        <div class="row text-center">
-            <div class="col-4"><small>Volume:</small></div>
-            <div class="col-4"><small>Reps:</small></div>
-            <div class="col-4"><small>RPE:</small></div>
-        </div>
-        <div class="row text-center mb-3">
-            <div class="col-4">{{ workout.session_volume|floatformat:"0" }}</div>
-            <div class="col-4">{{ workout.session_reps }}</div>
-            <div class="col-4">{{ workout.session_average_rpe }}</div>
-        </div>
-        <div class="collapse" id="collapse-{{ forloop.counter }}">
-            {% for exercise in workout.workout %}
-                <table class="table">
-                    <thead class="thead-friends text-light">
-                        <tr>
-                            <th class="text-uppercase friends-exercise-name" scope="col">{{ exercise.exercise }}</th>
-                            <th scope="col">Weight</th>
-                            <th scope="col">Reps</th>
-                            <th scope="col">RPE</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for weight_reps_rpe in exercise.set_volumes %}
-                            <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
-                                <td>{{ weight_reps_rpe.weight }}</td>
-                                <td>{{ weight_reps_rpe.rep_count }}</td>
-                                <td>{{ weight_reps_rpe.rpe  }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% endfor %}
+        <div class="col-12 col-md-8 offset-md-2 mt-3 friends-workout-container">
             <div class="row">
-                <div class="col-10 offset-1">
-                    <hr>
-                    {% if workout.session_notes %}
-                        <p><small>Session notes:</small></p>
-                        <p><small class="lightweight-text">{{ workout.session_notes }}</small></p>
-                    {% endif %}
+                <div class="col-12 mb-1 col-md-8">
+                    <h5 class="card-title pl-3">{{ workout.session_name }}</h5>
+                </div>
+                <div class="interactions-container col-3 text-center col-md-1">
+                    <i class="fas fa-thumbs-up mb-3"></i>                        
+                </div>
+                <div class="interactions-container col-3 col-md-1 pl-1">
+                    <small>{{ workout.liked_workout.all|length }}</small>
+                </div>
+                <div class="interactions-container col-3 text-center col-md-1 pt-1">
+                    <a class="comments-link" href="{% url 'workout' workout.id %}"><i class="fas fa-comment-alt"></i></a>
+                </div>
+                <div class="interactions-container col-3 col-md-1 pl-1">                            
+                    <small>{{ workout.target_workout.all|length }}</small>                            
                 </div>
             </div>
-        </div>                     
-    </div>
-    <div class="col-12 col-md-8 offset-md-2 p-0">
-        <button class="btn view-workout btn-outline-primary btn-block" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">
-            View workout
-        </button>
-        <hr >
-    </div>
-
+            <div class="row">
+                <div class="col-12 mb-4">        
+                    <p class="pl-3 card-text"><small class="lightweight-text">Logged on: <a href="{% url 'workout' workout.id %}">{{ workout.created_at }}</a> by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a></small></p>
+                </div>
+            </div>                     
+            <div class="row text-center">
+                <div class="col-4"><small>Volume:</small></div>
+                <div class="col-4"><small>Reps:</small></div>
+                <div class="col-4"><small>RPE:</small></div>
+            </div>
+            <div class="row text-center mb-3">
+                <div class="col-4">{{ workout.session_volume|floatformat:"0" }}</div>
+                <div class="col-4">{{ workout.session_reps }}</div>
+                <div class="col-4">{{ workout.session_average_rpe }}</div>
+            </div>
+            <div class="collapse" id="collapse-{{ forloop.counter }}">
+                {% for exercise in workout.workout %}
+                    <table class="table">
+                        <thead class="thead-friends text-light">
+                            <tr>
+                                <th class="text-uppercase friends-exercise-name" scope="col">{{ exercise.exercise }}</th>
+                                <th scope="col">Weight</th>
+                                <th scope="col">Reps</th>
+                                <th scope="col">RPE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for weight_reps_rpe in exercise.set_volumes %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ weight_reps_rpe.weight }}</td>
+                                    <td>{{ weight_reps_rpe.rep_count }}</td>
+                                    <td>{{ weight_reps_rpe.rpe  }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-10 offset-1">
+                        <hr>
+                        {% if workout.session_notes %}
+                            <p><small>Session notes:</small></p>
+                            <p><small class="lightweight-text">{{ workout.session_notes }}</small></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>                     
+        </div>
+        <div class="col-12 col-md-8 offset-md-2 p-0">
+            <button class="btn view-workout btn-outline-primary btn-block" type="button" data-toggle="collapse" data-target="#collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">
+                View workout
+            </button>
+            <hr >
+        </div>
     {% endfor %}
     <div class="container mb-4 mt-0">
         <div class="row justify-content-center">
