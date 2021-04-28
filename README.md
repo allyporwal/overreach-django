@@ -23,7 +23,8 @@ It will be something I continue working on as a hobby/passion project (in a clon
 
 1. [User Experience](#User-Experience)
 2. [User Stories](#User-Stories)
-2. [Technologies Used](#Technologies-used)
+3. [Technologies Used](#Technologies-used)
+4. [Testing](#Testing)
 
 <hr>
 
@@ -121,15 +122,17 @@ The project uses the following technologies and frameworks:
 
 The following libraries/packages listed below are also used:
 
-- [boto3]()
-- [botocore]()
-- [dj-database-url]()
-- [django-allauth]()
-- [django-countries]()
-- [django-crispy-forms]()
-- [django-storages]()
-- [gunicorn]()
-- [oauthlib]()
+- [boto3]() ensures that the app works with Amazon S3
+- [dj-database-url]() allows the app to work with PostgreSQL
+- [django-allauth]() is used for all user authentication
+- [django-countries]() is for the country field in the profile form
+- [django-crispy-forms]() ensures that all Django forms are rendered with Bootstrap styling
+- [django-storages]() gives the functionality in a custom storage class needed to connect to S3
+- [gunicorn]() is the WSGI server that runs the Python app
+- [oauthlib]() ensures the Google OAuth integration works with Allauth
 - [Pillow]() for image handling on forms
-- [psycopg2-binary]()
+- [psycopg2-binary]() is the PostgreSQL database adapter for Python
 
+<hr>
+
+## Testing
