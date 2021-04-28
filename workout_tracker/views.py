@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.core.paginator import Paginator
 from .forms import WorkoutTrackerForm, WorkoutCommentsForm
 from profiles.models import UserProfile
-from .models import WorkoutTracker, WorkoutComments, WorkoutLikes
+from .models import WorkoutTracker, WorkoutLikes
 from .validators import validate_active_workout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages

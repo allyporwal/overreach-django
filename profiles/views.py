@@ -161,12 +161,17 @@ def friends(request):
     friends_profiles = UserProfile.objects.filter(pk__in=friends)
     friends_workouts = WorkoutTracker.objects.filter(
         created_by__in=friends_profiles).order_by('-pk')
+    friends_workouts_paginator = Paginator(friends_workouts, 12)
+
+    page_number = request.GET.get('page')
+    page_obj = friends_workouts_paginator.get_page(page_number)
 
     template = 'profiles/friends.html'
     context = {
         'profile': profile,
-        'friends_profiles': friends_profiles,
+        # 'friends_profiles': friends_profiles,
         'friends_workouts': friends_workouts,
+        'page_obj': page_obj,
     }
     return render(request, template, context)
 

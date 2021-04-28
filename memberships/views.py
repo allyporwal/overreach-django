@@ -10,6 +10,14 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+from django.contrib.auth.decorators import user_passes_test
+
+
+def check_membership(user):
+    profile = UserProfile.objects.get(user=user)
+    if profile.is_subscribed:
+        return profile
+
 
 @login_required
 def membership_signup(request):
@@ -94,6 +102,7 @@ def checkout_success(request):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def membership_status(request):
     """Show the user their membership status and give
     option to cancel"""
@@ -107,6 +116,7 @@ def membership_status(request):
 
 
 @login_required
+@user_passes_test(check_membership, login_url='/memberships/signup/')
 def cancel_membership(request):
     """Allow user to cancel their membership"""
     profile = get_object_or_404(UserProfile, user=request.user)
