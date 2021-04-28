@@ -318,6 +318,29 @@ def edit_workout(request, workout_id):
                                    weight, rep_count, rpe) in zip(
                                        *weight_rep_count_rpe)]
 
+            # catch any unlikey errors if users inspect page and
+            # delete required attribute on form inputs
+            if '' in set_count:
+                messages.error(
+                    request, 'Error: sets field cannot take blank inputs')
+                return redirect(reverse('active_workout'))
+
+            if '0' in set_count:
+                messages.error(
+                    request, 'Error: set count must not be 0')
+                return redirect(reverse('active_workout'))
+
+            if '' in exercises_sets_reps[2]:
+                messages.error(
+                    request, 'Error: reps field cannot take blank inputs')
+                return redirect(reverse('active_workout'))
+
+            for arr in weight_rep_count_rpe:
+                if '' in arr:
+                    messages.error(
+                        request, 'Error: form cannot take blank inputs')
+                    return redirect(reverse('active_workout'))
+
             # Iterate through workout and set_count lists,
             # add the correct number of sets to each dictionary
             # in the workout list and then delete them from the

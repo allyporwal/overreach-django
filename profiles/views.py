@@ -1,11 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from .models import UserProfile, Followers
 from .forms import UserProfileForm
-from workout_tracker.models import WorkoutTracker, WorkoutComments
+from workout_tracker.models import WorkoutTracker
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import user_passes_test
-from django.core.exceptions import ObjectDoesNotExist
 
 
 def check_membership(user):

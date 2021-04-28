@@ -1,4 +1,4 @@
-Hi {{ first_name }},
+Hi {{ email_data.first_name }},
 
 Welcome to Overreach.
 
