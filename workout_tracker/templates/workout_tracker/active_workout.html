@@ -9,6 +9,38 @@
 
 {% block content %}
 
+<!-- help modal -->
+<div class="modal fade" id="help-modal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="helpModalLabel">Quick tips</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <ol>
+                    <li class="mb-2">Once you input an exercise name and desired number of sets, tap the <i class="fas fa-check"></i> button to create the sets</li>
+                    <li class="mb-2">Use the <i class="fas fa-plus"></i>   <i class="fas fa-dumbbell"></i> button to add another exercise</li>
+                    <li class="mb-2">The <i class="fas fa-stopwatch"></i> button launches a rest timer</li>
+                    <li class="mb-2">If you click save, you'll then name the workout and add comments before saving it</li>
+                    <li class="mb-2">Want to navigate away? Once you click save, even if you don't name the workout and save it to our database, it won't disappear unless you end your browsing session</li>
+                    <li>Now go smash your workout</li>
+                </ol>
+            </div>
+            <div class="container mb-4">
+                <div class="row">
+                    <div class="col-12">
+                    <hr>
+                    <button type="button" data-dismiss="modal" class="btn btn-block allauth-button text-light">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% if errors %}
 <div class="container mt-3">
     <div class="row justify-content-center">
@@ -71,7 +103,7 @@
 <div class="container mb-5">
     <div class="form-row justify-content-center">
         <div class="form-group col-6 col-sm-2"> 
-            <button class="btn btn-info form-control text-uppercase" id="show-help">
+            <button class="btn btn-info form-control text-uppercase" data-toggle="modal" data-target="#help-modal" id="show-help">
                 <i class="fas fa-question-circle"></i>
             </button>           
         </div>    
