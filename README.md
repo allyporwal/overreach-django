@@ -237,13 +237,13 @@ During development each feature was tested to ensure that an average user cannot
 
 ### Browser compatibility tests
 
-The app has been tested on a variety of different devices and browsers. One currently unfixable problem, however, is that the footer on the website disappears on some mobile devices on Safari or (Chrome)[https://github.com/allyporwal/full-stack-frameworks/blob/master/wireframes/overreach_chrome_mobile.png], but it performs as intended on (Firefox)[https://github.com/allyporwal/full-stack-frameworks/blob/master/wireframes/overreach_firefox_mobile.png].
+The app has been tested on a variety of different devices and browsers. One currently unfixable problem, however, is that the footer on the website disappears on some mobile devices on Safari or [Chrome](https://github.com/allyporwal/full-stack-frameworks/blob/master/wireframes/overreach_chrome_mobile.png), but it performs as intended on [Firefox](https://github.com/allyporwal/full-stack-frameworks/blob/master/wireframes/overreach_firefox_mobile.png).
 
 Aside from the above issue, it performs perfectly on an iPhone XR and every page has been tested on one. 
 
 The app performs exactly as intended on a 21.5 inch iMac on Safari, Chrome and Firefox. 
 
-iPhone 5, 6/7/8, 6/7/8 plus, iPad, various android phones, laptops and a 4K monitor were all simulated in Chrome Developer Tools to check for responsiveness. The app help up well and all the elements were consistently positioned where they should be
+iPhone 5, 6/7/8, 6/7/8 plus, iPad, various android phones, laptops and a 4K monitor were all simulated in Chrome Developer Tools to check for responsiveness. The app held up well and all the elements were consistently positioned where they should be
 
 [Back to top](#contents)
 
