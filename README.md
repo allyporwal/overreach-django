@@ -407,7 +407,7 @@ In Gmail, I created an app password for the Django app and input the 16 digit pa
 Huge thanks to sources below:
 
  - The list comprehension code in the ```active_workout``` view as well as other similar functions was kindly answered in this [thread](https://stackoverflow.com/questions/64822476/how-to-turn-2-d-list-into-a-list-of-dictionaries-in-python) by user Aplet123 when I asked on Stack Overflow for my MS3 project - it's been very useful to say the least!!
- - The ```webhooks.py``` file and several bits of ```settings.py``` was taken from the excellent Boutique Ado tutorial series done by [ckz8780](https://github.com/ckz8780) for Code Institute
+ - The ```webhooks.py``` file, the receiever that creates the userprofile and several bits of ```settings.py``` was taken from the excellent Boutique Ado tutorial series done by [ckz8780](https://github.com/ckz8780) for Code Institute
  - The Javscript for Stripe integration and the view that creates a membership was lifted from Stripe official documentation
  - The picture on the landing page was taken from [here](https://pxhere.com/en/photo/1618341) as it has a CC licence
  - Some of the test profile pictures on the app are of my wife, so thank you to her (not that she knows how many or which ones)

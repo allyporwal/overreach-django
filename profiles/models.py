@@ -59,6 +59,7 @@ class Followers(models.Model):
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     """Create or update the user profile"""
+    # this snippet from Boutique Ado tutorial, attribution in Readme
     if created:
         UserProfile.objects.create(user=instance)
 
