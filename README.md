@@ -24,7 +24,8 @@ It will be something I continue working on as a hobby/passion project (in a clon
 1. [User Experience](#User-Experience)
 2. [User Stories](#User-Stories)
 3. [Technologies Used](#Technologies-used)
-4. [Testing](#Testing)
+4. [Features](#Features)
+5. [Testing](#Testing)
 
 <hr>
 
@@ -105,18 +106,18 @@ This project uses the following languages:
 
 The project uses the following technologies and frameworks:
 
-- [Bootstrap 4.6]() was used for the key layout components
-- [jQuery]() was used to enable responsive behaviour on forms and other elements
-- [chart.js]() is used to graph key data on a user's dashboard
-- [Django]() is the Python framework the backend code uses
-- [Heroku]() is the cloud-hosting service the app is hosted by
-- [PostgreSQL]() is the database used, provided by Heroku
-- [SQLite3]() was used for data storage in development
-- [Amazon S3]() is used for CSS and media storage
-- [Google OAuth]() is used to enable login/registration with a Google account
-- [Gitpod]() was the IDE used for writing all code
-- [Stripe]() provides the technology for processing payments
-- [Font Awesome]() is the source of all icons
+- [Bootstrap 4.6](https://getbootstrap.com/) was used for the key layout components
+- [jQuery](https://api.jquery.com/) was used to enable responsive behaviour on forms and other elements
+- [chart.js](https://chart.js/) is used to graph key data on a user's dashboard
+- [Django](https://djangoproject.com/) is the Python framework the backend code uses
+- [Heroku](https://heroku.com/) is the cloud-hosting service the app is hosted by
+- [PostgreSQL](https://www.postgresql.org/) is the database used, provided by Heroku
+- [SQLite3](https://www.sqlite.org/index.html/) was used for data storage in development
+- [Amazon S3](https://aws.amazon.com/s3/) is used for CSS and media storage
+- [Google OAuth](https://developers.google.com/identity/protocols/oauth2/) is used to enable login/registration with a Google account
+- [Gitpod](https://gitpod.io) was the IDE used for writing all code
+- [Stripe](https://stripe.com) provides the technology for processing payments
+- [Font Awesome](https://fontawesome.com) is the source of all icons
 - [dbdiagram.io](https://dbdiagram.io/) was used to plan the relational database models
 - [Balsamiq](https://balsamiq.cloud) was used to sketch the wireframes
 
@@ -135,6 +136,19 @@ The following libraries/packages listed below are also used:
 
 <hr>
 
+## Features
+
+Current features for the user include:
+
+- User login/registration via email or Google
+- Subscription payments through Stripe
+- Subscription status and previous/next payment dates can be viewed
+- Profile pictures can be uploaded
+- Strength training (workout) logging, with a dynamic form that allows logging of a workout of any size
+- 
+
+<hr>
+
 ## Testing
 
-Extensive testing was carried out on all aspects of the app
+Extensive testing was carried out on all aspects of the app to ensure that it functions smoothly. 
