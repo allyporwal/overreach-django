@@ -13,7 +13,7 @@ Overreach is a web app that is intended to serve two main purposes:
 
 The app was deployed using Heroku and can be found here: [Overreach](https://overreach.herokuapp.com)
 
-This is my final milestone project for the Code Institute Diploma in Full Stack Software Development. In a nutshell, the goal of this milestone project is to design a full stack web application with a relational data model, business logic, user authentication and full CRUD functionality for the users.
+This is my final milestone project for the Code Institute Diploma in Full Stack Software Development. In a nutshell, the goal of this milestone project was to design a full stack web application with a relational data model, business logic, user authentication and full CRUD functionality for the users.
 
 It will be something I continue working on as a hobby/passion project (in a cloned repository) after submitting to further develop my skills in full stack software development.
 
@@ -189,9 +189,9 @@ Currently any cancelled subscriptions are visible to the admin as "Cancelled sub
 
 Extensive testing was carried out on all aspects of the app to ensure that it functions smoothly. 
 
-All HTML was checked using the [W3](https://validator.w3.org/#validate_by_input) validator. There is one small issue outstanding with the Bootstrap navbar component. Specifically, as documented in this [Stack Overflow thread](https://stackoverflow.com/questions/24961294/bootstrap-navbar-not-working-on-ipad), leaving out the ```href="#"``` attribute appears to sometimes cause problems. As such, this has been left in. Without it, the navbar dropdown was almost invisible and completely unusable. This was the only solution I tried and it functions as intended, but just unfortunately throws the error on W3C.
+All HTML was checked using the [W3](https://validator.w3.org/#validate_by_input) validator. There is one small issue outstanding with the Bootstrap navbar component. Specifically, as documented in this [Stack Overflow thread](https://stackoverflow.com/questions/24961294/bootstrap-navbar-not-working-on-ipad), leaving out the ```href="#"``` attribute appears to sometimes cause problems. As such, this has been left in. Without it, the navbar dropdown was almost invisible and completely unusable on Safari and Firefox on iOS. This was the only solution I tried and it functions as intended, but just unfortunately throws the error on W3C.
 
-All CSS was checked on [W3C] and passed without errors. All JS was tested on [Esprima](https://esprima.org/demo/validate.html) and was syntactically valid.
+All CSS was checked on [W3C](https://jigsaw.w3.org/css-validator/) and passed without errors. All JS was tested on [Esprima](https://esprima.org/demo/validate.html) and was syntactically valid.
 
 All Python code was checked in Gitpod with [cornflakes-linter](https://marketplace.visualstudio.com/items?itemName=kevinglasson.cornflakes-linter) and any errors in code that I had written was corrected. 
 
@@ -213,6 +213,15 @@ During development each feature was tested to ensure that an average user cannot
 
 (*)This function caused me a few difficulties. To get it working as intended, there needed to be a few checks in the profile view to allow conditional formatting in the template. One to see if the user was the displayed profile, another to try and see if the user followed the displayed profile if the displayed profile wasn't theirs, and then an exception to catch if they had no follower/is_following relationship already in the database. It took several attempts to get this right and the correct follow or unfollow buttons showing on the displayed profile.
 
+### Admin Story testing
+
+| Test | Action | Expected Outcome | Pass/Fail |
+|---|---|---|---|
+|When a user becomes a paying member, I should see them appear in Stripe|Navigating to Stripe Dashboard | Stripe should show the new customer and their payment|Pass|
+|When a user becomes a paying member, I should see their profile update on the admin section | Checking that user's profile | The is_subscribed boolean field should be checked/true |Pass(*)|
+
+(*) On one occasion during testing, everything updated on a user's profile except this is_subscribed boolean field remained false/unchecked. However, when repeatedly testing this functionality I was unable to force the error again. I am unsure if this was caused by me making mistake in the admin section or the Stripe Webhook not triggering the Handler. Repeated tests were all successful.
+
 ### Defensive design testing
 
 | Test | Action | Expected Outcome | Pass/Fail |
@@ -228,7 +237,7 @@ During development each feature was tested to ensure that an average user cannot
 
 ### Browser compatibility tests
 
-The app has been tested on a variety of different devices and browsers. One currently unfixable problem, however, is that the footer on the website disappears on some mobile devices on Safari or (Chrome)[], but not (Firefox)[].
+The app has been tested on a variety of different devices and browsers. One currently unfixable problem, however, is that the footer on the website disappears on some mobile devices on Safari or (Chrome)[https://github.com/allyporwal/full-stack-frameworks/blob/master/wireframes/overreach_chrome_mobile.png], but it performs as intended on (Firefox)[https://github.com/allyporwal/full-stack-frameworks/blob/master/wireframes/overreach_firefox_mobile.png].
 
 Aside from the above issue, it performs perfectly on an iPhone XR and every page has been tested on one. 
 
