@@ -197,6 +197,45 @@ All Python code was checked in Gitpod with [cornflakes-linter](https://marketpla
 
 During development each feature was tested to ensure that an average user cannot break the site and to check that all pages and features worked as intended on multiple devices.
 
+### User Story testing
+
+| Test | Action | Expected Outcome | Pass/Fail |
+|---|---|---|---|
+| As a user, I want to be able to create an account| Sign up using my email address | Email verification screen comes up next and email gets sent to my inbox | Pass |
+| As a user, I want to be able to create an account with my Google Credentials| Sign up using my Google account | Membership signup view comes up immediately after Google login, no verification email expected | Pass |
+| As a user, I want to be able to subscribe using my card for payment | Input card details on payment screen after inputting billing info | Checkout is successful and a thank you screen is shown, with links to the dashboard or subscription status pages. Welcome email and receipt of payment email arrives in my inbox, the inbox of the email associated with my card | Pass |
+| As a user, I want to be able to unsubscribe | Navigating to the Membership page from the navbar and clicking Cancel Membership | Cancellation is successful and an email confirms this | Pass |
+| As a user, I want to be able to log a workout | Navigate to the Workout screen via the navbar and see the log workout page | Pressing save should load a new view prompting the input of a workout name and notes | Pass |
+| After logging my workout, I want to see that workout's data | After inputting a name and possibly notes, I want to see that workout presented to me | Once saved the workout's page should appear with the key data nicely presented | Pass |
+| As a user, I want to be able to follow other users | Navigating to another user's profile page should present a button showing "Follow" or "unfollow", depending on if I follow them | Clicking follow should raise their follower count by one and then my friends feed will be populated with their workouts | Pass(*) |
+| As a user, I want to be able to comment on workouts | Navigating to a workout and submitting a comment in the form at the bottom of the page | The page should reload, complete with my comment | Pass |
+| As a user, I want to be able to like/unlike workouts | Navigating to a workout and pressing the like/unlike button | The page should reload, and the likes count should increment accordingly | Pass |
+
+(*)This function caused me a few difficulties. To get it working as intended, there needed to be a few checks in the profile view to allow conditional formatting in the template. One to see if the user was the displayed profile, another to try and see if the user followed the displayed profile if the displayed profile wasn't theirs, and then an exception to catch if they had no follower/is_following relationship already in the database. It took several attempts to get this right and the correct follow or unfollow buttons showing on the displayed profile.
+
+### Defensive design testing
+
+| Test | Action | Expected Outcome | Pass/Fail |
+|---|---|---|---|
+| A user should not be able to submit a workout if there is no data input | Navigating to the workout screen and trying to save a workout with no data | The form will not submit, or it will submit but an error message will prompt the user to correct their input | Pass(**) |
+| A user should not be able to access anything without logging in | Testing any URL without being logged in | The user should be directed to the login page | Pass |
+| A user should not be able to access any features until they have become a paying member | Before paying, they cannot see anything other than the membership registration form or the checkout | After paying, they have full access to all views | Pass*** |
+| A user should not be able to access the views to save a workout without having first actually input one | Navigating to the log_workout view with no workout saved in the session cookie | Testing the log_workout view with no workout logged on the active_workout view should redirect the user back to the dashboard | Pass |
+
+(**) Although the views protect against any tinkering in Developer Tools by a user, some Javascript was also necessary as an additional step. A server 500 error can be triggered by submitting the workout form with just an exercise, reps and set count but nothing else. This is why the save button is disabled until there is some weights, reps and sets input. Removing the required attribute on any weight, reps or RPE input on the form and inputting it blank is caught by the views and the workout is "rescued" but a blank input on the exercise sets or reps field results in the entire workout being discarded. In normal use on a mobile device this shouldn't be a problem but it is worth noting.
+
+(***) The checkout_success view is the one exception here as if things don't fully update on the database before the user lands there there might be a problem with them not being granted access. It gives the app a few seconds and hopefully the user's membership status is correct by the time they get to whatever view they want after seeing that confirmation page.
+
+### Browser compatibility tests
+
+The app has been tested on a variety of different devices and browsers. One currently unfixable problem, however, is that the footer on the website disappears on some mobile devices on Safari or (Chrome)[], but not (Firefox)[].
+
+Aside from the above issue, it performs perfectly on an iPhone XR and every page has been tested on one. 
+
+The app performs exactly as intended on a 21.5 inch iMac on Safari, Chrome and Firefox. 
+
+iPhone 5, 6/7/8, 6/7/8 plus, iPad, various android phones, laptops and a 4K monitor were all simulated in Chrome Developer Tools to check for responsiveness. The app help up well and all the elements were consistently positioned where they should be
+
 [Back to top](#contents)
 
 <hr>
@@ -350,3 +389,18 @@ else:
 
 In Gmail, I created an app password for the Django app and input the 16 digit password into the Heroku Config Vars with the name ```EMAIL_HOST_PASS```, corresponding to the clip from ```settings.py``` above. Also, in Heroku, ```EMAIL_HOST_USER``` was set as my own email address in Config Vars.
 
+[Back to top](#contents)
+
+<hr>
+
+## Acknowledgements/attributions
+
+Huge thanks to sources below:
+
+ - The list comprehension code in the ```active_workout``` view as well as other similar functions was kindly answered in this [thread](https://stackoverflow.com/questions/64822476/how-to-turn-2-d-list-into-a-list-of-dictionaries-in-python) by user Aplet123 when I asked on Stack Overflow for my MS3 project - it's been very useful to say the least!!
+ - The ```webhooks.py``` file and several bits of ```settings.py``` was taken from the excellent Boutique Ado tutorial series done by [ckz8780](https://github.com/ckz8780) for Code Institute
+ - The Javscript for Stripe integration and the view that creates a membership was lifted from Stripe official documentation
+ - The picture on the landing page was taken from [here](https://pxhere.com/en/photo/1618341) as it has a CC licence
+ - Some of the test profile pictures on the app are of my wife, so thank you to her (not that she knows how many or which ones)
+
+Finally, a huge thank you to Brian Macharia. He's a superb mentor; patient, encouraging and always makes great use of the time we have together thanks to his experience and the excellent advice he gives.
