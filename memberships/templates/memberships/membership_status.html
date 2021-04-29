@@ -22,8 +22,8 @@
                 <p>Your next payment will be on: {{ profile.next_payment }}
                 </p>
                 <hr>
-                <a class="mt-3 no-decoration" href="{% url 'cancel_membership' %}">
-                    <button class="btn btn-block btn-warning">Cancel membership</button>
+                <a class="mt-3 no-decoration btn btn-block btn-warning" href="{% url 'cancel_membership' %}" >
+                    Cancel membership       
                 </a>
             </div>
         </div>
@@ -40,8 +40,8 @@
                     <p class="mt-3">You will have full access until: <strong>{{ profile.next_payment }}</strong></p>
                 {% endif %}      
                 <hr> 
-                <a href="{% url 'membership_signup' %}" class="mt-3 no-decoration">
-                    <button class="btn btn-block btn-primary">Click here to subscribe</button>
+                <a href="{% url 'membership_signup' %}" class="mt-3 no-decoration btn btn-block btn-primary">
+                    Click here to subscribe
                 </a>
             </div>
         </div>          

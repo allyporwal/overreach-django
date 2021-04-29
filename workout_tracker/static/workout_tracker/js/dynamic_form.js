@@ -17,22 +17,21 @@ $('#workout-sets').on('click', '.log-exercise', function () {
             `<div class="form-row weight-reps-rpe-${x}">
                 <div class="form-group col-6">
                     <label class="small-label" for="weight-${i + 1}-exercise-${x}"><small>Weight lifted</small></label>
-                    <input type="number" step="0.5" name="weight-${i + 1}-exercise-${x}" min="0" max="1200" class="form-control" required>
+                    <input type="number" id="weight-${i + 1}-exercise-${x}" step="0.5" name="weight-${i + 1}-exercise-${x}" min="0" max="1200" class="form-control" required>
                 </div>
                 <div class="form-group col-2">
                     <label class="small-label" for="reps-${i + 1}-exercise-${x}"><small>Reps</small></label>
-                    <input type="number" name="reps-${i + 1}-exercise-${x}" min="0" max="250" class="form-control" required>
+                    <input type="number" id="reps-${i + 1}-exercise-${x}" name="reps-${i + 1}-exercise-${x}" min="0" max="250" class="form-control" required>
                 </div>
                 <div class="form-group col-2">
                     <label class="small-label" for="rpe-${i + 1}-exercise-${x}"><small>RPE</small></label>
-                    <input type="number" step="0.5" name="rpe-${i + 1}-exercise-${x}" min="1" max="10" class="form-control" required>
+                    <input type="number" id="rpe-${i + 1}-exercise-${x}" step="0.5" name="rpe-${i + 1}-exercise-${x}" min="1" max="10" class="form-control" required>
                 </div>
                 <div class="form-group col-2">
-                    <label class="small-label" for="delete-set-${i}">&nbsp;</label>
-                    <button class="btn btn-outline-secondary w-100 form-control delete-set" name="delete-set-${i}" type="button"><i class="fas fa-trash"></i></button>                
+                    <label class="small-label" for="delete-set-${i}-exercise-${x}">&nbsp;</label>
+                    <button id="delete-set-${i}-exercise-${x}" class="btn btn-outline-secondary w-100 form-control delete-set" name="delete-set-${i}" type="button"><i class="fas fa-trash"></i></button>                
                 </div>              
             </div>`);
-        // $(this).prop("disabled", true)
     }
 });
 
@@ -59,7 +58,7 @@ $('#add-exercise').click(function () {
                           </div>
                           <div class="form-group col-3 col-sm-2">
                               <label for="log-exercise-${x}">&nbsp;</label>
-                              <button id="log-${x}" class="btn btn-outline-secondary w-100 form-control log-exercise" name="log-exercise-${x}" type="button"><i class="fas fa-check"></i></button>                
+                              <button id="log-exercise-${x}" class="btn btn-outline-secondary w-100 form-control log-exercise" name="log-exercise-${x}" type="button"><i class="fas fa-check"></i></button>                
                           </div>
                           <div class="form-group col-sm-2 col-3">
                               <label for="delete-exercise-${x}">&nbsp;</label>

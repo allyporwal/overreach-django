@@ -169,7 +169,7 @@ def friends(request):
     template = 'profiles/friends.html'
     context = {
         'profile': profile,
-        # 'friends_profiles': friends_profiles,
+        'friends_profiles': friends_profiles,
         'friends_workouts': friends_workouts,
         'page_obj': page_obj,
     }

@@ -73,7 +73,6 @@
     {{ billing_name|json_script:"id_billing_name" }}
     {{ billing_email|json_script:"id_billing_email" }}
     {{ customer_id|json_script:"id_customer_id" }}
-    {{ price_id|json_script:"id_price_id" }}
     {{ stripe_public_key|json_script:"id_stripe_public_key" }}
     <script src="{% static 'memberships/js/stripe_elements.js' %}"></script>
 {% endblock %}

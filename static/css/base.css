@@ -6,13 +6,12 @@ html, body {
     height: 100%;
     margin: 0;
     overflow-x: hidden;
-    min-height: -webkit-fill-available;
-    /* height: calc(100vh - calc(100vh - 100%)); */
+    /* /* min-height: -webkit-fill-available; */
+    height: calc(100vh - calc(100vh - 100%));
 }
 
 #push-footer-outer {
-    /* min-height: 100%; */
-    min-height: calc(100vh - calc(100vh - 100%));
+    min-height: 100%;
     background-color: rgba(0, 0, 0, .0125);
 }
 
@@ -202,11 +201,6 @@ footer {
     display: none;
 }
 
-.card-body {
-    -ms-overflow-style: none;  
-    scrollbar-width: none; 
-}
-
 .scroll-icon-up {
     margin-bottom: 12%;
 }
@@ -248,7 +242,7 @@ footer {
 }
 
 .view-workout {
-    border-color: rgba(0, 178, 131, 1);
+    border: none;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     background-color: rgba(0, 178, 131, 1);
@@ -280,7 +274,6 @@ footer {
 }
 
 .view-workout:hover, .view-workout:active, .view-workout:focus {
-    border-color: rgba(0, 178, 131, 0.75);
     background-color: rgba(0, 178, 131, 0.75) !important;
 }
 
@@ -292,21 +285,19 @@ footer {
 
 .btn-follow {
     background-color: rgba(0, 178, 131, 1);
-    border-color: rgba(0, 178, 131, 1);
+    border: none;
 }
 
 .btn-unfollow {
     background-color: rgba(178, 33, 0, 1);
-    border-color: rgba(178, 33, 0, 1);
+    border: none;
 }
 
 .btn-follow:hover, .btn-follow:active, .btn-follow:focus {
-    border-color: rgba(0, 178, 131, 0.75);
     background-color: rgba(0, 178, 131, 0.75) !important;
 }
 
 .btn-unfollow:hover, .btn-unfollow:active, .btn-unfollow:focus {
-    border-color: rgba(178, 33, 0, 0.75);
     background-color: rgba(178, 33, 0, 0.75) !important;
 }
 

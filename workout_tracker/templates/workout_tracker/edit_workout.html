@@ -3,6 +3,9 @@
 {% block extra_title %}
     | Edit {{ workout.session_name }}
 {% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'workout_tracker/css/workout_tracker.css' %}">
+{% endblock %}%}
 {% block content %}
 
 {% for error in errors %}
@@ -46,19 +49,19 @@
                 <div class="form-row weight-reps-rpe-{{ forloop.parentloop.counter }}">
                     <div class="form-group col-6">
                         <label class="small-label" for="weight-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}"><small>Weight</small></label>
-                        <input type="number" step="0.5" name="weight-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="Weight lifted" min="0" max="1200" class="form-control" value="{{ set.weight }}" required>
+                        <input type="number" id="weight-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" step="0.5" name="weight-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="Weight lifted" min="0" max="1200" class="form-control" value="{{ set.weight }}" required>
                     </div>
                     <div class="form-group col-2">
                         <label class="small-label" for="reps-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}"><small>Reps</small></label>
-                        <input type="number" name="reps-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="Reps" min="0" max="250" class="form-control" value="{{ set.rep_count }}" required>
+                        <input type="number" id="reps-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" name="reps-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="Reps" min="0" max="250" class="form-control" value="{{ set.rep_count }}" required>
                     </div>
                     <div class="form-group col-2">
                         <label class="small-label" for="rpe-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}"><small>RPE</small></label>
-                        <input type="number" step="0.5" name="rpe-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="RPE" min="1" max="10" class="form-control" value="{{ set.rpe }}" required>
+                        <input type="number" id="rpe-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" step="0.5" name="rpe-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" placeholder="RPE" min="1" max="10" class="form-control" value="{{ set.rpe }}" required>
                     </div>
                     <div class="form-group col-2">
-                        <label class="small-label" for="delete-set-${i}">&nbsp;</label>
-                        <button class="btn btn-outline-secondary w-100 form-control delete-set" name="delete-set-${i}" type="button"><i class="fas fa-trash"></i></button>                
+                        <label class="small-label" for="delete-set-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}">&nbsp;</label>
+                        <button id="delete-set-{{ forloop.counter }}-exercise-{{ forloop.parentloop.counter }}" class="btn btn-outline-secondary w-100 form-control delete-set" name="delete-set-{{ forloop.counter }}" type="button"><i class="fas fa-trash"></i></button>                
                     </div>              
                 </div>                
             {% endfor %}

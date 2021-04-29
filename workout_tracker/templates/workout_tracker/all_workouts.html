@@ -56,10 +56,10 @@
                                 <div class="btn-group card-button-group" role="group" aria-label="WorkoutActions">
                                     <a href="{% url 'workout' workout.id %}" class="col-4 btn btn-secondary">View</a>
                                     <a href="{% url 'edit_workout' workout.id %}" class="col-4 btn btn-secondary">Edit</a>
-                                    <button id="delete-dropdown" type="button" class="btn dropdown-toggle btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button id="delete-dropdown-{{ forloop.counter }}" type="button" class="btn dropdown-toggle btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Delete
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="delete-dropdown">
+                                    <div class="dropdown-menu" aria-labelledby="delete-dropdown-{{ forloop.counter }}">
                                         <p class="ml-4">Sure?</p>
                                         <a class="dropdown-item" href="{% url 'delete_workout' workout.id %}">Delete</a>
                                     </div>

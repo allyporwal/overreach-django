@@ -17,6 +17,8 @@ This is my final milestone project for the Code Institute Diploma in Full Stack 
 
 It will be something I continue working on as a hobby/passion project (in a cloned repository) after submitting to further develop my skills in full stack software development.
 
+As an aisde, the name Overreach comes from a term often used in strength training. A brief period of training where a trainee "overreaches" or an "overreaching" phase are key to making good progress in the gym and busting through plateaus in strength, power or size. The logo is designed to hint at the idea of reaching up and beyond.
+
 <hr>
 
 ### Contents:
@@ -143,12 +145,42 @@ Current features for the user include:
 - User login/registration via email or Google
 - Subscription payments through Stripe
 - Subscription status and previous/next payment dates can be viewed
+- Subscriptions can be cancelled
 - Profile pictures can be uploaded
 - Strength training (workout) logging, with a dynamic form that allows logging of a workout of any size
-- 
+- A rest timer for timing rests between sets in a workout
+- Existing workouts can be edited
+- Access to all previously logged workouts
+- Access to all other users' previously logged workouts
+- Display of key workout data on dashboard
+- The ability to like and comment on workouts
+- Other users can be followed and their activity viewed on a friends feed
+- Other users' profiles can be viewed, with a link to their workouts
+
+Future user features will include:
+
+- A more detailed dashboard displaying a greater variety of data
+- Greater flexibility in the dashboard, allowing a user to choose what data they see and/or how it is presented
+- Groups to allow discussion of all weight-training related matters
+- Allowing a user to update card details rather than having to re-subscribe
+
+Current admin features include:
+
+- All workouts and comments are visible from the admin section
+- All user profiles and the most important subscription information is visible as well
+
+A key future admin feature will be:
+
+- Automatic cancelling of a user's access to the service on the correct date once they cancel their subscription
+
+Currently any cancelled subscriptions are visible to the admin as "Cancelled sub_id", allowing an admin user to see that and cancel the user's access. However, if the site were busy, this would need to be checked every day to ensure that there weren't people who had cancelled their subscription but still using the service.
+
 
 <hr>
 
 ## Testing
 
 Extensive testing was carried out on all aspects of the app to ensure that it functions smoothly. 
+
+All HTML was checked using the [W3](https://validator.w3.org/#validate_by_input) validator. There is one small issue outstanding with the Bootstrap navbar component. Specifically, as documented in this [Stack Overflow thread](https://stackoverflow.com/questions/24961294/bootstrap-navbar-not-working-on-ipad), leaving out the ```href="#"``` attribute appears to sometimes cause problems. As such, this has been left in. Without it, the navbar dropdown was almost invisible and completely unusable. This was the only solution I tried and it functions as intended, just unfortunately throws the error on W3C.
+

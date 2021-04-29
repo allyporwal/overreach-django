@@ -24,8 +24,8 @@
                     <div class="row">
                         <div class="col-12">
                             <hr>
-                            <a href="{% url 'delete_workout' workout.id %}" class="no-decoration">
-                                <button type="button" class="btn btn-block btn-danger">Delete</button>
+                            <a href="{% url 'delete_workout' workout.id %}" class="no-decoration btn btn-block btn-danger">
+                                Delete
                             </a>
                         </div>
                     </div>
@@ -42,8 +42,8 @@
             <p><small>Logged by <a href="{% url 'profile' workout.created_by.id %}">{{ workout.created_by }}</a> on {{ workout.created_at }}</small></p>
             <p>{{ workout.session_notes }}</p>
             {% if request.user == workout.created_by.user %}
-                <a href="{% url 'edit_workout' workout.id %}" class="no-decoration">
-                    <button class="btn allauth-button btn-sm text-light btn-block mt-3">Edit</button>
+                <a href="{% url 'edit_workout' workout.id %}" class="no-decoration btn allauth-button btn-sm text-light btn-block mt-3">
+                    Edit
                 </a>
                 <button type="button" class="btn btn-danger btn-sm btn-block mb-3 mt-3" data-toggle="modal" data-target="#delete-modal">
                     Delete
@@ -117,7 +117,7 @@
                 <div class="workout-accordian-header">
                     <div class="card-header" id="heading-totals">
                         <h2 class="mb-0">
-                            <button class="btn btn-block text-left w-100 h-100" type="button" data-toggle="collapse" data-target="#collapse-totals" aria-expanded="true" aria-controls="collapse-{{ forloop.counter }}">
+                            <button class="btn btn-block text-left w-100 h-100" type="button" data-toggle="collapse" data-target="#collapse-totals" aria-expanded="true" aria-controls="heading-totals">
                                 Session Totals
                             </button>
                         </h2>

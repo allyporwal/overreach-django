@@ -15,17 +15,11 @@
                 <p>{{ displayed_profile.main_goals }}</p>
             {% endif %}
             {% if is_following.status == True %}
-                <a href="{% url 'unfollow' displayed_profile.id %}" class="no-decoration">
-                    <button class="btn btn-primary btn-unfollow col-12 col-md-4 btn-block mb-3 mt-3">Unfollow</button>
-                </a>
+                <a href="{% url 'unfollow' displayed_profile.id %}" class="no-decoration btn btn-primary btn-unfollow col-12 col-md-4 btn-block mb-3 mt-3">Unfollow</a>
             {% elif is_following.status == False %}
-                <a href="{% url 'add_follower' displayed_profile.id %}" class="no-decoration">
-                    <button class="btn btn-primary btn-follow col-12 col-md-4 btn-block mb-3 mt-3">Follow</button>
-                </a>
+                <a href="{% url 'add_follower' displayed_profile.id %}" class="no-decoration btn btn-primary btn-follow col-12 col-md-4 btn-block mb-3 mt-3">Follow</a>
             {% elif is_following == False %}
-                <a href="{% url 'add_follower' displayed_profile.id %}" class="no-decoration">
-                    <button class="btn btn-primary btn-follow col-12 col-md-4 btn-block mb-3 mt-3">Follow</button>
-                </a>
+                <a href="{% url 'add_follower' displayed_profile.id %}" class="no-decoration btn btn-primary btn-follow col-12 col-md-4 btn-block mb-3 mt-3">Follow</a>
             {% endif %}
             <hr>
         </div>
