@@ -122,17 +122,19 @@ The project uses the following technologies and frameworks:
 
 The following libraries/packages listed below are also used:
 
-- [boto3]() ensures that the app works with Amazon S3
-- [dj-database-url]() allows the app to work with PostgreSQL
-- [django-allauth]() is used for all user authentication
-- [django-countries]() is for the country field in the profile form
-- [django-crispy-forms]() ensures that all Django forms are rendered with Bootstrap styling
-- [django-storages]() gives the functionality in a custom storage class needed to connect to S3
-- [gunicorn]() is the WSGI server that runs the Python app
-- [oauthlib]() ensures the Google OAuth integration works with Allauth
-- [Pillow]() for image handling on forms
-- [psycopg2-binary]() is the PostgreSQL database adapter for Python
+- [boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html) ensures that the app works with Amazon S3
+- [dj-database-url](https://pypi.org/project/dj-database-url/) allows the app to work with PostgreSQL
+- [django-allauth](https://django-allauth.readthedocs.io/en/latest/installation.html) is used for all user authentication
+- [django-countries](https://pypi.org/project/django-countries/) is for the country field in the profile form
+- [django-crispy-forms](https://django-crispy-forms.readthedocs.io/en/latest/) ensures that all Django forms are rendered with Bootstrap styling
+- [django-storages](https://django-storages.readthedocs.io/en/latest/index.html) gives the functionality in a custom storage class needed to connect to S3
+- [gunicorn](https://gunicorn.org/) is the WSGI server that runs the Python app
+- [oauthlib](https://pypi.org/project/oauthlib/) ensures the Google OAuth integration works with Allauth
+- [Pillow](https://pillow.readthedocs.io/en/stable/) for image handling on forms
+- [psycopg2-binary](https://pypi.org/project/psycopg2/) is the PostgreSQL database adapter for Python
 
 <hr>
 
 ## Testing
+
+Extensive testing was carried out on all aspects of the app
