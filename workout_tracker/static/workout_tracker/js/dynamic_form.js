@@ -1,6 +1,11 @@
 // Dynamically create a form that allows the 
 // user to add as many exercises as they like
 
+// Disable save button until set input fields are inserted
+$(document).ready(function() {
+    $('#save').prop('disabled', true);
+})
+
 // Listen for events in the form on log exercise buttons
 $('#workout-sets').on('click', '.log-exercise', function () {
     let numberOfSets = $(this).parent().prevUntil().find('.set-count').val();
@@ -11,6 +16,8 @@ $('#workout-sets').on('click', '.log-exercise', function () {
     // delete any sets to ensure no extra sets added on further pushes of button
     let clearToPreventExtra = $(this).parent().parent().siblings(`.weight-reps-rpe-${x}`);
     clearToPreventExtra.remove();
+    // enable save button
+    $('#save').prop('disabled', false);
     // add the desired number of sets
     for (i = 0; i < numberOfSets; i++) {
         $(this).parent().parent().after(

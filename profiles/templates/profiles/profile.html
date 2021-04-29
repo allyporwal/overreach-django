@@ -12,7 +12,7 @@
             <p>Member since: {{ displayed_profile.signup_date }}</p>
             <p>{{ followers }} followers</p>
             {% if displayed_profile.main_goals %}
-                <p>{{ displayed_profile.main_goals }}</p>
+                <p>Main goals: {{ displayed_profile.main_goals }}</p>
             {% endif %}
             {% if is_following.status == True %}
                 <a href="{% url 'unfollow' displayed_profile.id %}" class="no-decoration btn btn-primary btn-unfollow col-12 col-md-4 btn-block mb-3 mt-3">Unfollow</a>

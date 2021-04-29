@@ -148,7 +148,8 @@ def log_workout(request):
                 volumes.append(
                     (float(weight['rep_count']) * float(weight['weight'])))
 
-        # data for each individual exercise to calculate overall workout metrics
+        # data for each individual exercise to
+        # calculate overall workout metrics
         exercise_volumes = []
         exercise_reps = []
 
